@@ -50,10 +50,10 @@
             this.tbSource = new System.Windows.Forms.TextBox();
             this.btnTest = new System.Windows.Forms.Button();
             this.pnlCommButtons = new System.Windows.Forms.Panel();
+            this.nudSongNum = new System.Windows.Forms.NumericUpDown();
+            this.btnSetSIDSong = new System.Windows.Forms.Button();
             this.btnPauseSID = new System.Windows.Forms.Button();
             this.btnLaunch = new System.Windows.Forms.Button();
-            this.btnSetSIDSong = new System.Windows.Forms.Button();
-            this.nudSongNum = new System.Windows.Forms.NumericUpDown();
             this.pnlCommButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
             this.SuspendLayout();
@@ -72,6 +72,7 @@
             // 
             // serialPort1
             // 
+            this.serialPort1.BaudRate = 115200;
             this.serialPort1.PortName = "COM8";
             // 
             // timer1
@@ -246,14 +247,13 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(426, 217);
+            this.btnTest.Location = new System.Drawing.Point(463, 217);
             this.btnTest.Margin = new System.Windows.Forms.Padding(4);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(102, 28);
             this.btnTest.TabIndex = 15;
             this.btnTest.Text = "Test (Debug)";
             this.btnTest.UseVisualStyleBackColor = true;
-            this.btnTest.Visible = false;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // pnlCommButtons
@@ -270,39 +270,6 @@
             this.pnlCommButtons.Name = "pnlCommButtons";
             this.pnlCommButtons.Size = new System.Drawing.Size(332, 79);
             this.pnlCommButtons.TabIndex = 24;
-            // 
-            // btnPauseSID
-            // 
-            this.btnPauseSID.Location = new System.Drawing.Point(231, 44);
-            this.btnPauseSID.Margin = new System.Windows.Forms.Padding(4);
-            this.btnPauseSID.Name = "btnPauseSID";
-            this.btnPauseSID.Size = new System.Drawing.Size(90, 28);
-            this.btnPauseSID.TabIndex = 16;
-            this.btnPauseSID.Text = "Pause SID";
-            this.btnPauseSID.UseVisualStyleBackColor = true;
-            this.btnPauseSID.Click += new System.EventHandler(this.btnPauseSID_Click);
-            // 
-            // btnLaunch
-            // 
-            this.btnLaunch.Location = new System.Drawing.Point(249, 8);
-            this.btnLaunch.Margin = new System.Windows.Forms.Padding(4);
-            this.btnLaunch.Name = "btnLaunch";
-            this.btnLaunch.Size = new System.Drawing.Size(72, 28);
-            this.btnLaunch.TabIndex = 15;
-            this.btnLaunch.Text = "Launch";
-            this.btnLaunch.UseVisualStyleBackColor = true;
-            this.btnLaunch.Click += new System.EventHandler(this.btnLaunch_Click);
-            // 
-            // btnSetSIDSong
-            // 
-            this.btnSetSIDSong.Location = new System.Drawing.Point(9, 44);
-            this.btnSetSIDSong.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSetSIDSong.Name = "btnSetSIDSong";
-            this.btnSetSIDSong.Size = new System.Drawing.Size(90, 28);
-            this.btnSetSIDSong.TabIndex = 17;
-            this.btnSetSIDSong.Text = "Set Song";
-            this.btnSetSIDSong.UseVisualStyleBackColor = true;
-            this.btnSetSIDSong.Click += new System.EventHandler(this.btnSetSIDSong_Click);
             // 
             // nudSongNum
             // 
@@ -325,6 +292,39 @@
             0,
             0,
             0});
+            // 
+            // btnSetSIDSong
+            // 
+            this.btnSetSIDSong.Location = new System.Drawing.Point(9, 44);
+            this.btnSetSIDSong.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSetSIDSong.Name = "btnSetSIDSong";
+            this.btnSetSIDSong.Size = new System.Drawing.Size(90, 28);
+            this.btnSetSIDSong.TabIndex = 17;
+            this.btnSetSIDSong.Text = "Set Song";
+            this.btnSetSIDSong.UseVisualStyleBackColor = true;
+            this.btnSetSIDSong.Click += new System.EventHandler(this.btnSetSIDSong_Click);
+            // 
+            // btnPauseSID
+            // 
+            this.btnPauseSID.Location = new System.Drawing.Point(231, 44);
+            this.btnPauseSID.Margin = new System.Windows.Forms.Padding(4);
+            this.btnPauseSID.Name = "btnPauseSID";
+            this.btnPauseSID.Size = new System.Drawing.Size(90, 28);
+            this.btnPauseSID.TabIndex = 16;
+            this.btnPauseSID.Text = "Pause SID";
+            this.btnPauseSID.UseVisualStyleBackColor = true;
+            this.btnPauseSID.Click += new System.EventHandler(this.btnPauseSID_Click);
+            // 
+            // btnLaunch
+            // 
+            this.btnLaunch.Location = new System.Drawing.Point(249, 8);
+            this.btnLaunch.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLaunch.Name = "btnLaunch";
+            this.btnLaunch.Size = new System.Drawing.Size(72, 28);
+            this.btnLaunch.TabIndex = 15;
+            this.btnLaunch.Text = "Launch";
+            this.btnLaunch.UseVisualStyleBackColor = true;
+            this.btnLaunch.Click += new System.EventHandler(this.btnLaunch_Click);
             // 
             // Form1
             // 

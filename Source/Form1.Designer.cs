@@ -57,9 +57,14 @@
             this.rbComSerial = new System.Windows.Forms.RadioButton();
             this.rbComEthernet = new System.Windows.Forms.RadioButton();
             this.pnlSerialSetup = new System.Windows.Forms.Panel();
+            this.pnlEthernetSetup = new System.Windows.Forms.Panel();
+            this.tbIPAddress = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.pnlCommButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
             this.pnlSerialSetup.SuspendLayout();
+            this.pnlEthernetSetup.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnConnected
@@ -165,7 +170,7 @@
             // 
             this.lblDestPath.AutoSize = true;
             this.lblDestPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDestPath.Location = new System.Drawing.Point(128, 202);
+            this.lblDestPath.Location = new System.Drawing.Point(128, 186);
             this.lblDestPath.Name = "lblDestPath";
             this.lblDestPath.Size = new System.Drawing.Size(91, 16);
             this.lblDestPath.TabIndex = 23;
@@ -173,7 +178,7 @@
             // 
             // tbDestPath
             // 
-            this.tbDestPath.Location = new System.Drawing.Point(140, 222);
+            this.tbDestPath.Location = new System.Drawing.Point(140, 206);
             this.tbDestPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbDestPath.Name = "tbDestPath";
             this.tbDestPath.Size = new System.Drawing.Size(468, 22);
@@ -183,7 +188,7 @@
             // rbUSBDRive
             // 
             this.rbUSBDRive.AutoSize = true;
-            this.rbUSBDRive.Location = new System.Drawing.Point(16, 231);
+            this.rbUSBDRive.Location = new System.Drawing.Point(16, 215);
             this.rbUSBDRive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rbUSBDRive.Name = "rbUSBDRive";
             this.rbUSBDRive.Size = new System.Drawing.Size(91, 20);
@@ -195,7 +200,7 @@
             // rbSDCard
             // 
             this.rbSDCard.AutoSize = true;
-            this.rbSDCard.Location = new System.Drawing.Point(16, 206);
+            this.rbSDCard.Location = new System.Drawing.Point(16, 190);
             this.rbSDCard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rbSDCard.Name = "rbSDCard";
             this.rbSDCard.Size = new System.Drawing.Size(79, 20);
@@ -207,7 +212,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 187);
+            this.label2.Location = new System.Drawing.Point(12, 171);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 16);
             this.label2.TabIndex = 19;
@@ -215,7 +220,7 @@
             // 
             // btnSelectSource
             // 
-            this.btnSelectSource.Location = new System.Drawing.Point(16, 144);
+            this.btnSelectSource.Location = new System.Drawing.Point(16, 128);
             this.btnSelectSource.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSelectSource.Name = "btnSelectSource";
             this.btnSelectSource.Size = new System.Drawing.Size(29, 27);
@@ -228,7 +233,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 125);
+            this.label1.Location = new System.Drawing.Point(12, 109);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 16);
             this.label1.TabIndex = 17;
@@ -237,7 +242,7 @@
             // tbSource
             // 
             this.tbSource.AllowDrop = true;
-            this.tbSource.Location = new System.Drawing.Point(51, 146);
+            this.tbSource.Location = new System.Drawing.Point(51, 130);
             this.tbSource.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbSource.Name = "tbSource";
             this.tbSource.ReadOnly = true;
@@ -268,9 +273,9 @@
             this.pnlCommButtons.Controls.Add(this.btnReset);
             this.pnlCommButtons.Controls.Add(this.btnSendFile);
             this.pnlCommButtons.Enabled = false;
-            this.pnlCommButtons.Location = new System.Drawing.Point(16, 270);
+            this.pnlCommButtons.Location = new System.Drawing.Point(16, 263);
             this.pnlCommButtons.Name = "pnlCommButtons";
-            this.pnlCommButtons.Size = new System.Drawing.Size(592, 79);
+            this.pnlCommButtons.Size = new System.Drawing.Size(592, 99);
             this.pnlCommButtons.TabIndex = 24;
             // 
             // nudSongNum
@@ -331,7 +336,7 @@
             // rbComSerial
             // 
             this.rbComSerial.AutoSize = true;
-            this.rbComSerial.Location = new System.Drawing.Point(25, 23);
+            this.rbComSerial.Location = new System.Drawing.Point(25, 33);
             this.rbComSerial.Name = "rbComSerial";
             this.rbComSerial.Size = new System.Drawing.Size(63, 20);
             this.rbComSerial.TabIndex = 25;
@@ -342,23 +347,61 @@
             // 
             this.rbComEthernet.AutoSize = true;
             this.rbComEthernet.Checked = true;
-            this.rbComEthernet.Location = new System.Drawing.Point(25, 70);
+            this.rbComEthernet.Location = new System.Drawing.Point(25, 68);
             this.rbComEthernet.Name = "rbComEthernet";
             this.rbComEthernet.Size = new System.Drawing.Size(77, 20);
             this.rbComEthernet.TabIndex = 26;
             this.rbComEthernet.TabStop = true;
             this.rbComEthernet.Text = "Ethernet";
             this.rbComEthernet.UseVisualStyleBackColor = true;
+            this.rbComEthernet.CheckedChanged += new System.EventHandler(this.rbComEthernet_CheckedChanged);
             // 
             // pnlSerialSetup
             // 
             this.pnlSerialSetup.Controls.Add(this.btnRefreshCOMList);
             this.pnlSerialSetup.Controls.Add(this.btnConnected);
             this.pnlSerialSetup.Controls.Add(this.cmbCOMPort);
-            this.pnlSerialSetup.Location = new System.Drawing.Point(140, 12);
+            this.pnlSerialSetup.Location = new System.Drawing.Point(95, 12);
             this.pnlSerialSetup.Name = "pnlSerialSetup";
-            this.pnlSerialSetup.Size = new System.Drawing.Size(412, 48);
+            this.pnlSerialSetup.Size = new System.Drawing.Size(412, 41);
             this.pnlSerialSetup.TabIndex = 19;
+            // 
+            // pnlEthernetSetup
+            // 
+            this.pnlEthernetSetup.Controls.Add(this.tbIPAddress);
+            this.pnlEthernetSetup.Location = new System.Drawing.Point(95, 56);
+            this.pnlEthernetSetup.Name = "pnlEthernetSetup";
+            this.pnlEthernetSetup.Size = new System.Drawing.Size(412, 42);
+            this.pnlEthernetSetup.TabIndex = 27;
+            // 
+            // tbIPAddress
+            // 
+            this.tbIPAddress.Location = new System.Drawing.Point(16, 13);
+            this.tbIPAddress.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbIPAddress.Name = "tbIPAddress";
+            this.tbIPAddress.Size = new System.Drawing.Size(108, 22);
+            this.tbIPAddress.TabIndex = 23;
+            this.tbIPAddress.Text = "192.168.1.18";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(12, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(71, 16);
+            this.label3.TabIndex = 28;
+            this.label3.Text = "Interface:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(8, 244);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(88, 16);
+            this.label4.TabIndex = 29;
+            this.label4.Text = "Commands:";
             // 
             // Form1
             // 
@@ -366,6 +409,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(624, 631);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.pnlEthernetSetup);
             this.Controls.Add(this.pnlSerialSetup);
             this.Controls.Add(this.rbComEthernet);
             this.Controls.Add(this.rbComSerial);
@@ -389,6 +435,8 @@
             this.pnlCommButtons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).EndInit();
             this.pnlSerialSetup.ResumeLayout(false);
+            this.pnlEthernetSetup.ResumeLayout(false);
+            this.pnlEthernetSetup.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -424,6 +472,10 @@
         private System.Windows.Forms.RadioButton rbComSerial;
         private System.Windows.Forms.RadioButton rbComEthernet;
         private System.Windows.Forms.Panel pnlSerialSetup;
+        private System.Windows.Forms.Panel pnlEthernetSetup;
+        private System.Windows.Forms.TextBox tbIPAddress;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }
 

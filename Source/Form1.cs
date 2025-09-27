@@ -276,7 +276,7 @@ namespace Serial_Logger
             IDataStream stream;
 
             if (rbComEthernet.Checked)
-                stream = new TcpDataStream("192.168.1.18", 80);
+                stream = new TcpDataStream(tbIPAddress.Text, 80);
             else
                 stream = new SerialDataStream("COM3", 115200);
 
@@ -398,6 +398,11 @@ namespace Serial_Logger
             return false;
         }
 
+        private void rbComEthernet_CheckedChanged(object sender, EventArgs e)
+        {
+            pnlEthernetSetup.Enabled = rbComEthernet.Checked;
+            pnlSerialSetup.Enabled = rbComSerial.Checked;
+        }
     }
 }
 

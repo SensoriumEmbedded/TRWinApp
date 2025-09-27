@@ -54,14 +54,18 @@
             this.btnSetSIDSong = new System.Windows.Forms.Button();
             this.btnPauseSID = new System.Windows.Forms.Button();
             this.btnLaunch = new System.Windows.Forms.Button();
+            this.rbComSerial = new System.Windows.Forms.RadioButton();
+            this.rbComEthernet = new System.Windows.Forms.RadioButton();
+            this.pnlSerialSetup = new System.Windows.Forms.Panel();
             this.pnlCommButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
+            this.pnlSerialSetup.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnConnected
             // 
             this.btnConnected.BackColor = System.Drawing.Color.Yellow;
-            this.btnConnected.Location = new System.Drawing.Point(149, 23);
+            this.btnConnected.Location = new System.Drawing.Point(149, 12);
             this.btnConnected.Margin = new System.Windows.Forms.Padding(4);
             this.btnConnected.Name = "btnConnected";
             this.btnConnected.Size = new System.Drawing.Size(120, 28);
@@ -97,10 +101,10 @@
             // rtbOutput
             // 
             this.rtbOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbOutput.Location = new System.Drawing.Point(16, 251);
+            this.rtbOutput.Location = new System.Drawing.Point(16, 403);
             this.rtbOutput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rtbOutput.Name = "rtbOutput";
-            this.rtbOutput.Size = new System.Drawing.Size(592, 366);
+            this.rtbOutput.Size = new System.Drawing.Size(592, 214);
             this.rtbOutput.TabIndex = 9;
             this.rtbOutput.Text = "";
             // 
@@ -118,7 +122,7 @@
             // cmbCOMPort
             // 
             this.cmbCOMPort.FormattingEnabled = true;
-            this.cmbCOMPort.Location = new System.Drawing.Point(51, 26);
+            this.cmbCOMPort.Location = new System.Drawing.Point(51, 15);
             this.cmbCOMPort.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbCOMPort.Name = "cmbCOMPort";
             this.cmbCOMPort.Size = new System.Drawing.Size(89, 24);
@@ -126,7 +130,7 @@
             // 
             // btnRefreshCOMList
             // 
-            this.btnRefreshCOMList.Location = new System.Drawing.Point(16, 25);
+            this.btnRefreshCOMList.Location = new System.Drawing.Point(16, 14);
             this.btnRefreshCOMList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRefreshCOMList.Name = "btnRefreshCOMList";
             this.btnRefreshCOMList.Size = new System.Drawing.Size(29, 27);
@@ -137,7 +141,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(15, 217);
+            this.btnClear.Location = new System.Drawing.Point(16, 369);
             this.btnClear.Margin = new System.Windows.Forms.Padding(4);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(72, 28);
@@ -161,7 +165,7 @@
             // 
             this.lblDestPath.AutoSize = true;
             this.lblDestPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDestPath.Location = new System.Drawing.Point(128, 155);
+            this.lblDestPath.Location = new System.Drawing.Point(128, 202);
             this.lblDestPath.Name = "lblDestPath";
             this.lblDestPath.Size = new System.Drawing.Size(91, 16);
             this.lblDestPath.TabIndex = 23;
@@ -169,7 +173,7 @@
             // 
             // tbDestPath
             // 
-            this.tbDestPath.Location = new System.Drawing.Point(140, 175);
+            this.tbDestPath.Location = new System.Drawing.Point(140, 222);
             this.tbDestPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbDestPath.Name = "tbDestPath";
             this.tbDestPath.Size = new System.Drawing.Size(468, 22);
@@ -179,7 +183,7 @@
             // rbUSBDRive
             // 
             this.rbUSBDRive.AutoSize = true;
-            this.rbUSBDRive.Location = new System.Drawing.Point(16, 184);
+            this.rbUSBDRive.Location = new System.Drawing.Point(16, 231);
             this.rbUSBDRive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rbUSBDRive.Name = "rbUSBDRive";
             this.rbUSBDRive.Size = new System.Drawing.Size(91, 20);
@@ -191,13 +195,11 @@
             // rbSDCard
             // 
             this.rbSDCard.AutoSize = true;
-            this.rbSDCard.Checked = true;
-            this.rbSDCard.Location = new System.Drawing.Point(16, 159);
+            this.rbSDCard.Location = new System.Drawing.Point(16, 206);
             this.rbSDCard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rbSDCard.Name = "rbSDCard";
             this.rbSDCard.Size = new System.Drawing.Size(79, 20);
             this.rbSDCard.TabIndex = 20;
-            this.rbSDCard.TabStop = true;
             this.rbSDCard.Text = "SD Card";
             this.rbSDCard.UseVisualStyleBackColor = true;
             // 
@@ -205,7 +207,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 140);
+            this.label2.Location = new System.Drawing.Point(12, 187);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 16);
             this.label2.TabIndex = 19;
@@ -213,7 +215,7 @@
             // 
             // btnSelectSource
             // 
-            this.btnSelectSource.Location = new System.Drawing.Point(16, 97);
+            this.btnSelectSource.Location = new System.Drawing.Point(16, 144);
             this.btnSelectSource.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSelectSource.Name = "btnSelectSource";
             this.btnSelectSource.Size = new System.Drawing.Size(29, 27);
@@ -226,7 +228,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 78);
+            this.label1.Location = new System.Drawing.Point(12, 125);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 16);
             this.label1.TabIndex = 17;
@@ -235,7 +237,7 @@
             // tbSource
             // 
             this.tbSource.AllowDrop = true;
-            this.tbSource.Location = new System.Drawing.Point(51, 99);
+            this.tbSource.Location = new System.Drawing.Point(51, 146);
             this.tbSource.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbSource.Name = "tbSource";
             this.tbSource.ReadOnly = true;
@@ -247,7 +249,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(463, 217);
+            this.btnTest.Location = new System.Drawing.Point(464, 369);
             this.btnTest.Margin = new System.Windows.Forms.Padding(4);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(102, 28);
@@ -266,9 +268,9 @@
             this.pnlCommButtons.Controls.Add(this.btnReset);
             this.pnlCommButtons.Controls.Add(this.btnSendFile);
             this.pnlCommButtons.Enabled = false;
-            this.pnlCommButtons.Location = new System.Drawing.Point(281, 15);
+            this.pnlCommButtons.Location = new System.Drawing.Point(16, 270);
             this.pnlCommButtons.Name = "pnlCommButtons";
-            this.pnlCommButtons.Size = new System.Drawing.Size(332, 79);
+            this.pnlCommButtons.Size = new System.Drawing.Size(592, 79);
             this.pnlCommButtons.TabIndex = 24;
             // 
             // nudSongNum
@@ -326,23 +328,55 @@
             this.btnLaunch.UseVisualStyleBackColor = true;
             this.btnLaunch.Click += new System.EventHandler(this.btnLaunch_Click);
             // 
+            // rbComSerial
+            // 
+            this.rbComSerial.AutoSize = true;
+            this.rbComSerial.Location = new System.Drawing.Point(25, 23);
+            this.rbComSerial.Name = "rbComSerial";
+            this.rbComSerial.Size = new System.Drawing.Size(63, 20);
+            this.rbComSerial.TabIndex = 25;
+            this.rbComSerial.Text = "Serial";
+            this.rbComSerial.UseVisualStyleBackColor = true;
+            // 
+            // rbComEthernet
+            // 
+            this.rbComEthernet.AutoSize = true;
+            this.rbComEthernet.Checked = true;
+            this.rbComEthernet.Location = new System.Drawing.Point(25, 70);
+            this.rbComEthernet.Name = "rbComEthernet";
+            this.rbComEthernet.Size = new System.Drawing.Size(77, 20);
+            this.rbComEthernet.TabIndex = 26;
+            this.rbComEthernet.TabStop = true;
+            this.rbComEthernet.Text = "Ethernet";
+            this.rbComEthernet.UseVisualStyleBackColor = true;
+            // 
+            // pnlSerialSetup
+            // 
+            this.pnlSerialSetup.Controls.Add(this.btnRefreshCOMList);
+            this.pnlSerialSetup.Controls.Add(this.btnConnected);
+            this.pnlSerialSetup.Controls.Add(this.cmbCOMPort);
+            this.pnlSerialSetup.Location = new System.Drawing.Point(140, 12);
+            this.pnlSerialSetup.Name = "pnlSerialSetup";
+            this.pnlSerialSetup.Size = new System.Drawing.Size(412, 48);
+            this.pnlSerialSetup.TabIndex = 19;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(624, 631);
+            this.Controls.Add(this.pnlSerialSetup);
+            this.Controls.Add(this.rbComEthernet);
+            this.Controls.Add(this.rbComSerial);
             this.Controls.Add(this.pnlCommButtons);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.lblDestPath);
-            this.Controls.Add(this.btnRefreshCOMList);
             this.Controls.Add(this.tbDestPath);
-            this.Controls.Add(this.cmbCOMPort);
             this.Controls.Add(this.rbUSBDRive);
             this.Controls.Add(this.rtbOutput);
             this.Controls.Add(this.rbSDCard);
-            this.Controls.Add(this.btnConnected);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSelectSource);
@@ -354,6 +388,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.pnlCommButtons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).EndInit();
+            this.pnlSerialSetup.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -386,6 +421,9 @@
         private System.Windows.Forms.Button btnPauseSID;
         private System.Windows.Forms.NumericUpDown nudSongNum;
         private System.Windows.Forms.Button btnSetSIDSong;
+        private System.Windows.Forms.RadioButton rbComSerial;
+        private System.Windows.Forms.RadioButton rbComEthernet;
+        private System.Windows.Forms.Panel pnlSerialSetup;
     }
 }
 

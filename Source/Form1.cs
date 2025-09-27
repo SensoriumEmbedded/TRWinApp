@@ -273,11 +273,26 @@ namespace Serial_Logger
 
         private void btnTest_Click(object sender, EventArgs e)
         {
+            IDataStream stream;
+
+            if (rbComEthernet.Checked)
+                stream = new TcpDataStream("192.168.1.18", 80);
+            else
+                stream = new SerialDataStream("COM3", 115200);
+
+            stream.Open();
+            stream.Write(new byte[] { 0x64, 0xEE });
+
+            //var buffer = new byte[256];
+            //int bytesRead = stream.Read(buffer, 0, buffer.Length);
+
+            stream.Close();
+
             //byte[] TestCode = { 0x64, 0x99, 0xf0, 0x40 };// Example 1: 0x64, 0x99, 0xf0, 0x40 = Set to -15.75% via linear equation
             //byte[] TestCode = { 0x64, 0x9a, 0x20, 0x40 };// Example 2: 0x64, 0x9a, 0x20, 0x40 = set to +32.25 via logarithmic equation
             //byte[] TestCode = { 0x64, 0x33, 0x05 };// Mute voice 1 & 3
-            byte[] TestCode = { 0x64, 0x22, 0x02 , 0x0a};// Set banner to LtRed
-            serialPort1.Write(TestCode, 0, TestCode.Count());
+            //byte[] TestCode = { 0x64, 0x22, 0x02 , 0x0a};// Set banner to LtRed
+            //serialPort1.Write(TestCode, 0, TestCode.Count());
         }
 
         private void btnSelectSource_Click(object sender, EventArgs e)

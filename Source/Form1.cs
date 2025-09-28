@@ -14,7 +14,7 @@ using System.Threading;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-namespace Serial_Logger
+namespace TRWinApp
 {
     public partial class Form1 : Form
     {
@@ -243,7 +243,7 @@ namespace Serial_Logger
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            SendSimpleCommand(new byte[] { 0x64, 0xEE }, "Reset Command");  
+            SendSimpleCommand(new byte[] { 0x64, 0x44, 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x2f, 0x47, 0x6f, 0x72, 0x66, 0x21, 0x00 }, "Launch Gorf!");  
 
             //byte[] TestCode = { 0x64, 0x99, 0xf0, 0x40 };// Example 1: 0x64, 0x99, 0xf0, 0x40 = Set to -15.75% via linear equation
             //byte[] TestCode = { 0x64, 0x9a, 0x20, 0x40 };// Example 2: 0x64, 0x9a, 0x20, 0x40 = set to +32.25 via logarithmic equation

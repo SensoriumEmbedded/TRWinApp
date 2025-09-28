@@ -1,4 +1,4 @@
-﻿namespace Serial_Logger
+﻿namespace TRWinApp
 {
     partial class Form1
     {
@@ -340,7 +340,7 @@
             // 
             this.pnlSerialSetup.Controls.Add(this.btnRefreshCOMList);
             this.pnlSerialSetup.Controls.Add(this.cmbCOMPort);
-            this.pnlSerialSetup.Location = new System.Drawing.Point(108, 5);
+            this.pnlSerialSetup.Location = new System.Drawing.Point(108, 6);
             this.pnlSerialSetup.Name = "pnlSerialSetup";
             this.pnlSerialSetup.Size = new System.Drawing.Size(412, 41);
             this.pnlSerialSetup.TabIndex = 19;
@@ -348,19 +348,19 @@
             // pnlEthernetSetup
             // 
             this.pnlEthernetSetup.Controls.Add(this.tbIPAddress);
-            this.pnlEthernetSetup.Location = new System.Drawing.Point(108, 49);
+            this.pnlEthernetSetup.Location = new System.Drawing.Point(108, 50);
             this.pnlEthernetSetup.Name = "pnlEthernetSetup";
             this.pnlEthernetSetup.Size = new System.Drawing.Size(412, 42);
             this.pnlEthernetSetup.TabIndex = 27;
             // 
             // tbIPAddress
             // 
-            this.tbIPAddress.Location = new System.Drawing.Point(16, 2);
+            this.tbIPAddress.Location = new System.Drawing.Point(16, 1);
             this.tbIPAddress.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbIPAddress.Name = "tbIPAddress";
             this.tbIPAddress.Size = new System.Drawing.Size(124, 22);
             this.tbIPAddress.TabIndex = 23;
-            this.tbIPAddress.Text = "192.168.1.20";
+            this.tbIPAddress.Text = "192.168.1.222";
             // 
             // label3
             // 
@@ -427,7 +427,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
-            this.Text = "TeensyROM Transfer v0.5";
+            this.Text = "TeensyROM Transfer/Control v0.5";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.pnlCommButtons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).EndInit();

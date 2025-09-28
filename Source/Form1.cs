@@ -138,9 +138,7 @@ namespace Serial_Logger
 
         private void btnPing_Click(object sender, EventArgs e)
         {
-            WriteToOutput("Pinging device/C64", Color.Black);
-            byte[] Ping = { 0x64, 0x55 };
-            serialPort1.Write(Ping, 0, 2);
+            SendSimpleCommand(new byte[] { 0x64, 0x55 }, "Ping");
         }
 
         private void btnSendFile_Click(object sender, EventArgs e)
@@ -211,35 +209,6 @@ namespace Serial_Logger
             //btnConnected.PerformClick(); //auto disconnect
         }
 
-        bool GetAck(int iTimeoutmSec = 500)
-        {
-            if (!WaitForSerial(2, iTimeoutmSec)) return false; //sends message on fail
-
-            byte[] recBuf = new byte[2];
-            serialPort1.Read(recBuf, 0, 2);
-            UInt16 recU16 = to16(recBuf);
-            if (recU16 == AckToken)
-            {
-                WriteToOutput("Ack", Color.DarkGreen);
-                return true;
-            }
-            if (recU16 == FailToken)
-            {
-                WriteToOutput("Transfer Failed...", Color.DarkRed);
-                return false;
-            }
-
-            WriteToOutput("Bad Ack: " + recBuf[0].ToString("X2") + ":" + recBuf[1].ToString("X2"), Color.DarkRed);
-            return false;
-        }
-
-        void SendIntBytes(UInt32 IntToSend, Int16 NumBytes)
-        {
-            byte[] BytesToSend = BitConverter.GetBytes(IntToSend);
-            for (Int16 ByteNum = (Int16)(NumBytes - 1); ByteNum >= 0; ByteNum--)
-                serialPort1.Write(BytesToSend, ByteNum, 1);
-        }
-
         private void btnRefreshCOMList_Click(object sender, EventArgs e)
         {
             cmbCOMPort.Items.Clear();
@@ -269,13 +238,7 @@ namespace Serial_Logger
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            if (!InitializeStream(out IDataStream stream)) return;
-
-            stream.Write(new byte[] { 0x64, 0xEE });
-            WriteToOutput("Reset Sent", Color.Blue);
-
-            stream.Close();
-
+            SendSimpleCommand(new byte[] { 0x64, 0xEE }, "Reset Command");
         }
 
         private void btnTest_Click(object sender, EventArgs e)
@@ -349,9 +312,11 @@ namespace Serial_Logger
         {
             //   App: PauseSIDToken 0x6466
             //Teensy: AckToken 0x64CC on Pass,  0x9b7f on Fail
-            SendIntBytes(PauseSIDToken, 2);
-            if (GetAck()) WriteToOutput("Sent Pause SID", Color.DarkGreen);
-            else WriteToOutput("Pause SID Failed!", Color.Red);
+            SendSimpleCommand(new byte[] { 0x64, 0x66 }, "Pause SID");
+
+            //SendIntBytes(PauseSIDToken, 2);
+            //if (GetAck()) WriteToOutput("Sent Pause SID", Color.DarkGreen);
+            //else WriteToOutput("Pause SID Failed!", Color.Red);
         }
         private void btnSetSIDSong_Click(object sender, EventArgs e)
         {
@@ -398,6 +363,35 @@ namespace Serial_Logger
             WriteToOutput("Timeout waiting for Teensy", Color.Red);
             //timer1.Enabled = true;
             return false;
+        }
+
+        bool GetAck(int iTimeoutmSec = 500)
+        {
+            if (!WaitForSerial(2, iTimeoutmSec)) return false; //sends message on fail
+
+            byte[] recBuf = new byte[2];
+            serialPort1.Read(recBuf, 0, 2);
+            UInt16 recU16 = to16(recBuf);
+            if (recU16 == AckToken)
+            {
+                WriteToOutput("Ack", Color.DarkGreen);
+                return true;
+            }
+            if (recU16 == FailToken)
+            {
+                WriteToOutput("Transfer Failed...", Color.DarkRed);
+                return false;
+            }
+
+            WriteToOutput("Bad Ack: " + recBuf[0].ToString("X2") + ":" + recBuf[1].ToString("X2"), Color.DarkRed);
+            return false;
+        }
+
+        void SendIntBytes(UInt32 IntToSend, Int16 NumBytes)
+        {
+            byte[] BytesToSend = BitConverter.GetBytes(IntToSend);
+            for (Int16 ByteNum = (Int16)(NumBytes - 1); ByteNum >= 0; ByteNum--)
+                serialPort1.Write(BytesToSend, ByteNum, 1);
         }
 
         private bool InitializeStream(out IDataStream stream)

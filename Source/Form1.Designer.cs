@@ -70,7 +70,7 @@
             // 
             // btnSendFile
             // 
-            this.btnSendFile.Location = new System.Drawing.Point(89, 8);
+            this.btnSendFile.Location = new System.Drawing.Point(249, 12);
             this.btnSendFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnSendFile.Name = "btnSendFile";
             this.btnSendFile.Size = new System.Drawing.Size(72, 28);
@@ -137,7 +137,7 @@
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(354, 8);
+            this.btnReset.Location = new System.Drawing.Point(89, 8);
             this.btnReset.Margin = new System.Windows.Forms.Padding(4);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(72, 28);
@@ -236,7 +236,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(354, 48);
+            this.btnTest.Location = new System.Drawing.Point(445, 68);
             this.btnTest.Margin = new System.Windows.Forms.Padding(4);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(102, 28);
@@ -295,7 +295,7 @@
             // 
             // btnPauseSID
             // 
-            this.btnPauseSID.Location = new System.Drawing.Point(231, 44);
+            this.btnPauseSID.Location = new System.Drawing.Point(168, 68);
             this.btnPauseSID.Margin = new System.Windows.Forms.Padding(4);
             this.btnPauseSID.Name = "btnPauseSID";
             this.btnPauseSID.Size = new System.Drawing.Size(90, 28);
@@ -306,7 +306,7 @@
             // 
             // btnLaunch
             // 
-            this.btnLaunch.Location = new System.Drawing.Point(249, 8);
+            this.btnLaunch.Location = new System.Drawing.Point(329, 12);
             this.btnLaunch.Margin = new System.Windows.Forms.Padding(4);
             this.btnLaunch.Name = "btnLaunch";
             this.btnLaunch.Size = new System.Drawing.Size(72, 28);

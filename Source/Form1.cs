@@ -2,30 +2,31 @@
 
 
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
-using System.IO.Ports;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Serial_Logger
 {
     public partial class Form1 : Form
     {
-        volatile bool USBLost = false;
+        //volatile bool USBLost = false;
 
         //synch with TeensyROM code:
         const UInt16 LaunchFileToken = 0x6444;
-        const UInt16 PauseSIDToken   = 0x6466;
+        const UInt16 PauseSIDToken = 0x6466;
         const UInt16 SetSIDSongToken = 0x6488;
-        const UInt16 SendFileToken   = 0x64AA;
-        const UInt16 AckToken        = 0x64CC;
-        const UInt16 FailToken       = 0x9B7F;
+        const UInt16 SendFileToken = 0x64AA;
+        const UInt16 AckToken = 0x64CC;
+        const UInt16 FailToken = 0x9B7F;
 
         public Form1()
         {
@@ -35,120 +36,121 @@ namespace Serial_Logger
         private void Form1_Load(object sender, EventArgs e)
         {
             btnRefreshCOMList.PerformClick();
+            rbComEthernet.PerformClick();
             serialPort1.ReadTimeout = 200;
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            string strMsg;
+        //private void timer1_Tick(object sender, EventArgs e)
+        //{
+        //    string strMsg;
+        //
+        //    if (USBLost)
+        //    {
+        //        try
+        //        {
+        //            serialPort1.Open();
+        //            USBLost = false;
+        //            WriteToOutput("\nWe're back!", Color.DarkGreen);
+        //        }
+        //        catch
+        //        {
+        //            rtbOutput.AppendText(".");
+        //            rtbOutput.Refresh();
+        //            return;
+        //        }
+        //    }
+        //
+        //    try
+        //    {
+        //        while (serialPort1.BytesToRead != 0)
+        //        {
+        //            strMsg = ">";
+        //            try
+        //            {
+        //                strMsg += serialPort1.ReadLine();
+        //            }
+        //            catch
+        //            {
+        //                strMsg += "***";  //timeout indicator
+        //                while (serialPort1.BytesToRead != 0)
+        //                {
+        //                    strMsg += (char)serialPort1.ReadChar();
+        //                }
+        //                strMsg += "\r";
+        //                rtbOutput.SelectionColor = Color.Red;
+        //            }
+        //            WriteToOutput(strMsg, Color.Blue);
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        WriteToOutput("USB port disconnected, retrying...", Color.DarkRed);
+        //        USBLost = true;
+        //        return;
+        //    }
+        //
+        //}
 
-            if (USBLost)
-            {
-                try
-                {
-                    serialPort1.Open();
-                    USBLost = false;
-                    WriteToOutput("\nWe're back!", Color.DarkGreen);
-                }
-                catch
-                {
-                    rtbOutput.AppendText(".");
-                    rtbOutput.Refresh();
-                    return;
-                }
-            }
-
-            try
-            {
-                while (serialPort1.BytesToRead != 0)
-                {
-                    strMsg = ">";
-                    try
-                    {
-                        strMsg += serialPort1.ReadLine();
-                    }
-                    catch
-                    {
-                        strMsg += "***";  //timeout indicator
-                        while (serialPort1.BytesToRead != 0)
-                        {
-                            strMsg += (char)serialPort1.ReadChar();
-                        }
-                        strMsg += "\r";
-                        rtbOutput.SelectionColor = Color.Red;
-                    }
-                    WriteToOutput(strMsg, Color.Blue);
-                }
-            }
-            catch
-            {
-                WriteToOutput("USB port disconnected, retrying...", Color.DarkRed);
-                USBLost = true;
-                return;
-            }
-
-        }
-
-        private void btnConnected_Click(object sender, EventArgs e)
-        {
-            if (btnConnected.Text == "Connected")
-            {   //disconnect:
-                timer1.Enabled = false;
-                //if (USBLost == false) 
-                try
-                {
-                    serialPort1.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Unable to close " + cmbCOMPort.Text, "Error");
-                }
-                btnConnected.Text = "Not Connected";
-                btnConnected.BackColor = Color.Yellow;
-                pnlCommButtons.Enabled = false;
-            }
-            else
-            {   //connect
-                if (cmbCOMPort.Text=="")
-                {
-                    WriteToOutput("Select COM port", Color.Red);
-                    return;
-                }
-                try
-                {
-                    serialPort1.PortName = cmbCOMPort.Text;
-                    rtbOutput.Clear();
-                    serialPort1.Open();
-                    //btnPing_Click(null, e);
-                }
-                catch
-                {
-                    MessageBox.Show("Unable to open " + cmbCOMPort.Text, "Error");
-                    return;
-                }
-                btnConnected.Text = "Connected";
-                btnConnected.BackColor = Color.LightGreen;
-                pnlCommButtons.Enabled = true;
-                USBLost = false;
-                timer1.Enabled = true;
-            }
-        }
+        //private void btnConnected_Click(object sender, EventArgs e)
+        //{
+        //    if (btnConnected.Text == "Connected")
+        //    {   //disconnect:
+        //        //timer1.Enabled = false;
+        //        //if (USBLost == false) 
+        //        try
+        //        {
+        //            serialPort1.Close();
+        //        }
+        //        catch
+        //        {
+        //            MessageBox.Show("Unable to close " + cmbCOMPort.Text, "Error");
+        //        }
+        //        btnConnected.Text = "Not Connected";
+        //        btnConnected.BackColor = Color.Yellow;
+        //        pnlCommButtons.Enabled = false;
+        //    }
+        //    else
+        //    {   //connect
+        //        if (cmbCOMPort.Text=="")
+        //        {
+        //            WriteToOutput("Select COM port", Color.Red);
+        //            return;
+        //        }
+        //        try
+        //        {
+        //            serialPort1.PortName = cmbCOMPort.Text;
+        //            rtbOutput.Clear();
+        //            serialPort1.Open();
+        //            //btnPing_Click(null, e);
+        //        }
+        //        catch
+        //        {
+        //            MessageBox.Show("Unable to open " + cmbCOMPort.Text, "Error");
+        //            return;
+        //        }
+        //        btnConnected.Text = "Connected";
+        //        btnConnected.BackColor = Color.LightGreen;
+        //        pnlCommButtons.Enabled = true;
+        //        //USBLost = false;
+        //        //timer1.Enabled = true;
+        //    }
+        //}
 
         private void btnPing_Click(object sender, EventArgs e)
         {
             WriteToOutput("Pinging device/C64", Color.Black);
             byte[] Ping = { 0x64, 0x55 };
-            serialPort1.Write(Ping, 0, 2); 
+            serialPort1.Write(Ping, 0, 2);
         }
 
         private void btnSendFile_Click(object sender, EventArgs e)
         {
-            if(!File.Exists(tbSource.Text))
+            if (!File.Exists(tbSource.Text))
             {
                 WriteToOutput("\nInvalid Source File/Path", Color.DarkRed);
                 return;
             }
-            
+
             //Read/store file, get length, calc checksum
             WriteToOutput("\nReading file: " + tbSource.Text, Color.Black);
             BinaryReader br = new BinaryReader(File.Open(tbSource.Text, FileMode.Open));
@@ -170,13 +172,13 @@ namespace Serial_Logger
             SendIntBytes(SendFileToken, 2);
             if (!GetAck()) return;
 
-            UInt32 SD_nUSB = (rbSDCard.Checked ? 1U:0U);
+            UInt32 SD_nUSB = (rbSDCard.Checked ? 1U : 0U);
             if (!tbDestPath.Text.EndsWith("/")) tbDestPath.Text += "/";
             string DestPathFile = tbDestPath.Text;
             DestPathFile += Path.GetFileName(tbSource.Text);
 
             WriteToOutput("Transferring " + len + " bytes, CS= 0x" + CheckSum.ToString("X4"), Color.Black);
-            WriteToOutput("  to TeensyROM " + (SD_nUSB==1U ? "SD:" : "USB:") + DestPathFile, Color.Black);
+            WriteToOutput("  to TeensyROM " + (SD_nUSB == 1U ? "SD:" : "USB:") + DestPathFile, Color.Black);
 
             SendIntBytes(len, 4);//Send Length
             SendIntBytes(CheckSum, 2);//Send Checksum
@@ -187,9 +189,9 @@ namespace Serial_Logger
 
             WriteToOutput("Sending...", Color.Black);
             Int32 BytesSent = 0;
-            while (len>BytesSent)
+            while (len > BytesSent)
             {
-                Int32 BytesToSend = 16*1024; //block size
+                Int32 BytesToSend = 16 * 1024; //block size
                 if (len - BytesSent < BytesToSend) BytesToSend = (Int32)len - BytesSent;
                 //serialPort1.Write(fileBuf, 0, (Int32)len); //Send file
                 serialPort1.Write(fileBuf, BytesSent, BytesToSend); //Send file
@@ -234,7 +236,7 @@ namespace Serial_Logger
         void SendIntBytes(UInt32 IntToSend, Int16 NumBytes)
         {
             byte[] BytesToSend = BitConverter.GetBytes(IntToSend);
-            for(Int16 ByteNum=(Int16)(NumBytes-1); ByteNum>=0; ByteNum--) 
+            for (Int16 ByteNum = (Int16)(NumBytes - 1); ByteNum >= 0; ByteNum--)
                 serialPort1.Write(BytesToSend, ByteNum, 1);
         }
 
@@ -254,7 +256,7 @@ namespace Serial_Logger
             }
             else
             {
-                //MessageBox.Show("No COM Ports Found", "Error");
+                WriteToOutput("No COM Ports Found", Color.Red);
                 //cmbCOMPort.Items.Add("COM5");
             }
 
@@ -267,26 +269,18 @@ namespace Serial_Logger
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            byte[] Reset = { 0x64, 0xEE };
-            serialPort1.Write(Reset, 0, 2);  
+            if (!InitializeStream(out IDataStream stream)) return;
+
+            stream.Write(new byte[] { 0x64, 0xEE });
+            WriteToOutput("Reset Sent", Color.Blue);
+
+            stream.Close();
+
         }
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            IDataStream stream;
-
-            if (rbComEthernet.Checked)
-                stream = new TcpDataStream(tbIPAddress.Text, 80);
-            else
-                stream = new SerialDataStream("COM3", 115200);
-
-            stream.Open();
-            stream.Write(new byte[] { 0x64, 0xEE });
-
-            //var buffer = new byte[256];
-            //int bytesRead = stream.Read(buffer, 0, buffer.Length);
-
-            stream.Close();
+            SendSimpleCommand(new byte[] { 0x64, 0xEE }, "Reset Command");  
 
             //byte[] TestCode = { 0x64, 0x99, 0xf0, 0x40 };// Example 1: 0x64, 0x99, 0xf0, 0x40 = Set to -15.75% via linear equation
             //byte[] TestCode = { 0x64, 0x9a, 0x20, 0x40 };// Example 2: 0x64, 0x9a, 0x20, 0x40 = set to +32.25 via logarithmic equation
@@ -366,18 +360,26 @@ namespace Serial_Logger
             if (GetAck()) WriteToOutput("Sent SID Song Num", Color.DarkGreen);
             else WriteToOutput("SID Song Num Failed!", Color.Red);
         }
+        private void rbComEthernet_CheckedChanged(object sender, EventArgs e)
+        {
+            pnlEthernetSetup.Enabled = rbComEthernet.Checked;
+            pnlSerialSetup.Enabled = rbComSerial.Checked;
+        }
+
 
         /********************************  Stand Alone Functions *****************************************/
 
         private void WriteToOutput(string strMsg, Color color)
         {
+            rtbOutput.SelectionStart = rtbOutput.TextLength; //Move caret to the end
+            rtbOutput.SelectionLength = 0;
             rtbOutput.SelectionColor = color;
             rtbOutput.AppendText(strMsg + "\r");
             rtbOutput.ScrollToCaret();
         }
         private UInt16 to16(byte[] buf)
         {
-            return (UInt16)(buf[1]*256 + buf[0]);
+            return (UInt16)(buf[1] * 256 + buf[0]);
         }
 
         private bool WaitForSerial(int NumBytes, int iTimeoutmSec)
@@ -398,10 +400,72 @@ namespace Serial_Logger
             return false;
         }
 
-        private void rbComEthernet_CheckedChanged(object sender, EventArgs e)
+        private bool InitializeStream(out IDataStream stream)
         {
-            pnlEthernetSetup.Enabled = rbComEthernet.Checked;
-            pnlSerialSetup.Enabled = rbComSerial.Checked;
+            stream = null;
+
+            try
+            {
+                if (rbComEthernet.Checked)
+                    stream = new TcpDataStream(tbIPAddress.Text, 80);
+                else
+                {
+
+                    if (cmbCOMPort.Text == "")
+                    {
+                        WriteToOutput("Select COM port", Color.Red);
+                        return false;
+                    }
+                    stream = new SerialDataStream(cmbCOMPort.Text, 115200);
+                }
+
+                stream.Open();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                WriteToOutput("Init Error: " + ex.Message, Color.Red);
+                return false;
+            }
+        }
+
+        private void FlushCloseStream(IDataStream stream)
+        {
+            if (stream == null) return;
+
+            const int timeoutMs = 500;
+            var buf = new byte[256];
+            var startTime = Environment.TickCount;
+
+            try
+            {
+
+                while (Environment.TickCount - startTime < timeoutMs)
+                {
+                    int bytesRead = stream.Read(buf, 0, buf.Length);
+
+                    if (bytesRead > 0)
+                    {
+                        var strbuf = Encoding.UTF8.GetString(buf, 0, bytesRead);
+                        WriteToOutput("TR(" + bytesRead + "): " + strbuf, Color.Purple);
+                        startTime = Environment.TickCount; // reset timeout
+                    }
+                    Thread.Sleep(10); // Small delay to avoid busy loop
+                }
+                stream.Close();
+            }
+            catch (Exception ex)
+            {
+                WriteToOutput("Flush/Close Error: " + ex.Message, Color.Red);
+            }
+        }
+
+        private void SendSimpleCommand(byte[] command, string description)
+        {
+            if (!InitializeStream(out IDataStream stream)) return;
+            WriteToOutput("Sent " + description, Color.Blue);
+            stream.Write(command);
+            FlushCloseStream(stream);
         }
     }
 }

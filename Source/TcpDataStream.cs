@@ -7,7 +7,7 @@ public class TcpDataStream : IDataStream
     private NetworkStream _stream;
     private string _host;
     private int _port;
-
+    
     public TcpDataStream(string host, int port)
     {
         _host = host;

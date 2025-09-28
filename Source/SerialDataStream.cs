@@ -15,6 +15,11 @@ public class SerialDataStream : IDataStream
     public void Close() => _port.Close();
 
     public void Write(byte[] data) => _port.Write(data, 0, data.Length);
-    public int Read(byte[] buffer, int offset, int count) => _port.Read(buffer, offset, count);
+    public int Read(byte[] buffer, int offset, int count)
+    {
+        if (_port.BytesToRead == 0) return 0;
+        
+        return _port.Read(buffer, offset, count);
+    }
 }
 

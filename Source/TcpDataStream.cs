@@ -30,5 +30,6 @@ public class TcpDataStream : IDataStream
     }
 
     public void Write(byte[] data) => _stream.Write(data, 0, data.Length);
+    public bool DataAvailable() => _stream.DataAvailable;
     public int Read(byte[] buffer, int offset, int count) => _stream.Read(buffer, offset, count);
 }

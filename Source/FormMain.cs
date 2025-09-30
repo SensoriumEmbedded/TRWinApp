@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -341,6 +342,7 @@ namespace TRWinApp
             rtbOutput.SelectionColor = color;
             rtbOutput.AppendText(strMsg + "\r");
             rtbOutput.ScrollToCaret();
+            rtbOutput.Refresh();
         }
         private UInt16 to16(byte[] buf)
         {
@@ -394,6 +396,33 @@ namespace TRWinApp
                 serialPort1.Write(BytesToSend, ByteNum, 1);
         }
 
+        /******************************** Stream IO Functions *****************************************/
+
+        bool GetAck(IDataStream stream, int iTimeoutmSec = 500)
+        {
+            var recBuf = new byte[2];
+            
+            if (!ReadStreamTO(stream, recBuf, out int bytesRead, iTimeoutmSec))
+            {
+                WriteToOutput("Ack Timeout", Color.Red);
+                return false;
+            }
+
+            UInt16 recU16 = to16(recBuf);
+            if (recU16 == AckToken)
+            {
+                WriteToOutput("Ack", Color.DarkGreen);
+                return true;
+            }
+            if (recU16 == FailToken)
+            {
+                WriteToOutput("Transfer Failed...", Color.DarkRed);
+                return false;
+            }
+
+            WriteToOutput("Bad Ack: " + recBuf[0].ToString("X2") + ":" + recBuf[1].ToString("X2"), Color.DarkRed);
+            return false;
+        }
         private bool InitializeStream(out IDataStream stream)
         {
             stream = null;
@@ -404,7 +433,6 @@ namespace TRWinApp
                     stream = new TcpDataStream(tbIPAddress.Text, 80);
                 else
                 {
-
                     if (cmbCOMPort.Text == "")
                     {
                         WriteToOutput("Select COM port", Color.Red);
@@ -423,34 +451,51 @@ namespace TRWinApp
             }
         }
 
-        private void FlushCloseStream(IDataStream stream)
+        private bool ReadStreamTO(IDataStream stream, byte[] buf, out int bytesRead , int timeoutMs)
+        {
+            bytesRead = 0;  //default to 0
+            var startTime = Environment.TickCount;
+            try
+            {
+                while (Environment.TickCount - startTime < timeoutMs)
+                {
+                    bytesRead = stream.Read(buf, 0, buf.Length);
+                    if (bytesRead > 0) return true;
+                    Thread.Sleep(10); // Small delay to avoid busy loop
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                WriteToOutput("Read Error: " + ex.Message, Color.Red);
+                return false;
+            }
+
+        }
+        private void FlushStream(IDataStream stream, int timeoutMs)
         {
             if (stream == null) return;
 
-            const int timeoutMs = 500;
             var buf = new byte[256];
-            var startTime = Environment.TickCount;
+
+            while (ReadStreamTO(stream, buf, out int bytesRead, timeoutMs))
+            {
+                var strbuf = Encoding.UTF8.GetString(buf, 0, bytesRead);
+                WriteToOutput("TR(" + bytesRead + "): " + strbuf, Color.Purple);
+            }
+        }
+
+        private void CloseStream(IDataStream stream)
+        {
+            if (stream == null) return;
 
             try
             {
-
-                while (Environment.TickCount - startTime < timeoutMs)
-                {
-                    int bytesRead = stream.Read(buf, 0, buf.Length);
-
-                    if (bytesRead > 0)
-                    {
-                        var strbuf = Encoding.UTF8.GetString(buf, 0, bytesRead);
-                        WriteToOutput("TR(" + bytesRead + "): " + strbuf, Color.Purple);
-                        startTime = Environment.TickCount; // reset timeout
-                    }
-                    Thread.Sleep(10); // Small delay to avoid busy loop
-                }
                 stream.Close();
             }
             catch (Exception ex)
             {
-                WriteToOutput("Flush/Close Error: " + ex.Message, Color.Red);
+                WriteToOutput("Close Error: " + ex.Message, Color.Red);
             }
         }
 
@@ -459,7 +504,9 @@ namespace TRWinApp
             if (!InitializeStream(out IDataStream stream)) return;
             WriteToOutput("Sent " + description, Color.Blue);
             stream.Write(command);
-            FlushCloseStream(stream);
+            FlushStream(stream, 500);
+            //if (!GetAck()) WriteToOutput("Launch Failed!", Color.Red);
+            CloseStream(stream);
         }
     }
 }

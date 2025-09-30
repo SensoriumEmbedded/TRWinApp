@@ -236,7 +236,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(445, 68);
+            this.btnTest.Location = new System.Drawing.Point(9, 78);
             this.btnTest.Margin = new System.Windows.Forms.Padding(4);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(102, 28);
@@ -262,7 +262,7 @@
             // 
             // nudSongNum
             // 
-            this.nudSongNum.Location = new System.Drawing.Point(107, 48);
+            this.nudSongNum.Location = new System.Drawing.Point(347, 48);
             this.nudSongNum.Maximum = new decimal(new int[] {
             256,
             0,
@@ -284,7 +284,7 @@
             // 
             // btnSetSIDSong
             // 
-            this.btnSetSIDSong.Location = new System.Drawing.Point(9, 44);
+            this.btnSetSIDSong.Location = new System.Drawing.Point(249, 44);
             this.btnSetSIDSong.Margin = new System.Windows.Forms.Padding(4);
             this.btnSetSIDSong.Name = "btnSetSIDSong";
             this.btnSetSIDSong.Size = new System.Drawing.Size(90, 28);
@@ -295,7 +295,7 @@
             // 
             // btnPauseSID
             // 
-            this.btnPauseSID.Location = new System.Drawing.Point(168, 68);
+            this.btnPauseSID.Location = new System.Drawing.Point(9, 42);
             this.btnPauseSID.Margin = new System.Windows.Forms.Padding(4);
             this.btnPauseSID.Name = "btnPauseSID";
             this.btnPauseSID.Size = new System.Drawing.Size(90, 28);
@@ -401,7 +401,7 @@
             this.label5.TabIndex = 31;
             this.label5.Text = "Communication Log:";
             // 
-            // Form1
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -426,7 +426,7 @@
             this.Controls.Add(this.tbSource);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "Form1";
+            this.Name = "FormMain";
             this.Text = "TeensyROM Transfer/Control v0.5";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.pnlCommButtons.ResumeLayout(false);

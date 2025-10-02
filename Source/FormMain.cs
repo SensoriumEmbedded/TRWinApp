@@ -10,6 +10,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -139,7 +140,7 @@ namespace TRWinApp
 
         private void btnPing_Click(object sender, EventArgs e)
         {
-            SendSimpleCommand(new byte[] { 0x64, 0x55 }, "Ping");
+            SendSimpleCommand(new byte[] { 0x64, 0x55 }, "Ping", false);
         }
 
         private void btnSendFile_Click(object sender, EventArgs e)
@@ -239,7 +240,8 @@ namespace TRWinApp
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            SendSimpleCommand(new byte[] { 0x64, 0xEE }, "Reset Command");
+            //need to look for "Reset cmd received" instead of ack:
+            SendSimpleCommand(new byte[] { 0x64, 0xEE }, "Reset Command", false);
         }
 
         private void btnTest_Click(object sender, EventArgs e)
@@ -402,7 +404,7 @@ namespace TRWinApp
         {
             var recBuf = new byte[2];
             
-            if (!ReadStreamTO(stream, recBuf, out int bytesRead, iTimeoutmSec))
+            if (!ReadStreamTO(stream, recBuf, 2, out int bytesRead, iTimeoutmSec))
             {
                 WriteToOutput("Ack Timeout", Color.Red);
                 return false;
@@ -416,7 +418,7 @@ namespace TRWinApp
             }
             if (recU16 == FailToken)
             {
-                WriteToOutput("Transfer Failed...", Color.DarkRed);
+                WriteToOutput("Command Fail Indicated", Color.DarkRed);
                 return false;
             }
 
@@ -451,17 +453,15 @@ namespace TRWinApp
             }
         }
 
-        private bool ReadStreamTO(IDataStream stream, byte[] buf, out int bytesRead , int timeoutMs)
+        private bool ReadStreamTO(IDataStream stream, byte[] buf, int bytesToRead, out int bytesRead , int timeoutMs)
         {
-            bytesRead = 0;  //default to 0
-            var startTime = Environment.TickCount;
+            bytesRead = 0; 
             try
             {
-                while (Environment.TickCount - startTime < timeoutMs)
+                while (StreamDataAvailableTO(stream, timeoutMs))
                 {
-                    bytesRead = stream.Read(buf, 0, buf.Length);
-                    if (bytesRead > 0) return true;
-                    Thread.Sleep(10); // Small delay to avoid busy loop
+                    bytesRead += stream.Read(buf, bytesRead, 1); //one byte at a time
+                    if (bytesRead >= bytesToRead) return true;
                 }
                 return false;
             }
@@ -472,16 +472,39 @@ namespace TRWinApp
             }
 
         }
+        private bool StreamDataAvailableTO(IDataStream stream, int timeoutMs)
+        {
+            if (stream == null) return false;
+
+            var startTime = Environment.TickCount;
+            while (Environment.TickCount - startTime < timeoutMs && !stream.DataAvailable())
+            {
+                Thread.Sleep(10); // Small delay to avoid busy loop
+            }
+            return stream.DataAvailable();
+        }
         private void FlushStream(IDataStream stream, int timeoutMs)
         {
             if (stream == null) return;
 
             var buf = new byte[256];
-
-            while (ReadStreamTO(stream, buf, out int bytesRead, timeoutMs))
+            try
             {
-                var strbuf = Encoding.UTF8.GetString(buf, 0, bytesRead);
-                WriteToOutput("TR(" + bytesRead + "): " + strbuf, Color.Purple);
+                while (StreamDataAvailableTO(stream, timeoutMs))
+                {
+                    int bytesRead = stream.Read(buf, 0, buf.Length);
+
+                    var strbuf = Encoding.UTF8.GetString(buf, 0, bytesRead);
+                    WriteToOutput("Flush(" + bytesRead + "): " + strbuf, Color.Gray);
+                    //for (int byteNum = 0; byteNum < bytesRead; byteNum++)
+                    //{ 
+                    //    WriteToOutput("Flush: 0x" + buf[byteNum].ToString("X2") + "'" + Encoding.UTF8.GetString(buf, byteNum,1) + "'", Color.Gray);
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteToOutput("Read Error: " + ex.Message, Color.Red);
             }
         }
 
@@ -499,13 +522,14 @@ namespace TRWinApp
             }
         }
 
-        private void SendSimpleCommand(byte[] command, string description)
+        private void SendSimpleCommand(byte[] command, string description, bool WaitForAck = true)
         {
             if (!InitializeStream(out IDataStream stream)) return;
-            WriteToOutput("Sent " + description, Color.Blue);
+            FlushStream(stream, 20);  //clear rx buffer, mostly for serial
             stream.Write(command);
-            FlushStream(stream, 500);
-            //if (!GetAck()) WriteToOutput("Launch Failed!", Color.Red);
+            WriteToOutput("Sent " + description, Color.Blue);
+            if (WaitForAck) GetAck(stream);
+            else FlushStream(stream, 500);
             CloseStream(stream);
         }
     }

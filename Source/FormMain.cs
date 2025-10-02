@@ -256,45 +256,45 @@ namespace TRWinApp
             return (UInt16)(buf[1] * 256 + buf[0]);
         }
 
-        private bool WaitForSerial(int NumBytes, int iTimeoutmSec)
-        {
-            const int iSleepTimeMs = 10;
-            int iCount = 0;
+        //private bool WaitForSerial(int NumBytes, int iTimeoutmSec)
+        //{
+        //    const int iSleepTimeMs = 10;
+        //    int iCount = 0;
+        //
+        //    while (iCount++ <= iTimeoutmSec / iSleepTimeMs)
+        //    {
+        //
+        //        if (serialPort1.BytesToRead >= NumBytes) return true;
+        //        //this.Refresh();
+        //        System.Threading.Thread.Sleep(iSleepTimeMs);
+        //    }
+        //
+        //    WriteToOutput("Timeout waiting for Teensy", Color.Red);
+        //    //timer1.Enabled = true;
+        //    return false;
+        //}
 
-            while (iCount++ <= iTimeoutmSec / iSleepTimeMs)
-            {
-
-                if (serialPort1.BytesToRead >= NumBytes) return true;
-                //this.Refresh();
-                System.Threading.Thread.Sleep(iSleepTimeMs);
-            }
-
-            WriteToOutput("Timeout waiting for Teensy", Color.Red);
-            //timer1.Enabled = true;
-            return false;
-        }
-
-        bool GetAck(int iTimeoutmSec = 500)
-        {
-            if (!WaitForSerial(2, iTimeoutmSec)) return false; //sends message on fail
-
-            byte[] recBuf = new byte[2];
-            serialPort1.Read(recBuf, 0, 2);
-            UInt16 recU16 = to16(recBuf);
-            if (recU16 == AckToken)
-            {
-                WriteToOutput("Ack", Color.DarkGreen);
-                return true;
-            }
-            if (recU16 == FailToken)
-            {
-                WriteToOutput("Transfer Failed...", Color.DarkRed);
-                return false;
-            }
-
-            WriteToOutput("Bad Ack: " + recBuf[0].ToString("X2") + ":" + recBuf[1].ToString("X2"), Color.DarkRed);
-            return false;
-        }
+        //bool GetAck(int iTimeoutmSec = 500)
+        //{
+        //    if (!WaitForSerial(2, iTimeoutmSec)) return false; //sends message on fail
+        //
+        //    byte[] recBuf = new byte[2];
+        //    serialPort1.Read(recBuf, 0, 2);
+        //    UInt16 recU16 = to16(recBuf);
+        //    if (recU16 == AckToken)
+        //    {
+        //        WriteToOutput("Ack", Color.DarkGreen);
+        //        return true;
+        //    }
+        //    if (recU16 == FailToken)
+        //    {
+        //        WriteToOutput("Transfer Failed...", Color.DarkRed);
+        //        return false;
+        //    }
+        //
+        //    WriteToOutput("Bad Ack: " + recBuf[0].ToString("X2") + ":" + recBuf[1].ToString("X2"), Color.DarkRed);
+        //    return false;
+        //}
 
         void SendIntBytes(UInt32 IntToSend, Int16 NumBytes)
         {
@@ -305,13 +305,14 @@ namespace TRWinApp
 
         /******************************** Stream IO Functions *****************************************/
 
-        bool GetAck(IDataStream stream, int iTimeoutmSec = 500)
+        bool GetAck(int iTimeoutmSec = 500)
         {
             var recBuf = new byte[2];
-            
-            if (!ReadStreamTO(stream, recBuf, 2, out int bytesRead, iTimeoutmSec))
+
+            string errMsg = _streamIO.ReadStreamTO(recBuf, 2, out int bytesRead, iTimeoutmSec);
+            if (errMsg != "OK")
             {
-                WriteToOutput("Ack Timeout", Color.Red);
+                WriteToOutput(errMsg, Color.Red);
                 return false;
             }
 
@@ -330,39 +331,38 @@ namespace TRWinApp
             WriteToOutput("Bad Ack: " + recBuf[0].ToString("X2") + ":" + recBuf[1].ToString("X2"), Color.DarkRed);
             return false;
         }
-        private bool ReadStreamTO(IDataStream stream, byte[] buf, int bytesToRead, out int bytesRead , int timeoutMs)
-        {
-            bytesRead = 0; 
-            try
-            {
-                while (_streamIO.DataAvailableTimeout(timeoutMs))
-                {
-                    bytesRead += stream.Read(buf, bytesRead, 1); //one byte at a time
-                    if (bytesRead >= bytesToRead) return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                WriteToOutput("Read Error: " + ex.Message, Color.Red);
-                return false;
-            }
-
-        }
 
         private void SendSimpleCommand(byte[] command, string description, bool WaitForAck = true)
         {
-            if (!_streamIO.InitializeOpen(rbComEthernet.Checked, tbIPAddress.Text, cmbCOMPort.Text, out string errMsg))
+            string errMsg;
+            
+            //initialize
+            errMsg = _streamIO.InitializeOpen(rbComEthernet.Checked, tbIPAddress.Text, cmbCOMPort.Text);
+            if (errMsg != "OK")
             {
                 WriteToOutput(errMsg, Color.Red);
                 return;
             }
-            _streamIO.FlushStream(20);  //clear rx buffer, mostly for serial
-            _streamIO.Stream.Write(command);
+
+            //flush
+            errMsg = _streamIO.FlushStream(20);  //clear rx buffer, mostly for serial
+            WriteToOutput(errMsg, Color.Gray); //returns flushed info, if any
+
+            //write command
+            _streamIO.Write(command);
             WriteToOutput("Sent " + description, Color.Blue);
-            if (WaitForAck) GetAck(_streamIO.Stream);
-            else _streamIO.FlushStream(500);
-            _streamIO.Close();
+
+            //ack check, if requested
+            if (WaitForAck) GetAck();
+            else
+            {
+                errMsg = _streamIO.FlushStream(500);
+                WriteToOutput(errMsg, Color.Gray); //returns flushed info, if any
+            }
+
+            //close
+            errMsg = _streamIO.Close();  
+            if (errMsg != "OK") WriteToOutput(errMsg, Color.Red);
         }
     }
 }

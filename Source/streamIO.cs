@@ -10,9 +10,9 @@ namespace TRWinApp
     {
         private IDataStream _stream;
 
-        public IDataStream Stream => _stream; //temporary exposure of stream
+        //public IDataStream Stream => _stream; //temporary exposure of stream
 
-        public bool InitializeOpen(bool useEthernet, string stIPAddress, string stCOMPort, out string errMsg)
+        public string InitializeOpen(bool useEthernet, string stIPAddress, string stCOMPort)
         {
             _stream = null;
 
@@ -22,22 +22,16 @@ namespace TRWinApp
                     _stream = new TcpDataStream(stIPAddress, 80);
                 else
                 {
-                    if (stCOMPort == "")
-                    {
-                        errMsg = "Select COM port";
-                        return false;
-                    }
+                    if (stCOMPort == "") return "Select COM port";
                     _stream = new SerialDataStream(stCOMPort, 115200);
                 }
 
                 _stream.Open();
-                errMsg = "";
-                return true;
+                return "OK";
             }
             catch (Exception ex)
             {
-                errMsg = "Init Error: " + ex.Message;
-                return false;
+                return "Init Error: " + ex.Message;
             }
         }
 
@@ -53,9 +47,9 @@ namespace TRWinApp
             return _stream.DataAvailable();
         }
 
-        public void Close()
+        public string Close()
         {
-            if (_stream == null) return;
+            if (_stream == null) return "NULL" + Environment.NewLine;
 
             try
             {
@@ -63,15 +57,16 @@ namespace TRWinApp
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Close Error: " + ex.Message);
-                //errMsg = "Close Error: " + ex.Message;
+                return "Close Error: " + ex.Message;
             }
+            return "OK";
         }
 
-        public void FlushStream(int timeoutMs)
+        public string FlushStream(int timeoutMs)
         {
-            if (_stream == null) return;
+            if (_stream == null) return "NULL" + Environment.NewLine;
 
+            string retVal = "";
             var buf = new byte[256];
             try
             {
@@ -80,24 +75,54 @@ namespace TRWinApp
                     int bytesRead = _stream.Read(buf, 0, buf.Length);
 
                     var strbuf = Encoding.UTF8.GetString(buf, 0, bytesRead);
-                    Console.WriteLine("Flush(" + bytesRead + "): " + strbuf);
-                    //WriteToOutput("Flush(" + bytesRead + "): " + strbuf, Color.Gray);
+                    retVal += "Flush(" + bytesRead + "): " + strbuf + Environment.NewLine;
                     //for (int byteNum = 0; byteNum < bytesRead; byteNum++)
                     //{ 
-                    //    WriteToOutput("Flush: 0x" + buf[byteNum].ToString("X2") + "'" + Encoding.UTF8.GetString(buf, byteNum,1) + "'", Color.Gray);
+                    //    retVal += "Flush: 0x" + buf[byteNum].ToString("X2") + "'" + Encoding.UTF8.GetString(buf, byteNum,1) + "'" + Environment.NewLine;
                     //}
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Read Error: " + ex.Message);
-                //WriteToOutput("Read Error: " + ex.Message, Color.Red);
+                retVal += "Read Error: " + ex.Message + Environment.NewLine;
             }
+            return retVal;
         }
 
+        public string ReadStreamTO(byte[] buf, int bytesToRead, out int bytesRead, int timeoutMs)
+        {
+            bytesRead = 0;
+            try
+            {
+                while (DataAvailableTimeout(timeoutMs))
+                {
+                    bytesRead += _stream.Read(buf, bytesRead, 1); //one byte at a time
+                    if (bytesRead >= bytesToRead) return "OK";
+                }
+                return "Read Timeout (" + bytesRead + "/" + bytesToRead + ")";
+            }
+            catch (Exception ex)
+            {
+                return "Read Error: " + ex.Message;
+            }
 
+        }
 
+        public bool Write(byte[] data)
+        {
 
+            if (_stream == null) return false;
+
+            try
+            {
+                _stream.Write(data);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
 
 

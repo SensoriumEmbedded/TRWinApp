@@ -45,7 +45,7 @@ namespace TRWinApp
 
         private void btnPing_Click(object sender, EventArgs e)
         {
-            SendSimpleCommand(new byte[] { 0x64, 0x55 }, "Ping", false);
+            SendCommand(new byte[] { 0x64, 0x55 }, "Ping", false);
         }
 
         private void btnSendFile_Click(object sender, EventArgs e)
@@ -132,7 +132,7 @@ namespace TRWinApp
             }
             else
             {
-                WriteToOutput("No COM Ports Found", Color.Red);
+                //WriteToOutput("No COM Ports Found", Color.Red);
                 //cmbCOMPort.Items.Add("COM5");
             }
 
@@ -146,12 +146,12 @@ namespace TRWinApp
         private void btnReset_Click(object sender, EventArgs e)
         {
             //need to look for "Reset cmd received" instead of ack:
-            SendSimpleCommand(new byte[] { 0x64, 0xEE }, "Reset Command", false);
+            SendCommand(new byte[] { 0x64, 0xEE }, "Reset Command", false);
         }
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            SendSimpleCommand(new byte[] { 0x64, 0x44, 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x2f, 0x47, 0x6f, 0x72, 0x66, 0x21, 0x00 }, "Launch Gorf!");  
+            SendCommand(new byte[] { 0x64, 0x44, 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x2f, 0x47, 0x6f, 0x72, 0x66, 0x21, 0x00 }, "Launch Gorf!");  
 
             //byte[] TestCode = { 0x64, 0x99, 0xf0, 0x40 };// Example 1: 0x64, 0x99, 0xf0, 0x40 = Set to -15.75% via linear equation
             //byte[] TestCode = { 0x64, 0x9a, 0x20, 0x40 };// Example 2: 0x64, 0x9a, 0x20, 0x40 = set to +32.25 via logarithmic equation
@@ -220,7 +220,7 @@ namespace TRWinApp
         {
             //   App: PauseSIDToken 0x6466
             //Teensy: AckToken 0x64CC on Pass,  0x9b7f on Fail
-            SendSimpleCommand(new byte[] { 0x64, 0x66 }, "Pause SID");
+            SendCommand(new byte[] { 0x64, 0x66 }, "Pause SID");
 
             //SendIntBytes(PauseSIDToken, 2);
             //if (GetAck()) WriteToOutput("Sent Pause SID", Color.DarkGreen);
@@ -256,46 +256,6 @@ namespace TRWinApp
             return (UInt16)(buf[1] * 256 + buf[0]);
         }
 
-        //private bool WaitForSerial(int NumBytes, int iTimeoutmSec)
-        //{
-        //    const int iSleepTimeMs = 10;
-        //    int iCount = 0;
-        //
-        //    while (iCount++ <= iTimeoutmSec / iSleepTimeMs)
-        //    {
-        //
-        //        if (serialPort1.BytesToRead >= NumBytes) return true;
-        //        //this.Refresh();
-        //        System.Threading.Thread.Sleep(iSleepTimeMs);
-        //    }
-        //
-        //    WriteToOutput("Timeout waiting for Teensy", Color.Red);
-        //    //timer1.Enabled = true;
-        //    return false;
-        //}
-
-        //bool GetAck(int iTimeoutmSec = 500)
-        //{
-        //    if (!WaitForSerial(2, iTimeoutmSec)) return false; //sends message on fail
-        //
-        //    byte[] recBuf = new byte[2];
-        //    serialPort1.Read(recBuf, 0, 2);
-        //    UInt16 recU16 = to16(recBuf);
-        //    if (recU16 == AckToken)
-        //    {
-        //        WriteToOutput("Ack", Color.DarkGreen);
-        //        return true;
-        //    }
-        //    if (recU16 == FailToken)
-        //    {
-        //        WriteToOutput("Transfer Failed...", Color.DarkRed);
-        //        return false;
-        //    }
-        //
-        //    WriteToOutput("Bad Ack: " + recBuf[0].ToString("X2") + ":" + recBuf[1].ToString("X2"), Color.DarkRed);
-        //    return false;
-        //}
-
         void SendIntBytes(UInt32 IntToSend, Int16 NumBytes)
         {
             byte[] BytesToSend = BitConverter.GetBytes(IntToSend);
@@ -303,14 +263,13 @@ namespace TRWinApp
                 serialPort1.Write(BytesToSend, ByteNum, 1);
         }
 
-        /******************************** Stream IO Functions *****************************************/
+        /******************************** Stream IO Control Functions *****************************************/
 
         bool GetAck(int iTimeoutmSec = 500)
         {
             var recBuf = new byte[2];
 
-            string errMsg = _streamIO.ReadStreamTO(recBuf, 2, out int bytesRead, iTimeoutmSec);
-            if (errMsg != "OK")
+            if (!_streamIO.ReadStreamTO(recBuf, 2, out int bytesRead, iTimeoutmSec, out string errMsg))
             {
                 WriteToOutput(errMsg, Color.Red);
                 return false;
@@ -332,37 +291,40 @@ namespace TRWinApp
             return false;
         }
 
-        private void SendSimpleCommand(byte[] command, string description, bool WaitForAck = true)
+        private void SendCommand(byte[] command, string description, bool waitForAck = true)
         {
-            string errMsg;
-            
-            //initialize
-            errMsg = _streamIO.InitializeOpen(rbComEthernet.Checked, tbIPAddress.Text, cmbCOMPort.Text);
-            if (errMsg != "OK")
-            {
-                WriteToOutput(errMsg, Color.Red);
-                return;
-            }
+            string errMsg, stFlushed;
 
-            //flush
-            errMsg = _streamIO.FlushStream(20);  //clear rx buffer, mostly for serial
-            WriteToOutput(errMsg, Color.Gray); //returns flushed info, if any
+            //initialize
+            if (!_streamIO.InitializeOpen(rbComEthernet.Checked, tbIPAddress.Text, cmbCOMPort.Text, out errMsg)) goto ErrorOut;
+
+            //flush rx buffer, mostly for serial
+            if (!_streamIO.FlushStreamRx(20, out stFlushed, out errMsg)) goto ErrorOut;
+            WriteToOutput(stFlushed, Color.Gray);
 
             //write command
-            _streamIO.Write(command);
+            if (!_streamIO.Write(command, out errMsg)) goto ErrorOut;
             WriteToOutput("Sent " + description, Color.Blue);
 
             //ack check, if requested
-            if (WaitForAck) GetAck();
+            if (waitForAck) GetAck(); //prints messages; last item, no need to check/return
             else
             {
-                errMsg = _streamIO.FlushStream(500);
-                WriteToOutput(errMsg, Color.Gray); //returns flushed info, if any
+                if (!_streamIO.FlushStreamRx(500, out stFlushed, out errMsg)) goto ErrorOut;
+                WriteToOutput(stFlushed, Color.Gray);
             }
 
             //close
-            errMsg = _streamIO.Close();  
-            if (errMsg != "OK") WriteToOutput(errMsg, Color.Red);
+            Close:
+                if (!_streamIO.Close(out errMsg))
+                {
+                    WriteToOutput(errMsg, Color.Red);
+                }
+                return;
+
+            ErrorOut:
+                WriteToOutput(errMsg, Color.Red);
+                goto Close; //try to close stream
         }
     }
 }

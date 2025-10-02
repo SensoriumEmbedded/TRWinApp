@@ -12,7 +12,7 @@ namespace TRWinApp
 
         //public IDataStream Stream => _stream; //temporary exposure of stream
 
-        public string InitializeOpen(bool useEthernet, string stIPAddress, string stCOMPort)
+        public bool InitializeOpen(bool useEthernet, string stIPAddress, string stCOMPort, out string errMsg)
         {
             _stream = null;
 
@@ -22,16 +22,22 @@ namespace TRWinApp
                     _stream = new TcpDataStream(stIPAddress, 80);
                 else
                 {
-                    if (stCOMPort == "") return "Select COM port";
+                    if (stCOMPort == "")
+                    {
+                        errMsg = "Select COM port";
+                        return false; 
+                    }
                     _stream = new SerialDataStream(stCOMPort, 115200);
                 }
 
                 _stream.Open();
-                return "OK";
+                errMsg = ""; 
+                return true;
             }
             catch (Exception ex)
             {
-                return "Init Error: " + ex.Message;
+                errMsg = "Init Error: " + ex.Message;
+                return false;
             }
         }
 
@@ -47,9 +53,13 @@ namespace TRWinApp
             return _stream.DataAvailable();
         }
 
-        public string Close()
+        public bool Close(out string errMsg)
         {
-            if (_stream == null) return "NULL" + Environment.NewLine;
+            if (_stream == null)
+            {
+                errMsg = "NULL Stream";
+                return false;
+            }
 
             try
             {
@@ -57,16 +67,22 @@ namespace TRWinApp
             }
             catch (Exception ex)
             {
-                return "Close Error: " + ex.Message;
+                errMsg = "Close Error: " + ex.Message;
+                return false;
             }
-            return "OK";
+            errMsg = "";
+            return true;
         }
 
-        public string FlushStream(int timeoutMs)
+        public bool FlushStreamRx(int timeoutMs, out string stFlushed, out string errMsg)
         {
-            if (_stream == null) return "NULL" + Environment.NewLine;
+            stFlushed = "";
+            if (_stream == null)
+            {
+                errMsg = "NULL Stream";
+                return false;
+            }
 
-            string retVal = "";
             var buf = new byte[256];
             try
             {
@@ -74,52 +90,73 @@ namespace TRWinApp
                 {
                     int bytesRead = _stream.Read(buf, 0, buf.Length);
 
+                    if (stFlushed != "") stFlushed += Environment.NewLine;
                     var strbuf = Encoding.UTF8.GetString(buf, 0, bytesRead);
-                    retVal += "Flush(" + bytesRead + "): " + strbuf + Environment.NewLine;
+                    stFlushed += "Flush(" + bytesRead + "): " + strbuf;
                     //for (int byteNum = 0; byteNum < bytesRead; byteNum++)
                     //{ 
-                    //    retVal += "Flush: 0x" + buf[byteNum].ToString("X2") + "'" + Encoding.UTF8.GetString(buf, byteNum,1) + "'" + Environment.NewLine;
+                    //    stFlushed += "Flush: 0x" + buf[byteNum].ToString("X2") + "'" + Encoding.UTF8.GetString(buf, byteNum,1) + "'" + Environment.NewLine;
                     //}
                 }
             }
             catch (Exception ex)
             {
-                retVal += "Read Error: " + ex.Message + Environment.NewLine;
+                errMsg = "Flush/Read Error: " + ex.Message;
+                return false;
             }
-            return retVal;
+            errMsg = ""; 
+            return true;
         }
 
-        public string ReadStreamTO(byte[] buf, int bytesToRead, out int bytesRead, int timeoutMs)
+        public bool ReadStreamTO(byte[] buf, int bytesToRead, out int bytesRead, int timeoutMs, out string errMsg)
         {
             bytesRead = 0;
+
+            if (_stream == null)
+            {
+                errMsg = "NULL Stream";
+                return false;
+            }
+
             try
             {
                 while (DataAvailableTimeout(timeoutMs))
                 {
                     bytesRead += _stream.Read(buf, bytesRead, 1); //one byte at a time
-                    if (bytesRead >= bytesToRead) return "OK";
+                    if (bytesRead >= bytesToRead)
+                    {
+                        errMsg = "";
+                        return true;
+                    }
                 }
-                return "Read Timeout (" + bytesRead + "/" + bytesToRead + ")";
+                errMsg = "Read Timeout (" + bytesRead + "/" + bytesToRead + ")";
+                return false;
             }
             catch (Exception ex)
             {
-                return "Read Error: " + ex.Message;
+                errMsg = "Read Error: " + ex.Message;
+                return false;
             }
 
         }
 
-        public bool Write(byte[] data)
+        public bool Write(byte[] data, out string errMsg)
         {
-
-            if (_stream == null) return false;
+            if (_stream == null)
+            {
+                errMsg = "NULL Stream";
+                return false;
+            }
 
             try
             {
                 _stream.Write(data);
+                errMsg = "";
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                errMsg = "Write Error: " + ex.Message;
                 return false;
             }
         }

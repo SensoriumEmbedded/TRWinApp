@@ -63,12 +63,105 @@ namespace TRWinApp
 
 
 
+        /********************************  Local Control Functions *****************************************/
+        private void btnRefreshCOMList_Click(object sender, EventArgs e)
+        {
+            cmbCOMPort.Items.Clear();
+            string[] thePortNames = System.IO.Ports.SerialPort.GetPortNames();
+
+            foreach (string item in thePortNames)
+            {
+                cmbCOMPort.Items.Add(item);
+            }
+
+            if (thePortNames.Length != 0)
+            {
+                cmbCOMPort.SelectedIndex = 0;
+            }
+            else
+            {
+                //WriteToOutput("No COM Ports Found", Color.Red);
+                //cmbCOMPort.Items.Add("COM5");
+            }
+
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            rtbOutput.Clear();
+        }
+
+        private void btnSelectSource_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.FileName = "";
+            openFileDialog1.Filter = "C64 Files (*.prg;*.crt)|*.prg;*.crt|PRG files (*.prg)|*.prg|CRT files (*.crt)|*.crt|All files (*.*)|*.*";
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel) return;
+            tbSource.Text = openFileDialog1.FileName;
+        }
+
+        private void tbSource_DragDrop(object sender, DragEventArgs e)
+        {
+            //tbSource.Text = e.ToString();
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (files != null && files.Length != 0)
+            {
+                tbSource.Text = files[0];
+                tbSource.SelectionStart = tbSource.Text.Length;
+                tbSource.SelectionLength = 0;
+            }
+        }
+
+        private void tbSource_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+        private void rbUSBDRive_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbUSBDRive.Checked) lblDestPath.Text = "USB Drive Path:";
+            else lblDestPath.Text = "SD Card Path:";
+        }
+
+        private void rbComEthernet_CheckedChanged(object sender, EventArgs e)
+        {
+            pnlEthernetSetup.Enabled = rbComEthernet.Checked;
+            pnlSerialSetup.Enabled = rbComSerial.Checked;
+        }
+
+
+        /********************************  Command Button Functions *****************************************/
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            SendCommand(new byte[] { 0x64, 0x44, 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x2f, 0x47, 0x6f, 0x72, 0x66, 0x21, 0x00 }, "Launch Gorf!", true );
+
+            //byte[] TestCode = { 0x64, 0x99, 0xf0, 0x40 };// Example 1: 0x64, 0x99, 0xf0, 0x40 = Set to -15.75% via linear equation
+            //byte[] TestCode = { 0x64, 0x9a, 0x20, 0x40 };// Example 2: 0x64, 0x9a, 0x20, 0x40 = set to +32.25 via logarithmic equation
+            //byte[] TestCode = { 0x64, 0x33, 0x05 };// Mute voice 1 & 3
+            //byte[] TestCode = { 0x64, 0x22, 0x02 , 0x0a};// Set banner to LtRed
+        }
+
+        private void btnPauseSID_Click(object sender, EventArgs e)
+        {
+            //   App: PauseSIDToken 0x6466
+            //Teensy: AckToken 0x64CC on Pass,  0x9b7f on Fail
+            SendToken(PauseSIDToken, "Pause SID", true);
+        }
 
         private void btnPing_Click(object sender, EventArgs e)
         {
             //look for "TeensyROM" instead of ack
             SendToken(PingToken, "Ping", false);
         }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            //look for "Reset cmd received" instead of ack:
+            SendToken(ResetC64Token, "Reset Command", false);
+        }
+
 
         private void btnSendFile_Click(object sender, EventArgs e)
         {
@@ -138,82 +231,6 @@ namespace TRWinApp
             //btnConnected.PerformClick(); //auto disconnect
         }
 
-        private void btnRefreshCOMList_Click(object sender, EventArgs e)
-        {
-            cmbCOMPort.Items.Clear();
-            string[] thePortNames = System.IO.Ports.SerialPort.GetPortNames();
-
-            foreach (string item in thePortNames)
-            {
-                cmbCOMPort.Items.Add(item);
-            }
-
-            if (thePortNames.Length != 0)
-            {
-                cmbCOMPort.SelectedIndex = 0;
-            }
-            else
-            {
-                //WriteToOutput("No COM Ports Found", Color.Red);
-                //cmbCOMPort.Items.Add("COM5");
-            }
-
-        }
-
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            rtbOutput.Clear();
-        }
-
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-            //need to look for "Reset cmd received" instead of ack:
-            SendToken(ResetC64Token, "Reset Command", false);
-        }
-
-        private void btnTest_Click(object sender, EventArgs e)
-        {
-            SendCommand(new byte[] { 0x64, 0x44, 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x2f, 0x47, 0x6f, 0x72, 0x66, 0x21, 0x00 }, "Launch Gorf!");  
-
-            //byte[] TestCode = { 0x64, 0x99, 0xf0, 0x40 };// Example 1: 0x64, 0x99, 0xf0, 0x40 = Set to -15.75% via linear equation
-            //byte[] TestCode = { 0x64, 0x9a, 0x20, 0x40 };// Example 2: 0x64, 0x9a, 0x20, 0x40 = set to +32.25 via logarithmic equation
-            //byte[] TestCode = { 0x64, 0x33, 0x05 };// Mute voice 1 & 3
-            //byte[] TestCode = { 0x64, 0x22, 0x02 , 0x0a};// Set banner to LtRed
-            //serialPort1.Write(TestCode, 0, TestCode.Count());
-        }
-
-        private void btnSelectSource_Click(object sender, EventArgs e)
-        {
-            openFileDialog1.FileName = "";
-            openFileDialog1.Filter = "C64 Files (*.prg;*.crt)|*.prg;*.crt|PRG files (*.prg)|*.prg|CRT files (*.crt)|*.crt|All files (*.*)|*.*";
-            if (openFileDialog1.ShowDialog() == DialogResult.Cancel) return;
-            tbSource.Text = openFileDialog1.FileName;
-        }
-
-        private void tbSource_DragDrop(object sender, DragEventArgs e)
-        {
-            //tbSource.Text = e.ToString();
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            if (files != null && files.Length != 0)
-            {
-                tbSource.Text = files[0];
-                tbSource.SelectionStart = tbSource.Text.Length;
-                tbSource.SelectionLength = 0;
-            }
-        }
-
-        private void tbSource_DragOver(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                e.Effect = DragDropEffects.Copy;
-            else
-                e.Effect = DragDropEffects.None;
-        }
-        private void rbUSBDRive_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbUSBDRive.Checked) lblDestPath.Text = "USB Drive Path:";
-            else lblDestPath.Text = "SD Card Path:";
-        }
         private void btnLaunch_Click(object sender, EventArgs e)
         {
             //   App: LaunchFileToken 0x6444
@@ -238,23 +255,12 @@ namespace TRWinApp
             if (!GetAck()) WriteToOutput("Launch Failed!", Color.Red);
         }
 
-        private void btnPauseSID_Click(object sender, EventArgs e)
-        {
-            //   App: PauseSIDToken 0x6466
-            //Teensy: AckToken 0x64CC on Pass,  0x9b7f on Fail
-            SendToken(PauseSIDToken, "Pause SID", true);
-        }
         private void btnSetSIDSong_Click(object sender, EventArgs e)
         {
             SendIntBytes(SetSIDSongToken, 2);
             SendIntBytes((UInt16)(nudSongNum.Value - 1), 1);
             if (GetAck()) WriteToOutput("Sent SID Song Num", Color.DarkGreen);
             else WriteToOutput("SID Song Num Failed!", Color.Red);
-        }
-        private void rbComEthernet_CheckedChanged(object sender, EventArgs e)
-        {
-            pnlEthernetSetup.Enabled = rbComEthernet.Checked;
-            pnlSerialSetup.Enabled = rbComSerial.Checked;
         }
 
 

@@ -20,7 +20,7 @@ namespace TRWinApp
 {
     public partial class FormMain : Form
     {
-        //volatile bool USBLost = false;
+        private StreamIO _streamIO;
 
         //synch with TeensyROM code:
         const UInt16 LaunchFileToken = 0x6444;
@@ -33,6 +33,7 @@ namespace TRWinApp
         public FormMain()
         {
             InitializeComponent();
+            _streamIO = new StreamIO(/* this */);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -425,33 +426,33 @@ namespace TRWinApp
             WriteToOutput("Bad Ack: " + recBuf[0].ToString("X2") + ":" + recBuf[1].ToString("X2"), Color.DarkRed);
             return false;
         }
-        private bool InitializeStream(out IDataStream stream)
-        {
-            stream = null;
-
-            try
-            {
-                if (rbComEthernet.Checked)
-                    stream = new TcpDataStream(tbIPAddress.Text, 80);
-                else
-                {
-                    if (cmbCOMPort.Text == "")
-                    {
-                        WriteToOutput("Select COM port", Color.Red);
-                        return false;
-                    }
-                    stream = new SerialDataStream(cmbCOMPort.Text, 115200);
-                }
-
-                stream.Open();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                WriteToOutput("Init Error: " + ex.Message, Color.Red);
-                return false;
-            }
-        }
+        //private bool InitializeStream(out IDataStream stream)
+        //{
+        //    stream = null;
+        //
+        //    try
+        //    {
+        //        if (rbComEthernet.Checked)
+        //            stream = new TcpDataStream(tbIPAddress.Text, 80);
+        //        else
+        //        {
+        //            if (cmbCOMPort.Text == "")
+        //            {
+        //                WriteToOutput("Select COM port", Color.Red);
+        //                return false;
+        //            }
+        //            stream = new SerialDataStream(cmbCOMPort.Text, 115200);
+        //        }
+        //
+        //        stream.Open();
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        WriteToOutput("Init Error: " + ex.Message, Color.Red);
+        //        return false;
+        //    }
+        //}
 
         private bool ReadStreamTO(IDataStream stream, byte[] buf, int bytesToRead, out int bytesRead , int timeoutMs)
         {
@@ -524,13 +525,17 @@ namespace TRWinApp
 
         private void SendSimpleCommand(byte[] command, string description, bool WaitForAck = true)
         {
-            if (!InitializeStream(out IDataStream stream)) return;
-            FlushStream(stream, 20);  //clear rx buffer, mostly for serial
-            stream.Write(command);
+            if (!_streamIO.InitializeStream(rbComEthernet, tbIPAddress, cmbCOMPort, out string errMsg))
+            {
+                WriteToOutput(errMsg, Color.Red);
+                return;
+            }
+            FlushStream(_streamIO.Stream, 20);  //clear rx buffer, mostly for serial
+            _streamIO.Stream.Write(command);
             WriteToOutput("Sent " + description, Color.Blue);
-            if (WaitForAck) GetAck(stream);
-            else FlushStream(stream, 500);
-            CloseStream(stream);
+            if (WaitForAck) GetAck(_streamIO.Stream);
+            else FlushStream(_streamIO.Stream, 500);
+            CloseStream(_streamIO.Stream);
         }
     }
 }

@@ -43,102 +43,6 @@ namespace TRWinApp
             serialPort1.ReadTimeout = 200;
         }
 
-        //private void timer1_Tick(object sender, EventArgs e)
-        //{
-        //    string strMsg;
-        //
-        //    if (USBLost)
-        //    {
-        //        try
-        //        {
-        //            serialPort1.Open();
-        //            USBLost = false;
-        //            WriteToOutput("\nWe're back!", Color.DarkGreen);
-        //        }
-        //        catch
-        //        {
-        //            rtbOutput.AppendText(".");
-        //            rtbOutput.Refresh();
-        //            return;
-        //        }
-        //    }
-        //
-        //    try
-        //    {
-        //        while (serialPort1.BytesToRead != 0)
-        //        {
-        //            strMsg = ">";
-        //            try
-        //            {
-        //                strMsg += serialPort1.ReadLine();
-        //            }
-        //            catch
-        //            {
-        //                strMsg += "***";  //timeout indicator
-        //                while (serialPort1.BytesToRead != 0)
-        //                {
-        //                    strMsg += (char)serialPort1.ReadChar();
-        //                }
-        //                strMsg += "\r";
-        //                rtbOutput.SelectionColor = Color.Red;
-        //            }
-        //            WriteToOutput(strMsg, Color.Blue);
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        WriteToOutput("USB port disconnected, retrying...", Color.DarkRed);
-        //        USBLost = true;
-        //        return;
-        //    }
-        //
-        //}
-
-        //private void btnConnected_Click(object sender, EventArgs e)
-        //{
-        //    if (btnConnected.Text == "Connected")
-        //    {   //disconnect:
-        //        //timer1.Enabled = false;
-        //        //if (USBLost == false) 
-        //        try
-        //        {
-        //            serialPort1.Close();
-        //        }
-        //        catch
-        //        {
-        //            MessageBox.Show("Unable to close " + cmbCOMPort.Text, "Error");
-        //        }
-        //        btnConnected.Text = "Not Connected";
-        //        btnConnected.BackColor = Color.Yellow;
-        //        pnlCommButtons.Enabled = false;
-        //    }
-        //    else
-        //    {   //connect
-        //        if (cmbCOMPort.Text=="")
-        //        {
-        //            WriteToOutput("Select COM port", Color.Red);
-        //            return;
-        //        }
-        //        try
-        //        {
-        //            serialPort1.PortName = cmbCOMPort.Text;
-        //            rtbOutput.Clear();
-        //            serialPort1.Open();
-        //            //btnPing_Click(null, e);
-        //        }
-        //        catch
-        //        {
-        //            MessageBox.Show("Unable to open " + cmbCOMPort.Text, "Error");
-        //            return;
-        //        }
-        //        btnConnected.Text = "Connected";
-        //        btnConnected.BackColor = Color.LightGreen;
-        //        pnlCommButtons.Enabled = true;
-        //        //USBLost = false;
-        //        //timer1.Enabled = true;
-        //    }
-        //}
-
         private void btnPing_Click(object sender, EventArgs e)
         {
             SendSimpleCommand(new byte[] { 0x64, 0x55 }, "Ping", false);
@@ -426,40 +330,12 @@ namespace TRWinApp
             WriteToOutput("Bad Ack: " + recBuf[0].ToString("X2") + ":" + recBuf[1].ToString("X2"), Color.DarkRed);
             return false;
         }
-        //private bool InitializeStream(out IDataStream stream)
-        //{
-        //    stream = null;
-        //
-        //    try
-        //    {
-        //        if (rbComEthernet.Checked)
-        //            stream = new TcpDataStream(tbIPAddress.Text, 80);
-        //        else
-        //        {
-        //            if (cmbCOMPort.Text == "")
-        //            {
-        //                WriteToOutput("Select COM port", Color.Red);
-        //                return false;
-        //            }
-        //            stream = new SerialDataStream(cmbCOMPort.Text, 115200);
-        //        }
-        //
-        //        stream.Open();
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        WriteToOutput("Init Error: " + ex.Message, Color.Red);
-        //        return false;
-        //    }
-        //}
-
         private bool ReadStreamTO(IDataStream stream, byte[] buf, int bytesToRead, out int bytesRead , int timeoutMs)
         {
             bytesRead = 0; 
             try
             {
-                while (StreamDataAvailableTO(stream, timeoutMs))
+                while (_streamIO.DataAvailableTimeout(timeoutMs))
                 {
                     bytesRead += stream.Read(buf, bytesRead, 1); //one byte at a time
                     if (bytesRead >= bytesToRead) return true;
@@ -473,71 +349,20 @@ namespace TRWinApp
             }
 
         }
-        private bool StreamDataAvailableTO(IDataStream stream, int timeoutMs)
-        {
-            if (stream == null) return false;
-
-            var startTime = Environment.TickCount;
-            while (Environment.TickCount - startTime < timeoutMs && !stream.DataAvailable())
-            {
-                Thread.Sleep(10); // Small delay to avoid busy loop
-            }
-            return stream.DataAvailable();
-        }
-        private void FlushStream(IDataStream stream, int timeoutMs)
-        {
-            if (stream == null) return;
-
-            var buf = new byte[256];
-            try
-            {
-                while (StreamDataAvailableTO(stream, timeoutMs))
-                {
-                    int bytesRead = stream.Read(buf, 0, buf.Length);
-
-                    var strbuf = Encoding.UTF8.GetString(buf, 0, bytesRead);
-                    WriteToOutput("Flush(" + bytesRead + "): " + strbuf, Color.Gray);
-                    //for (int byteNum = 0; byteNum < bytesRead; byteNum++)
-                    //{ 
-                    //    WriteToOutput("Flush: 0x" + buf[byteNum].ToString("X2") + "'" + Encoding.UTF8.GetString(buf, byteNum,1) + "'", Color.Gray);
-                    //}
-                }
-            }
-            catch (Exception ex)
-            {
-                WriteToOutput("Read Error: " + ex.Message, Color.Red);
-            }
-        }
-
-        private void CloseStream(IDataStream stream)
-        {
-            if (stream == null) return;
-
-            try
-            {
-                stream.Close();
-            }
-            catch (Exception ex)
-            {
-                WriteToOutput("Close Error: " + ex.Message, Color.Red);
-            }
-        }
 
         private void SendSimpleCommand(byte[] command, string description, bool WaitForAck = true)
         {
-            if (!_streamIO.InitializeStream(rbComEthernet, tbIPAddress, cmbCOMPort, out string errMsg))
+            if (!_streamIO.InitializeOpen(rbComEthernet.Checked, tbIPAddress.Text, cmbCOMPort.Text, out string errMsg))
             {
                 WriteToOutput(errMsg, Color.Red);
                 return;
             }
-            FlushStream(_streamIO.Stream, 20);  //clear rx buffer, mostly for serial
+            _streamIO.FlushStream(20);  //clear rx buffer, mostly for serial
             _streamIO.Stream.Write(command);
             WriteToOutput("Sent " + description, Color.Blue);
             if (WaitForAck) GetAck(_streamIO.Stream);
-            else FlushStream(_streamIO.Stream, 500);
-            CloseStream(_streamIO.Stream);
+            else _streamIO.FlushStream(500);
+            _streamIO.Close();
         }
     }
 }
-
-

@@ -22,13 +22,31 @@ namespace TRWinApp
     {
         private StreamIO _streamIO;
 
-        //synch with TeensyROM code:
-        const UInt16 LaunchFileToken = 0x6444;
-        const UInt16 PauseSIDToken = 0x6466;
-        const UInt16 SetSIDSongToken = 0x6488;
-        const UInt16 SendFileToken = 0x64AA;
-        const UInt16 AckToken = 0x64CC;
-        const UInt16 FailToken = 0x9B7F;
+        //synch with TeensyROM code Common_Defs.h
+        const UInt16 SetColorToken     = 0x6422;
+        const UInt16 LaunchFileToken   = 0x6444;
+        const UInt16 PingToken         = 0x6455;
+        const UInt16 PauseSIDToken     = 0x6466; //df
+        const UInt16 SetSIDSongToken   = 0x6488;
+        const UInt16 SIDSpeedLinToken  = 0x6499;
+        const UInt16 SIDSpeedLogToken  = 0x649A;
+        const UInt16 SIDVoiceMuteToken = 0x6433;
+        const UInt16 C64PauseOnToken   = 0x6431; // C64 Paused
+        const UInt16 C64PauseOffToken  = 0x6430; // C64 Unpaused
+        const UInt16 DebugToken        = 0x6467; //dg
+        const UInt16 SendFileToken     = 0x64AA;
+        const UInt16 PostFileToken     = 0x64BB;
+        const UInt16 CopyFileToken     = 0x64FF;
+        const UInt16 GetFileToken      = 0x64B0;
+        const UInt16 DeleteFileToken   = 0x64CF;
+        const UInt16 AckToken          = 0x64CC;
+        const UInt16 GetDirectoryToken = 0x64DD; // regular JSON format, to be deprecated
+        const UInt16 GetDirNDJSONToken = 0x64DE; // NDJSON format
+        const UInt16 ResetC64Token     = 0x64EE;
+        const UInt16 RetryToken        = 0x9B7E;
+        const UInt16 FailToken         = 0x9B7F;
+        const UInt16 BadSIDToken       = 0x9B80;
+        const UInt16 GoodSIDToken      = 0x9B81;
 
         public FormMain()
         {
@@ -43,9 +61,13 @@ namespace TRWinApp
             serialPort1.ReadTimeout = 200;
         }
 
+
+
+
         private void btnPing_Click(object sender, EventArgs e)
         {
-            SendCommand(new byte[] { 0x64, 0x55 }, "Ping", false);
+            //look for "TeensyROM" instead of ack
+            SendToken(PingToken, "Ping", false);
         }
 
         private void btnSendFile_Click(object sender, EventArgs e)
@@ -146,7 +168,7 @@ namespace TRWinApp
         private void btnReset_Click(object sender, EventArgs e)
         {
             //need to look for "Reset cmd received" instead of ack:
-            SendCommand(new byte[] { 0x64, 0xEE }, "Reset Command", false);
+            SendToken(ResetC64Token, "Reset Command", false);
         }
 
         private void btnTest_Click(object sender, EventArgs e)
@@ -220,11 +242,7 @@ namespace TRWinApp
         {
             //   App: PauseSIDToken 0x6466
             //Teensy: AckToken 0x64CC on Pass,  0x9b7f on Fail
-            SendCommand(new byte[] { 0x64, 0x66 }, "Pause SID");
-
-            //SendIntBytes(PauseSIDToken, 2);
-            //if (GetAck()) WriteToOutput("Sent Pause SID", Color.DarkGreen);
-            //else WriteToOutput("Pause SID Failed!", Color.Red);
+            SendToken(PauseSIDToken, "Pause SID", true);
         }
         private void btnSetSIDSong_Click(object sender, EventArgs e)
         {
@@ -291,6 +309,11 @@ namespace TRWinApp
             return false;
         }
 
+        private void SendToken(UInt16 token, string description, bool waitForAck = true)
+        {
+            var command = new byte[] { (byte)((token >> 8) & 0x00FF), (byte)(token & 0x00FF) };
+            SendCommand(command, description, waitForAck);
+        }
         private void SendCommand(byte[] command, string description, bool waitForAck = true)
         {
             string errMsg, stFlushed;

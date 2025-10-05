@@ -51,7 +51,7 @@ namespace TRWinApp
         public FormMain()
         {
             InitializeComponent();
-            _streamIO = new StreamIO(/* this */);
+            _streamIO = new StreamIO();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -60,7 +60,6 @@ namespace TRWinApp
             rbComEthernet.PerformClick();
             serialPort1.ReadTimeout = 200;
         }
-
 
 
         /********************************  Local Control Functions *****************************************/
@@ -135,7 +134,8 @@ namespace TRWinApp
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            SendCommand(new byte[] { 0x64, 0x44, 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x2f, 0x47, 0x6f, 0x72, 0x66, 0x21, 0x00 }, "Launch Gorf!", true );
+            var command = new byte[] { 0x64, 0x44, 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x2f, 0x47, 0x6f, 0x72, 0x66, 0x21, 0x00 };
+            SendCommand(command, "Launch Gorf!", AckToken);
 
             //byte[] TestCode = { 0x64, 0x99, 0xf0, 0x40 };// Example 1: 0x64, 0x99, 0xf0, 0x40 = Set to -15.75% via linear equation
             //byte[] TestCode = { 0x64, 0x9a, 0x20, 0x40 };// Example 2: 0x64, 0x9a, 0x20, 0x40 = set to +32.25 via logarithmic equation
@@ -147,19 +147,21 @@ namespace TRWinApp
         {
             //   App: PauseSIDToken 0x6466
             //Teensy: AckToken 0x64CC on Pass,  0x9b7f on Fail
-            SendToken(PauseSIDToken, "Pause SID", true);
+            SendCommand(PauseSIDToken, "Pause SID", AckToken);
         }
 
         private void btnPing_Click(object sender, EventArgs e)
         {
             //look for "TeensyROM" instead of ack
-            SendToken(PingToken, "Ping", false);
+            var expResponse = Encoding.ASCII.GetBytes("TeensyROM");
+            SendCommand(PingToken, "Ping", expResponse);
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
             //look for "Reset cmd received" instead of ack:
-            SendToken(ResetC64Token, "Reset Command", false);
+            var expResponse = Encoding.ASCII.GetBytes("Reset cmd received");
+            SendCommand(ResetC64Token, "Reset Command", expResponse);
         }
 
 
@@ -315,12 +317,24 @@ namespace TRWinApp
             return false;
         }
 
-        private void SendToken(UInt16 token, string description, bool waitForAck = true)
+        private byte[] RespTokenToByte(UInt16 Token)
         {
-            var command = new byte[] { (byte)((token >> 8) & 0x00FF), (byte)(token & 0x00FF) };
-            SendCommand(command, description, waitForAck);
+            return new byte[] { (byte)(Token & 0x00FF), (byte)((Token >> 8) & 0x00FF) };
         }
-        private void SendCommand(byte[] command, string description, bool waitForAck = true)
+        private void SendCommand(UInt16 cmdToken, string description, UInt16 RespToken)
+        {
+            SendCommand(cmdToken, description, RespTokenToByte(RespToken));
+        }
+        private void SendCommand(byte[] command, string description, UInt16 RespToken)
+        {
+            SendCommand(command, description, RespTokenToByte(RespToken));
+        }
+        private void SendCommand(UInt16 cmdToken, string description, byte[] expResponse)
+        {
+            var command = new byte[] { (byte)((cmdToken >> 8) & 0x00FF), (byte)(cmdToken & 0x00FF) };
+            SendCommand(command, description, expResponse);
+        }
+        private void SendCommand(byte[] command, string description, byte[] expResponse)
         {
             string errMsg, stFlushed;
 
@@ -335,25 +349,53 @@ namespace TRWinApp
             if (!_streamIO.Write(command, out errMsg)) goto ErrorOut;
             WriteToOutput("Sent " + description, Color.Blue);
 
-            //ack check, if requested
-            if (waitForAck) GetAck(); //prints messages; last item, no need to check/return
-            else
+            //check response, if requested
+            if (expResponse.Length == 0)
             {
+                //flush the stream if not looking for a response...
                 if (!_streamIO.FlushStreamRx(500, out stFlushed, out errMsg)) goto ErrorOut;
                 WriteToOutput(stFlushed, Color.Gray);
+            }            
+            else
+            {
+                var recBuf = new byte[expResponse.Length];
+                if (!_streamIO.ReadStreamTO(recBuf, expResponse.Length, out int bytesRead, 500, out errMsg)) goto ErrorOut;
+                if (bytesRead != expResponse.Length)
+                {
+                    WriteToOutput("Bad Response Length: " + bytesRead.ToString() + " != " + expResponse.Length.ToString(), Color.Red);
+                    goto Close;
+                }
+
+                for (int byteNum = 0; byteNum < expResponse.Length; byteNum++)
+                {
+                    if (recBuf[byteNum] != expResponse[byteNum])
+                    {
+                        string expResp = "  Exp:";
+                        string actResp = "  Act:";
+                        for (int i = expResponse.Length - 1; i >= 0; i--)
+                        {
+                            expResp += " " + expResponse[i].ToString("X2");
+                            actResp += " " + recBuf[i].ToString("X2");
+                        }
+                        WriteToOutput("Bad Response: ", Color.Red);
+                        WriteToOutput(expResp, Color.Red);
+                        WriteToOutput(actResp, Color.Red);
+                        goto Close;
+                    }
+                }
+                WriteToOutput("Received Expected Response", Color.DarkGreen);
+                //WriteToOutput("Received: " + recBuf[0].ToString("X2") + ":" + recBuf[1].ToString("X2"), Color.DarkGreen);
+            }
+            goto Close; //close stream
+
+        ErrorOut:
+            WriteToOutput(errMsg, Color.Red);
+        Close:
+            if (!_streamIO.Close(out errMsg))
+            {
+                WriteToOutput(errMsg, Color.Red);
             }
 
-            //close
-            Close:
-                if (!_streamIO.Close(out errMsg))
-                {
-                    WriteToOutput(errMsg, Color.Red);
-                }
-                return;
-
-            ErrorOut:
-                WriteToOutput(errMsg, Color.Red);
-                goto Close; //try to close stream
         }
     }
 }

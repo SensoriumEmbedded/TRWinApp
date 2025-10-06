@@ -90,9 +90,10 @@ namespace TRWinApp
                 {
                     int bytesRead = _stream.Read(buf, 0, buf.Length);
 
-                    if (stFlushed != "") stFlushed += Environment.NewLine;
-                    var strbuf = Encoding.UTF8.GetString(buf, 0, bytesRead);
-                    stFlushed += "Flush(" + bytesRead + "): " + strbuf;
+                    //if (stFlushed != "") stFlushed += Environment.NewLine; //add return, except for first
+                    //var strbuf = Encoding.UTF8.GetString(buf, 0, bytesRead);
+                    //stFlushed += "Flush(" + bytesRead + "): " + strbuf;
+                    stFlushed += Encoding.UTF8.GetString(buf, 0, bytesRead);
                     //for (int byteNum = 0; byteNum < bytesRead; byteNum++)
                     //{ 
                     //    stFlushed += "Flush: 0x" + buf[byteNum].ToString("X2") + "'" + Encoding.UTF8.GetString(buf, byteNum,1) + "'" + Environment.NewLine;

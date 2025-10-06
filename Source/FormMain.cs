@@ -119,7 +119,7 @@ namespace TRWinApp
         }
         private void rbUSBDRive_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbUSBDRive.Checked) lblDestPath.Text = "USB Drive Path:";
+            if (rbUSBDrive.Checked) lblDestPath.Text = "USB Drive Path:";
             else lblDestPath.Text = "SD Card Path:";
         }
 
@@ -134,13 +134,56 @@ namespace TRWinApp
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            var command = new byte[] { 0x64, 0x44, 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x2f, 0x47, 0x6f, 0x72, 0x66, 0x21, 0x00 };
+            //byte[] command = { 0x64, 0x99, 0xf0, 0x40 };// Example 1: 0x64, 0x99, 0xf0, 0x40 = Set to -15.75% via linear equation
+            //byte[] command = { 0x64, 0x9a, 0x20, 0x40 };// Example 2: 0x64, 0x9a, 0x20, 0x40 = set to +32.25 via logarithmic equation
+            //byte[] command = { 0x64, 0x33, 0x05 };// Mute voice 1 & 3
+            //byte[] command = { 0x64, 0x22, 0x02 , 0x0a};// Set banner to LtRed
+            byte[] command = { 0x64, 0x44, 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x2f, 0x47, 0x6f, 0x72, 0x66, 0x21, 0x00 };
             SendCommand(command, "Launch Gorf!", AckToken);
 
-            //byte[] TestCode = { 0x64, 0x99, 0xf0, 0x40 };// Example 1: 0x64, 0x99, 0xf0, 0x40 = Set to -15.75% via linear equation
-            //byte[] TestCode = { 0x64, 0x9a, 0x20, 0x40 };// Example 2: 0x64, 0x9a, 0x20, 0x40 = set to +32.25 via logarithmic equation
-            //byte[] TestCode = { 0x64, 0x33, 0x05 };// Mute voice 1 & 3
-            //byte[] TestCode = { 0x64, 0x22, 0x02 , 0x0a};// Set banner to LtRed
+            // Workflow:
+            // Receive <-- List Directory Token 0x64DD/0x64DE
+            // Send --> AckToken 0x64CC
+            // Receive <-- DriveType(1), Destination Path(MaxNameLength, null terminator), take(1), skip(1)
+            //        DriveTypes: (RegMenuTypes)
+            //           USBDrive  = 0
+            //           SD        = 1
+            //           Teensy    = 2
+            // Send --> AckToken 0x64CC on successful check of directory existence, 0x9b7f on Fail
+            // Send --> StartDirectoryListToken 0x5A5A or FailToken 0x9b7f
+            // Send --> Write content as json
+            // Send --> EndDirectoryListToken 0xA5A5,  0x9b7f on Fail
+
+
+
+            // byte[] pathFileBytes = Encoding.ASCII.GetBytes(tbDestPath.Text);
+            // byte[] pathInfo = new byte[1 + pathFileBytes.Length + 1 + 2 + 2];
+            // pathInfo[0] = 1;  //SD
+            // Array.Copy(pathFileBytes, 0, pathInfo, 1, pathFileBytes.Length);
+            // pathInfo[pathInfo.Length - 5] = 0;   // null terminator
+            // pathInfo[pathInfo.Length - 4] = 0;   // skip
+            // pathInfo[pathInfo.Length - 3] = 2;   // 
+            // pathInfo[pathInfo.Length - 2] = 2; // take
+            // pathInfo[pathInfo.Length - 1] = 2; // 
+            // 
+            // 
+            // //byte[] pathInfo = { 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x00, 0x00, 0x00, 0x00, 0x00 }; //tr dir
+            // //byte[] pathInfo = { 0x01, 0x73, 0x00, 0x00, 0x00, 0x01, 0x01 };
+            // //byte[] pathInfo = { 0x01, 0x73, 0x00, 0x00, 0x00, 0x00, 0x10 }; //SD, root/term, skip none, take FFFF
+            // WriteToOutput(tbDestPath.Text, Color.Purple);
+            // 
+            // if (!SendCommand(GetDirNDJSONToken, "get NDJSON Dir", AckToken, false, false)) return;
+            // 
+            // for (int byteNum = 0; byteNum < pathInfo.Length; byteNum++)
+            // {
+            //     WriteToOutput(byteNum + " " + pathInfo[byteNum].ToString("X2") + " \"" + (char)pathInfo[byteNum] + "\"", Color.Chocolate);
+            // }
+            // 
+            // 
+            // if (!SendCommand(pathInfo, "Path Info", AckToken, true, false)) return;
+            // 
+            // byte[] noneExp = { };
+            // SendCommand(noneExp, "Flush Only", noneExp, true, true); //just flush and close
         }
 
         private void btnPauseSID_Click(object sender, EventArgs e)
@@ -163,6 +206,41 @@ namespace TRWinApp
             var expResponse = Encoding.ASCII.GetBytes("Reset cmd received");
             SendCommand(ResetC64Token, "Reset Command", expResponse);
         }
+
+        private void btnLaunch_Click(object sender, EventArgs e)
+        {
+            //   App: LaunchFileToken 0x6444
+            //Teensy: AckToken 0x64CC
+            //   App: Send CS(2), SD_nUSB(1), 
+            //          DestPath/Name(up to MaxNamePathLength, null term)
+            //Teensy: AckToken 0x64CC on Pass,  0x9b7f on Fail
+
+            if (!SendCommand(LaunchFileToken, "Launch File", AckToken, false, false)) return;
+
+            //if (!tbDestPath.Text.EndsWith("/")) tbDestPath.Text += "/";
+            string LaunchFilePath = tbLaunchFilePath.Text;
+            //DestPathFile += Path.GetFileName(tbSource.Text);
+            byte SD_nUSB = (byte)(rbRL_SD.Checked ? 1 : (rbRL_TF.Checked ? 2 : 0));
+            string[] LaunchSource = { "USB:", "SD:", "TR:"};
+            WriteToOutput("Launching " + LaunchSource[SD_nUSB] + LaunchFilePath, Color.Blue);
+
+            byte[] pathFileBytes = Encoding.ASCII.GetBytes(LaunchFilePath);
+            byte[] launchPathFileName = new byte[1 + pathFileBytes.Length + 1];
+            launchPathFileName[0] = SD_nUSB;
+            Array.Copy(pathFileBytes, 0, launchPathFileName, 1, pathFileBytes.Length);
+            launchPathFileName[launchPathFileName.Length - 1] = 0; // null terminator
+            SendCommand(launchPathFileName, "Path/File Name", AckToken, true, true);
+        }
+
+        private void btnSetSIDSong_Click(object sender, EventArgs e)
+        {
+            SendIntBytes(SetSIDSongToken, 2);
+            SendIntBytes((UInt16)(nudSongNum.Value - 1), 1);
+            if (GetAck()) WriteToOutput("Sent SID Song Num", Color.DarkGreen);
+            else WriteToOutput("SID Song Num Failed!", Color.Red);
+        }
+
+
 
 
         private void btnSendFile_Click(object sender, EventArgs e)
@@ -233,38 +311,6 @@ namespace TRWinApp
             //btnConnected.PerformClick(); //auto disconnect
         }
 
-        private void btnLaunch_Click(object sender, EventArgs e)
-        {
-            //   App: LaunchFileToken 0x6444
-            //Teensy: AckToken 0x64CC
-            //   App: Send CS(2), SD_nUSB(1), 
-            //          DestPath/Name(up to MaxNamePathLength, null term)
-            //Teensy: AckToken 0x64CC on Pass,  0x9b7f on Fail
-
-            SendIntBytes(LaunchFileToken, 2);
-            if (!GetAck()) return;
-
-            UInt32 SD_nUSB = (rbSDCard.Checked ? 1U : 0U);
-            //if (!tbDestPath.Text.EndsWith("/")) tbDestPath.Text += "/";
-            string DestPathFile = tbDestPath.Text;
-            //DestPathFile += Path.GetFileName(tbSource.Text);
-
-            WriteToOutput("Launching " + (SD_nUSB == 1U ? "SD:" : "USB:") + DestPathFile, Color.Black);
-
-            SendIntBytes(SD_nUSB, 1);//Send SD or USB
-
-            serialPort1.Write(DestPathFile + "\0");                    //Send path/name, null terminate
-            if (!GetAck()) WriteToOutput("Launch Failed!", Color.Red);
-        }
-
-        private void btnSetSIDSong_Click(object sender, EventArgs e)
-        {
-            SendIntBytes(SetSIDSongToken, 2);
-            SendIntBytes((UInt16)(nudSongNum.Value - 1), 1);
-            if (GetAck()) WriteToOutput("Sent SID Song Num", Color.DarkGreen);
-            else WriteToOutput("SID Song Num Failed!", Color.Red);
-        }
-
 
         /********************************  Stand Alone Functions *****************************************/
 
@@ -321,25 +367,29 @@ namespace TRWinApp
         {
             return new byte[] { (byte)(Token & 0x00FF), (byte)((Token >> 8) & 0x00FF) };
         }
-        private void SendCommand(UInt16 cmdToken, string description, UInt16 RespToken)
+        private bool SendCommand(UInt16 cmdToken, string description, UInt16 RespToken, bool skipInit = false, bool closeOnSuccess = true)
         {
-            SendCommand(cmdToken, description, RespTokenToByte(RespToken));
+            return SendCommand(cmdToken, description, RespTokenToByte(RespToken), skipInit, closeOnSuccess);
         }
-        private void SendCommand(byte[] command, string description, UInt16 RespToken)
+        private bool SendCommand(byte[] command, string description, UInt16 RespToken, bool skipInit = false, bool closeOnSuccess = true)
         {
-            SendCommand(command, description, RespTokenToByte(RespToken));
+            return SendCommand(command, description, RespTokenToByte(RespToken), skipInit, closeOnSuccess);
         }
-        private void SendCommand(UInt16 cmdToken, string description, byte[] expResponse)
+        private bool SendCommand(UInt16 cmdToken, string description, byte[] expResponse, bool skipInit = false, bool closeOnSuccess = true)
         {
             var command = new byte[] { (byte)((cmdToken >> 8) & 0x00FF), (byte)(cmdToken & 0x00FF) };
-            SendCommand(command, description, expResponse);
+            return SendCommand(command, description, expResponse, skipInit, closeOnSuccess);
         }
-        private void SendCommand(byte[] command, string description, byte[] expResponse)
+        private bool SendCommand(byte[] command, string description, byte[] expResponse, bool skipInit = false, bool closeOnSuccess = true)
         {
             string errMsg, stFlushed;
+            bool retVal = true;
 
             //initialize
-            if (!_streamIO.InitializeOpen(rbComEthernet.Checked, tbIPAddress.Text, cmbCOMPort.Text, out errMsg)) goto ErrorOut;
+            if (!skipInit)
+            {
+                if (!_streamIO.InitializeOpen(rbComEthernet.Checked, tbIPAddress.Text, cmbCOMPort.Text, out errMsg)) goto ErrorOut;
+            }
 
             //flush rx buffer, mostly for serial
             if (!_streamIO.FlushStreamRx(20, out stFlushed, out errMsg)) goto ErrorOut;
@@ -353,6 +403,7 @@ namespace TRWinApp
             if (expResponse.Length == 0)
             {
                 //flush the stream if not looking for a response...
+                WriteToOutput("No Resp Check, flushing...", Color.Blue);
                 if (!_streamIO.FlushStreamRx(500, out stFlushed, out errMsg)) goto ErrorOut;
                 WriteToOutput(stFlushed, Color.Gray);
             }            
@@ -363,6 +414,7 @@ namespace TRWinApp
                 if (bytesRead != expResponse.Length)
                 {
                     WriteToOutput("Bad Response Length: " + bytesRead.ToString() + " != " + expResponse.Length.ToString(), Color.Red);
+                    retVal = false;
                     goto Close;
                 }
 
@@ -380,22 +432,30 @@ namespace TRWinApp
                         WriteToOutput("Bad Response: ", Color.Red);
                         WriteToOutput(expResp, Color.Red);
                         WriteToOutput(actResp, Color.Red);
+                        retVal = false;
                         goto Close;
                     }
                 }
                 WriteToOutput("Received Expected Response", Color.DarkGreen);
-                //WriteToOutput("Received: " + recBuf[0].ToString("X2") + ":" + recBuf[1].ToString("X2"), Color.DarkGreen);
             }
+            if (!closeOnSuccess) return retVal; //(true)
             goto Close; //close stream
 
         ErrorOut:
             WriteToOutput(errMsg, Color.Red);
+            retVal = false;
         Close:
+            if (cbPostFlush.Checked)
+            {
+                _streamIO.FlushStreamRx(500, out stFlushed, out errMsg);
+                WriteToOutput(stFlushed, Color.Black);
+            }
             if (!_streamIO.Close(out errMsg))
             {
                 WriteToOutput(errMsg, Color.Red);
+                retVal = false;
             }
-
+            return retVal;
         }
     }
 }

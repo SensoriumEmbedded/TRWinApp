@@ -40,14 +40,13 @@
             this.btnReset = new System.Windows.Forms.Button();
             this.lblDestPath = new System.Windows.Forms.Label();
             this.tbDestPath = new System.Windows.Forms.TextBox();
-            this.rbUSBDRive = new System.Windows.Forms.RadioButton();
+            this.rbUSBDrive = new System.Windows.Forms.RadioButton();
             this.rbSDCard = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.btnSelectSource = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tbSource = new System.Windows.Forms.TextBox();
             this.btnTest = new System.Windows.Forms.Button();
-            this.pnlCommButtons = new System.Windows.Forms.Panel();
             this.nudSongNum = new System.Windows.Forms.NumericUpDown();
             this.btnSetSIDSong = new System.Windows.Forms.Button();
             this.btnPauseSID = new System.Windows.Forms.Button();
@@ -57,20 +56,31 @@
             this.pnlSerialSetup = new System.Windows.Forms.Panel();
             this.pnlEthernetSetup = new System.Windows.Forms.Panel();
             this.tbIPAddress = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
-            this.pnlCommButtons.SuspendLayout();
+            this.cbPostFlush = new System.Windows.Forms.CheckBox();
+            this.pnlDebug = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.rbRL_SD = new System.Windows.Forms.RadioButton();
+            this.rbRL_USB = new System.Windows.Forms.RadioButton();
+            this.tbLaunchFilePath = new System.Windows.Forms.TextBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.rbRL_TF = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
             this.pnlSerialSetup.SuspendLayout();
             this.pnlEthernetSetup.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.pnlDebug.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSendFile
             // 
-            this.btnSendFile.Location = new System.Drawing.Point(249, 12);
+            this.btnSendFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSendFile.Location = new System.Drawing.Point(274, 74);
             this.btnSendFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnSendFile.Name = "btnSendFile";
             this.btnSendFile.Size = new System.Drawing.Size(72, 28);
@@ -86,16 +96,17 @@
             // rtbOutput
             // 
             this.rtbOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbOutput.Location = new System.Drawing.Point(16, 403);
+            this.rtbOutput.Location = new System.Drawing.Point(16, 328);
             this.rtbOutput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rtbOutput.Name = "rtbOutput";
-            this.rtbOutput.Size = new System.Drawing.Size(592, 214);
+            this.rtbOutput.Size = new System.Drawing.Size(653, 292);
             this.rtbOutput.TabIndex = 9;
             this.rtbOutput.Text = "";
             // 
             // btnPing
             // 
-            this.btnPing.Location = new System.Drawing.Point(9, 8);
+            this.btnPing.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPing.Location = new System.Drawing.Point(7, 26);
             this.btnPing.Margin = new System.Windows.Forms.Padding(4);
             this.btnPing.Name = "btnPing";
             this.btnPing.Size = new System.Drawing.Size(72, 28);
@@ -106,6 +117,7 @@
             // 
             // cmbCOMPort
             // 
+            this.cmbCOMPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCOMPort.FormattingEnabled = true;
             this.cmbCOMPort.Location = new System.Drawing.Point(51, 15);
             this.cmbCOMPort.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -115,6 +127,7 @@
             // 
             // btnRefreshCOMList
             // 
+            this.btnRefreshCOMList.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRefreshCOMList.Location = new System.Drawing.Point(16, 15);
             this.btnRefreshCOMList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRefreshCOMList.Name = "btnRefreshCOMList";
@@ -126,7 +139,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(536, 369);
+            this.btnClear.Location = new System.Drawing.Point(597, 294);
             this.btnClear.Margin = new System.Windows.Forms.Padding(4);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(72, 28);
@@ -137,7 +150,8 @@
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(89, 8);
+            this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReset.Location = new System.Drawing.Point(87, 26);
             this.btnReset.Margin = new System.Windows.Forms.Padding(4);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(72, 28);
@@ -150,7 +164,7 @@
             // 
             this.lblDestPath.AutoSize = true;
             this.lblDestPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDestPath.Location = new System.Drawing.Point(128, 167);
+            this.lblDestPath.Location = new System.Drawing.Point(135, 95);
             this.lblDestPath.Name = "lblDestPath";
             this.lblDestPath.Size = new System.Drawing.Size(91, 16);
             this.lblDestPath.TabIndex = 23;
@@ -158,30 +172,33 @@
             // 
             // tbDestPath
             // 
-            this.tbDestPath.Location = new System.Drawing.Point(140, 187);
+            this.tbDestPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbDestPath.Location = new System.Drawing.Point(147, 115);
             this.tbDestPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbDestPath.Name = "tbDestPath";
-            this.tbDestPath.Size = new System.Drawing.Size(468, 22);
+            this.tbDestPath.Size = new System.Drawing.Size(220, 22);
             this.tbDestPath.TabIndex = 22;
             this.tbDestPath.Text = "/";
             // 
-            // rbUSBDRive
+            // rbUSBDrive
             // 
-            this.rbUSBDRive.AutoSize = true;
-            this.rbUSBDRive.Location = new System.Drawing.Point(16, 196);
-            this.rbUSBDRive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rbUSBDRive.Name = "rbUSBDRive";
-            this.rbUSBDRive.Size = new System.Drawing.Size(91, 20);
-            this.rbUSBDRive.TabIndex = 21;
-            this.rbUSBDRive.Text = "USB Drive";
-            this.rbUSBDRive.UseVisualStyleBackColor = true;
-            this.rbUSBDRive.CheckedChanged += new System.EventHandler(this.rbUSBDRive_CheckedChanged);
+            this.rbUSBDrive.AutoSize = true;
+            this.rbUSBDrive.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbUSBDrive.Location = new System.Drawing.Point(23, 125);
+            this.rbUSBDrive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbUSBDrive.Name = "rbUSBDrive";
+            this.rbUSBDrive.Size = new System.Drawing.Size(91, 20);
+            this.rbUSBDrive.TabIndex = 21;
+            this.rbUSBDrive.Text = "USB Drive";
+            this.rbUSBDrive.UseVisualStyleBackColor = true;
+            this.rbUSBDrive.CheckedChanged += new System.EventHandler(this.rbUSBDRive_CheckedChanged);
             // 
             // rbSDCard
             // 
             this.rbSDCard.AutoSize = true;
             this.rbSDCard.Checked = true;
-            this.rbSDCard.Location = new System.Drawing.Point(16, 171);
+            this.rbSDCard.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbSDCard.Location = new System.Drawing.Point(23, 99);
             this.rbSDCard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rbSDCard.Name = "rbSDCard";
             this.rbSDCard.Size = new System.Drawing.Size(79, 20);
@@ -194,15 +211,16 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 152);
+            this.label2.Location = new System.Drawing.Point(19, 80);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 16);
+            this.label2.Size = new System.Drawing.Size(114, 16);
             this.label2.TabIndex = 19;
-            this.label2.Text = "Destination:";
+            this.label2.Text = "TR Destination:";
             // 
             // btnSelectSource
             // 
-            this.btnSelectSource.Location = new System.Drawing.Point(16, 109);
+            this.btnSelectSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSelectSource.Location = new System.Drawing.Point(23, 37);
             this.btnSelectSource.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSelectSource.Name = "btnSelectSource";
             this.btnSelectSource.Size = new System.Drawing.Size(29, 27);
@@ -215,20 +233,21 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 90);
+            this.label1.Location = new System.Drawing.Point(19, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 16);
+            this.label1.Size = new System.Drawing.Size(102, 16);
             this.label1.TabIndex = 17;
-            this.label1.Text = "Source:";
+            this.label1.Text = "Local Source:";
             // 
             // tbSource
             // 
             this.tbSource.AllowDrop = true;
-            this.tbSource.Location = new System.Drawing.Point(51, 111);
+            this.tbSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbSource.Location = new System.Drawing.Point(58, 39);
             this.tbSource.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbSource.Name = "tbSource";
             this.tbSource.ReadOnly = true;
-            this.tbSource.Size = new System.Drawing.Size(557, 22);
+            this.tbSource.Size = new System.Drawing.Size(309, 22);
             this.tbSource.TabIndex = 16;
             this.tbSource.Text = "<-- Selection button      -or-      Drag/Drop File Here";
             this.tbSource.DragDrop += new System.Windows.Forms.DragEventHandler(this.tbSource_DragDrop);
@@ -236,7 +255,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(9, 78);
+            this.btnTest.Location = new System.Drawing.Point(8, 0);
             this.btnTest.Margin = new System.Windows.Forms.Padding(4);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(102, 28);
@@ -245,24 +264,10 @@
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
-            // pnlCommButtons
-            // 
-            this.pnlCommButtons.Controls.Add(this.nudSongNum);
-            this.pnlCommButtons.Controls.Add(this.btnSetSIDSong);
-            this.pnlCommButtons.Controls.Add(this.btnPauseSID);
-            this.pnlCommButtons.Controls.Add(this.btnLaunch);
-            this.pnlCommButtons.Controls.Add(this.btnPing);
-            this.pnlCommButtons.Controls.Add(this.btnReset);
-            this.pnlCommButtons.Controls.Add(this.btnSendFile);
-            this.pnlCommButtons.Controls.Add(this.btnTest);
-            this.pnlCommButtons.Location = new System.Drawing.Point(16, 244);
-            this.pnlCommButtons.Name = "pnlCommButtons";
-            this.pnlCommButtons.Size = new System.Drawing.Size(592, 118);
-            this.pnlCommButtons.TabIndex = 24;
-            // 
             // nudSongNum
             // 
-            this.nudSongNum.Location = new System.Drawing.Point(347, 48);
+            this.nudSongNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nudSongNum.Location = new System.Drawing.Point(107, 100);
             this.nudSongNum.Maximum = new decimal(new int[] {
             256,
             0,
@@ -284,7 +289,8 @@
             // 
             // btnSetSIDSong
             // 
-            this.btnSetSIDSong.Location = new System.Drawing.Point(249, 44);
+            this.btnSetSIDSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSetSIDSong.Location = new System.Drawing.Point(9, 96);
             this.btnSetSIDSong.Margin = new System.Windows.Forms.Padding(4);
             this.btnSetSIDSong.Name = "btnSetSIDSong";
             this.btnSetSIDSong.Size = new System.Drawing.Size(90, 28);
@@ -295,7 +301,8 @@
             // 
             // btnPauseSID
             // 
-            this.btnPauseSID.Location = new System.Drawing.Point(9, 42);
+            this.btnPauseSID.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPauseSID.Location = new System.Drawing.Point(7, 60);
             this.btnPauseSID.Margin = new System.Windows.Forms.Padding(4);
             this.btnPauseSID.Name = "btnPauseSID";
             this.btnPauseSID.Size = new System.Drawing.Size(90, 28);
@@ -306,7 +313,8 @@
             // 
             // btnLaunch
             // 
-            this.btnLaunch.Location = new System.Drawing.Point(329, 12);
+            this.btnLaunch.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLaunch.Location = new System.Drawing.Point(254, 16);
             this.btnLaunch.Margin = new System.Windows.Forms.Padding(4);
             this.btnLaunch.Name = "btnLaunch";
             this.btnLaunch.Size = new System.Drawing.Size(72, 28);
@@ -318,7 +326,8 @@
             // rbComSerial
             // 
             this.rbComSerial.AutoSize = true;
-            this.rbComSerial.Location = new System.Drawing.Point(12, 9);
+            this.rbComSerial.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbComSerial.Location = new System.Drawing.Point(6, 21);
             this.rbComSerial.Name = "rbComSerial";
             this.rbComSerial.Size = new System.Drawing.Size(63, 20);
             this.rbComSerial.TabIndex = 25;
@@ -328,7 +337,8 @@
             // rbComEthernet
             // 
             this.rbComEthernet.AutoSize = true;
-            this.rbComEthernet.Location = new System.Drawing.Point(12, 35);
+            this.rbComEthernet.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbComEthernet.Location = new System.Drawing.Point(6, 47);
             this.rbComEthernet.Name = "rbComEthernet";
             this.rbComEthernet.Size = new System.Drawing.Size(77, 20);
             this.rbComEthernet.TabIndex = 26;
@@ -340,21 +350,22 @@
             // 
             this.pnlSerialSetup.Controls.Add(this.btnRefreshCOMList);
             this.pnlSerialSetup.Controls.Add(this.cmbCOMPort);
-            this.pnlSerialSetup.Location = new System.Drawing.Point(108, 6);
+            this.pnlSerialSetup.Location = new System.Drawing.Point(97, 9);
             this.pnlSerialSetup.Name = "pnlSerialSetup";
-            this.pnlSerialSetup.Size = new System.Drawing.Size(412, 41);
+            this.pnlSerialSetup.Size = new System.Drawing.Size(150, 41);
             this.pnlSerialSetup.TabIndex = 19;
             // 
             // pnlEthernetSetup
             // 
             this.pnlEthernetSetup.Controls.Add(this.tbIPAddress);
-            this.pnlEthernetSetup.Location = new System.Drawing.Point(108, 50);
+            this.pnlEthernetSetup.Location = new System.Drawing.Point(97, 53);
             this.pnlEthernetSetup.Name = "pnlEthernetSetup";
-            this.pnlEthernetSetup.Size = new System.Drawing.Size(412, 42);
+            this.pnlEthernetSetup.Size = new System.Drawing.Size(150, 37);
             this.pnlEthernetSetup.TabIndex = 27;
             // 
             // tbIPAddress
             // 
+            this.tbIPAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbIPAddress.Location = new System.Drawing.Point(16, 1);
             this.tbIPAddress.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbIPAddress.Name = "tbIPAddress";
@@ -362,80 +373,178 @@
             this.tbIPAddress.TabIndex = 23;
             this.tbIPAddress.Text = "192.168.1.222";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(12, 9);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 16);
-            this.label3.TabIndex = 28;
-            this.label3.Text = "Interface:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(8, 225);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(88, 16);
-            this.label4.TabIndex = 29;
-            this.label4.Text = "Commands:";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.rbComSerial);
-            this.panel1.Controls.Add(this.rbComEthernet);
-            this.panel1.Location = new System.Drawing.Point(5, 17);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(102, 70);
-            this.panel1.TabIndex = 30;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(12, 381);
+            this.label5.Location = new System.Drawing.Point(12, 311);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(146, 16);
             this.label5.TabIndex = 31;
             this.label5.Text = "Communication Log:";
+            // 
+            // cbPostFlush
+            // 
+            this.cbPostFlush.AutoSize = true;
+            this.cbPostFlush.Location = new System.Drawing.Point(117, 5);
+            this.cbPostFlush.Name = "cbPostFlush";
+            this.cbPostFlush.Size = new System.Drawing.Size(142, 20);
+            this.cbPostFlush.TabIndex = 32;
+            this.cbPostFlush.Text = "Flush Before Close";
+            this.cbPostFlush.UseVisualStyleBackColor = true;
+            // 
+            // pnlDebug
+            // 
+            this.pnlDebug.Controls.Add(this.btnTest);
+            this.pnlDebug.Controls.Add(this.cbPostFlush);
+            this.pnlDebug.Location = new System.Drawing.Point(16, 270);
+            this.pnlDebug.Name = "pnlDebug";
+            this.pnlDebug.Size = new System.Drawing.Size(258, 40);
+            this.pnlDebug.TabIndex = 33;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.tbSource);
+            this.groupBox1.Controls.Add(this.btnSelectSource);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.rbSDCard);
+            this.groupBox1.Controls.Add(this.rbUSBDrive);
+            this.groupBox1.Controls.Add(this.tbDestPath);
+            this.groupBox1.Controls.Add(this.btnSendFile);
+            this.groupBox1.Controls.Add(this.lblDestPath);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(271, 18);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(398, 150);
+            this.groupBox1.TabIndex = 34;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "File Transfer";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.rbComSerial);
+            this.groupBox2.Controls.Add(this.rbComEthernet);
+            this.groupBox2.Controls.Add(this.pnlSerialSetup);
+            this.groupBox2.Controls.Add(this.pnlEthernetSetup);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(253, 96);
+            this.groupBox2.TabIndex = 35;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Interface";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.rbRL_TF);
+            this.groupBox3.Controls.Add(this.rbRL_SD);
+            this.groupBox3.Controls.Add(this.rbRL_USB);
+            this.groupBox3.Controls.Add(this.btnLaunch);
+            this.groupBox3.Controls.Add(this.tbLaunchFilePath);
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.Location = new System.Drawing.Point(271, 174);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(398, 106);
+            this.groupBox3.TabIndex = 36;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Remote Launch";
+            // 
+            // rbRL_SD
+            // 
+            this.rbRL_SD.AutoSize = true;
+            this.rbRL_SD.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbRL_SD.Location = new System.Drawing.Point(22, 23);
+            this.rbRL_SD.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbRL_SD.Name = "rbRL_SD";
+            this.rbRL_SD.Size = new System.Drawing.Size(79, 20);
+            this.rbRL_SD.TabIndex = 20;
+            this.rbRL_SD.Text = "SD Card";
+            this.rbRL_SD.UseVisualStyleBackColor = true;
+            // 
+            // rbRL_USB
+            // 
+            this.rbRL_USB.AutoSize = true;
+            this.rbRL_USB.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbRL_USB.Location = new System.Drawing.Point(22, 46);
+            this.rbRL_USB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbRL_USB.Name = "rbRL_USB";
+            this.rbRL_USB.Size = new System.Drawing.Size(91, 20);
+            this.rbRL_USB.TabIndex = 21;
+            this.rbRL_USB.Text = "USB Drive";
+            this.rbRL_USB.UseVisualStyleBackColor = true;
+            // 
+            // tbLaunchFilePath
+            // 
+            this.tbLaunchFilePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbLaunchFilePath.Location = new System.Drawing.Point(147, 50);
+            this.tbLaunchFilePath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbLaunchFilePath.Name = "tbLaunchFilePath";
+            this.tbLaunchFilePath.Size = new System.Drawing.Size(220, 22);
+            this.tbLaunchFilePath.TabIndex = 22;
+            this.tbLaunchFilePath.Text = "/Games/Gorf!";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.nudSongNum);
+            this.groupBox4.Controls.Add(this.btnPing);
+            this.groupBox4.Controls.Add(this.btnSetSIDSong);
+            this.groupBox4.Controls.Add(this.btnReset);
+            this.groupBox4.Controls.Add(this.btnPauseSID);
+            this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox4.Location = new System.Drawing.Point(15, 114);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(250, 150);
+            this.groupBox4.TabIndex = 37;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Other Commands";
+            // 
+            // rbRL_TF
+            // 
+            this.rbRL_TF.AutoSize = true;
+            this.rbRL_TF.Checked = true;
+            this.rbRL_TF.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbRL_TF.Location = new System.Drawing.Point(22, 70);
+            this.rbRL_TF.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbRL_TF.Name = "rbRL_TF";
+            this.rbRL_TF.Size = new System.Drawing.Size(110, 20);
+            this.rbRL_TF.TabIndex = 24;
+            this.rbRL_TF.TabStop = true;
+            this.rbRL_TF.Text = "Teensy Flash";
+            this.rbRL_TF.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(624, 631);
+            this.ClientSize = new System.Drawing.Size(685, 631);
+            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.pnlDebug);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.pnlEthernetSetup);
-            this.Controls.Add(this.pnlSerialSetup);
-            this.Controls.Add(this.pnlCommButtons);
             this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.lblDestPath);
-            this.Controls.Add(this.tbDestPath);
-            this.Controls.Add(this.rbUSBDRive);
             this.Controls.Add(this.rtbOutput);
-            this.Controls.Add(this.rbSDCard);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnSelectSource);
-            this.Controls.Add(this.tbSource);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.Text = "TeensyROM Transfer/Control v0.5";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.pnlCommButtons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).EndInit();
             this.pnlSerialSetup.ResumeLayout(false);
             this.pnlEthernetSetup.ResumeLayout(false);
             this.pnlEthernetSetup.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnlDebug.ResumeLayout(false);
+            this.pnlDebug.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -454,13 +563,12 @@
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Label lblDestPath;
         private System.Windows.Forms.TextBox tbDestPath;
-        private System.Windows.Forms.RadioButton rbUSBDRive;
+        private System.Windows.Forms.RadioButton rbUSBDrive;
         private System.Windows.Forms.RadioButton rbSDCard;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnSelectSource;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbSource;
-        private System.Windows.Forms.Panel pnlCommButtons;
         private System.Windows.Forms.Button btnLaunch;
         private System.Windows.Forms.Button btnPauseSID;
         private System.Windows.Forms.NumericUpDown nudSongNum;
@@ -470,10 +578,17 @@
         private System.Windows.Forms.Panel pnlSerialSetup;
         private System.Windows.Forms.Panel pnlEthernetSetup;
         private System.Windows.Forms.TextBox tbIPAddress;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox cbPostFlush;
+        private System.Windows.Forms.Panel pnlDebug;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton rbRL_TF;
+        private System.Windows.Forms.RadioButton rbRL_SD;
+        private System.Windows.Forms.RadioButton rbRL_USB;
+        private System.Windows.Forms.TextBox tbLaunchFilePath;
+        private System.Windows.Forms.GroupBox groupBox4;
     }
 }
 

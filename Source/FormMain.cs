@@ -1,6 +1,8 @@
 ﻿
 
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +17,6 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using Newtonsoft.Json;
 
 namespace TRWinApp
 {
@@ -196,10 +197,17 @@ namespace TRWinApp
             // Receive <-- Song number to set (1 byte, zero based, song 1 is 0) 
             // Send --> AckToken 0x64CC or FailToken 0x9B7F
 
-            SendIntBytes(SetSIDSongToken, 2);
-            SendIntBytes((UInt16)(nudSongNum.Value - 1), 1);
-            if (GetAck()) WriteToOutput("Sent SID Song Num", Color.DarkGreen);
-            else WriteToOutput("SID Song Num Failed!", Color.Red);
+            byte[] SIDSongToken = RespTokenToByte(SetSIDSongToken);
+            byte[] SetSIDSong = new byte[2 + 1];
+            Array.Copy(SIDSongToken, SetSIDSong, 2);
+            SetSIDSong[2] = (byte)(nudSongNum.Value - 1);
+
+            //for (int byteNum = 0; byteNum < SetSIDSong.Length; byteNum++)
+            //{ 
+            //    WriteToOutput("Byte " + byteNum + " = " + SetSIDSong[byteNum].ToString("X2") + " '" + Encoding.UTF8.GetString(SetSIDSong, byteNum,1) + "'", Color.Purple);
+            //}
+
+            SendCommand(SetSIDSongToken, "Set SID Song to #" + nudSongNum.Value, AckToken);
         }
 
         private void btnRemoteDir_Click(object sender, EventArgs e)

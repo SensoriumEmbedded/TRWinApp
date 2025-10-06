@@ -141,49 +141,6 @@ namespace TRWinApp
             byte[] command = { 0x64, 0x44, 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x2f, 0x47, 0x6f, 0x72, 0x66, 0x21, 0x00 };
             SendCommand(command, "Launch Gorf!", AckToken);
 
-            // Workflow:
-            // Receive <-- List Directory Token 0x64DD/0x64DE
-            // Send --> AckToken 0x64CC
-            // Receive <-- DriveType(1), Destination Path(MaxNameLength, null terminator), take(1), skip(1)
-            //        DriveTypes: (RegMenuTypes)
-            //           USBDrive  = 0
-            //           SD        = 1
-            //           Teensy    = 2
-            // Send --> AckToken 0x64CC on successful check of directory existence, 0x9b7f on Fail
-            // Send --> StartDirectoryListToken 0x5A5A or FailToken 0x9b7f
-            // Send --> Write content as json
-            // Send --> EndDirectoryListToken 0xA5A5,  0x9b7f on Fail
-
-
-
-            // byte[] pathFileBytes = Encoding.ASCII.GetBytes(tbDestPath.Text);
-            // byte[] pathInfo = new byte[1 + pathFileBytes.Length + 1 + 2 + 2];
-            // pathInfo[0] = 1;  //SD
-            // Array.Copy(pathFileBytes, 0, pathInfo, 1, pathFileBytes.Length);
-            // pathInfo[pathInfo.Length - 5] = 0;   // null terminator
-            // pathInfo[pathInfo.Length - 4] = 0;   // skip
-            // pathInfo[pathInfo.Length - 3] = 2;   // 
-            // pathInfo[pathInfo.Length - 2] = 2; // take
-            // pathInfo[pathInfo.Length - 1] = 2; // 
-            // 
-            // 
-            // //byte[] pathInfo = { 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x00, 0x00, 0x00, 0x00, 0x00 }; //tr dir
-            // //byte[] pathInfo = { 0x01, 0x73, 0x00, 0x00, 0x00, 0x01, 0x01 };
-            // //byte[] pathInfo = { 0x01, 0x73, 0x00, 0x00, 0x00, 0x00, 0x10 }; //SD, root/term, skip none, take FFFF
-            // WriteToOutput(tbDestPath.Text, Color.Purple);
-            // 
-            // if (!SendCommand(GetDirNDJSONToken, "get NDJSON Dir", AckToken, false, false)) return;
-            // 
-            // for (int byteNum = 0; byteNum < pathInfo.Length; byteNum++)
-            // {
-            //     WriteToOutput(byteNum + " " + pathInfo[byteNum].ToString("X2") + " \"" + (char)pathInfo[byteNum] + "\"", Color.Chocolate);
-            // }
-            // 
-            // 
-            // if (!SendCommand(pathInfo, "Path Info", AckToken, true, false)) return;
-            // 
-            // byte[] noneExp = { };
-            // SendCommand(noneExp, "Flush Only", noneExp, true, true); //just flush and close
         }
 
         private void btnPauseSID_Click(object sender, EventArgs e)
@@ -217,16 +174,12 @@ namespace TRWinApp
 
             if (!SendCommand(LaunchFileToken, "Launch File", AckToken, false, false)) return;
 
-            //if (!tbDestPath.Text.EndsWith("/")) tbDestPath.Text += "/";
             string LaunchFilePath = tbLaunchFilePath.Text;
-            //DestPathFile += Path.GetFileName(tbSource.Text);
-            byte SD_nUSB = (byte)(rbRL_SD.Checked ? 1 : (rbRL_TF.Checked ? 2 : 0));
-            string[] LaunchSource = { "USB:", "SD:", "TR:"};
-            WriteToOutput("Launching " + LaunchSource[SD_nUSB] + LaunchFilePath, Color.Blue);
+            WriteToOutput("Launching " + strLaunchSource() + LaunchFilePath, Color.Blue);
 
             byte[] pathFileBytes = Encoding.ASCII.GetBytes(LaunchFilePath);
             byte[] launchPathFileName = new byte[1 + pathFileBytes.Length + 1];
-            launchPathFileName[0] = SD_nUSB;
+            launchPathFileName[0] = LaunchSource();
             Array.Copy(pathFileBytes, 0, launchPathFileName, 1, pathFileBytes.Length);
             launchPathFileName[launchPathFileName.Length - 1] = 0; // null terminator
             SendCommand(launchPathFileName, "Path/File Name", AckToken, true, true);
@@ -234,10 +187,63 @@ namespace TRWinApp
 
         private void btnSetSIDSong_Click(object sender, EventArgs e)
         {
+            // Command: 
+            // Set sub-song number of currently loaded SID
+            //
+            // Workflow: (TR POV)
+            // Receive <-- SetSIDSongToken Token 0x6488 
+            // Receive <-- Song number to set (1 byte, zero based, song 1 is 0) 
+            // Send --> AckToken 0x64CC or FailToken 0x9B7F
+
             SendIntBytes(SetSIDSongToken, 2);
             SendIntBytes((UInt16)(nudSongNum.Value - 1), 1);
             if (GetAck()) WriteToOutput("Sent SID Song Num", Color.DarkGreen);
             else WriteToOutput("SID Song Num Failed!", Color.Red);
+        }
+
+        private void btnRemoteDir_Click(object sender, EventArgs e)
+        {
+            // Workflow: (TR POV)
+            // Receive <-- List Directory Token 0x64DD/0x64DE
+            // Send    --> AckToken 0x64CC
+            // Receive <-- Storage Type(1), skip(2), take(2), Destination Path(MaxNameLength, null terminator)
+            //        Storage Types: (RegMenuTypes)
+            //           USBDrive  = 0
+            //           SD        = 1
+            //           Teensy    = 2
+            // Send    --> AckToken 0x64CC on successful check of directory existence, 0x9b7f on Fail
+            // Send    --> StartDirectoryListToken 0x5A5A or FailToken 0x9b7f
+            // Send    --> Write content as json
+            // Send    --> EndDirectoryListToken 0xA5A5,  0x9b7f on Fail
+
+            byte[] pathFileBytes = Encoding.ASCII.GetBytes(tbLaunchFilePath.Text);
+            byte[] pathInfo = new byte[1 + 2 + 2 + pathFileBytes.Length + 1];
+            pathInfo[0] = LaunchSource(); // Storage Type
+            pathInfo[1] = 0;    // skip MSB
+            pathInfo[2] = 0;    // skip LSB
+            pathInfo[3] = 0x7F; // take MSB
+            pathInfo[4] = 0xFF; // take LSB
+            Array.Copy(pathFileBytes, 0, pathInfo, 5, pathFileBytes.Length);
+            pathInfo[pathInfo.Length - 1] = 0;   // null terminator
+  
+            if (!SendCommand(GetDirNDJSONToken, "get NDJSON Dir", AckToken, false, false)) return;
+            
+            if (!SendCommand(pathInfo, "Path Info", AckToken, true, false)) return;
+
+            if (!_streamIO.FlushStreamRx(500, out string stFlushed, out string errMsg))
+            {
+                WriteToOutput(errMsg, Color.Red);
+            }
+
+            WriteToOutput("Dir Path: " + strLaunchSource() + tbLaunchFilePath.Text, Color.Black);
+            //parse NDJSON data?
+            WriteToOutput(stFlushed, Color.Black);
+
+            if (!_streamIO.Close(out errMsg))
+            {
+                WriteToOutput(errMsg, Color.Red);
+            }
+
         }
 
 
@@ -323,10 +329,12 @@ namespace TRWinApp
             rtbOutput.ScrollToCaret();
             rtbOutput.Refresh();
         }
-        private UInt16 to16(byte[] buf)
-        {
-            return (UInt16)(buf[1] * 256 + buf[0]);
-        }
+
+        private byte LaunchSource() { return (byte)(rbRL_SD.Checked ? 1 : (rbRL_TF.Checked ? 2 : 0)); }
+
+        private string strLaunchSource() { return new[] { "USB:", "SD:", "TR:" }[LaunchSource()]; }
+
+        private UInt16 to16(byte[] buf) { return (UInt16)(buf[1] * 256 + buf[0]); }
 
         void SendIntBytes(UInt32 IntToSend, Int16 NumBytes)
         {
@@ -457,5 +465,6 @@ namespace TRWinApp
             }
             return retVal;
         }
+
     }
 }

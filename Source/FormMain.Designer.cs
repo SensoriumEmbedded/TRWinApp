@@ -62,11 +62,12 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnRemoteDir = new System.Windows.Forms.Button();
+            this.rbRL_TF = new System.Windows.Forms.RadioButton();
             this.rbRL_SD = new System.Windows.Forms.RadioButton();
             this.rbRL_USB = new System.Windows.Forms.RadioButton();
             this.tbLaunchFilePath = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.rbRL_TF = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
             this.pnlSerialSetup.SuspendLayout();
             this.pnlEthernetSetup.SuspendLayout();
@@ -80,7 +81,7 @@
             // btnSendFile
             // 
             this.btnSendFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSendFile.Location = new System.Drawing.Point(274, 74);
+            this.btnSendFile.Location = new System.Drawing.Point(233, 74);
             this.btnSendFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnSendFile.Name = "btnSendFile";
             this.btnSendFile.Size = new System.Drawing.Size(72, 28);
@@ -314,7 +315,7 @@
             // btnLaunch
             // 
             this.btnLaunch.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLaunch.Location = new System.Drawing.Point(254, 16);
+            this.btnLaunch.Location = new System.Drawing.Point(146, 53);
             this.btnLaunch.Margin = new System.Windows.Forms.Padding(4);
             this.btnLaunch.Name = "btnLaunch";
             this.btnLaunch.Size = new System.Drawing.Size(72, 28);
@@ -437,6 +438,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnRemoteDir);
             this.groupBox3.Controls.Add(this.rbRL_TF);
             this.groupBox3.Controls.Add(this.rbRL_SD);
             this.groupBox3.Controls.Add(this.rbRL_USB);
@@ -449,6 +451,32 @@
             this.groupBox3.TabIndex = 36;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Remote Launch";
+            // 
+            // btnRemoteDir
+            // 
+            this.btnRemoteDir.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemoteDir.Location = new System.Drawing.Point(250, 54);
+            this.btnRemoteDir.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRemoteDir.Name = "btnRemoteDir";
+            this.btnRemoteDir.Size = new System.Drawing.Size(72, 28);
+            this.btnRemoteDir.TabIndex = 24;
+            this.btnRemoteDir.Text = "Get Dir";
+            this.btnRemoteDir.UseVisualStyleBackColor = true;
+            this.btnRemoteDir.Click += new System.EventHandler(this.btnRemoteDir_Click);
+            // 
+            // rbRL_TF
+            // 
+            this.rbRL_TF.AutoSize = true;
+            this.rbRL_TF.Checked = true;
+            this.rbRL_TF.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbRL_TF.Location = new System.Drawing.Point(22, 70);
+            this.rbRL_TF.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbRL_TF.Name = "rbRL_TF";
+            this.rbRL_TF.Size = new System.Drawing.Size(110, 20);
+            this.rbRL_TF.TabIndex = 24;
+            this.rbRL_TF.TabStop = true;
+            this.rbRL_TF.Text = "Teensy Flash";
+            this.rbRL_TF.UseVisualStyleBackColor = true;
             // 
             // rbRL_SD
             // 
@@ -477,7 +505,7 @@
             // tbLaunchFilePath
             // 
             this.tbLaunchFilePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbLaunchFilePath.Location = new System.Drawing.Point(147, 50);
+            this.tbLaunchFilePath.Location = new System.Drawing.Point(147, 26);
             this.tbLaunchFilePath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbLaunchFilePath.Name = "tbLaunchFilePath";
             this.tbLaunchFilePath.Size = new System.Drawing.Size(220, 22);
@@ -498,20 +526,6 @@
             this.groupBox4.TabIndex = 37;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Other Commands";
-            // 
-            // rbRL_TF
-            // 
-            this.rbRL_TF.AutoSize = true;
-            this.rbRL_TF.Checked = true;
-            this.rbRL_TF.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbRL_TF.Location = new System.Drawing.Point(22, 70);
-            this.rbRL_TF.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rbRL_TF.Name = "rbRL_TF";
-            this.rbRL_TF.Size = new System.Drawing.Size(110, 20);
-            this.rbRL_TF.TabIndex = 24;
-            this.rbRL_TF.TabStop = true;
-            this.rbRL_TF.Text = "Teensy Flash";
-            this.rbRL_TF.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
@@ -589,6 +603,7 @@
         private System.Windows.Forms.RadioButton rbRL_USB;
         private System.Windows.Forms.TextBox tbLaunchFilePath;
         private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button btnRemoteDir;
     }
 }
 

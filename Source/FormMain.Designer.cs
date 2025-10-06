@@ -81,10 +81,10 @@
             // btnSendFile
             // 
             this.btnSendFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSendFile.Location = new System.Drawing.Point(233, 74);
+            this.btnSendFile.Location = new System.Drawing.Point(245, 74);
             this.btnSendFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnSendFile.Name = "btnSendFile";
-            this.btnSendFile.Size = new System.Drawing.Size(72, 28);
+            this.btnSendFile.Size = new System.Drawing.Size(90, 28);
             this.btnSendFile.TabIndex = 8;
             this.btnSendFile.Text = "Send File";
             this.btnSendFile.UseVisualStyleBackColor = true;
@@ -96,7 +96,7 @@
             // 
             // rtbOutput
             // 
-            this.rtbOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbOutput.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbOutput.Location = new System.Drawing.Point(16, 328);
             this.rtbOutput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rtbOutput.Name = "rtbOutput";
@@ -110,7 +110,7 @@
             this.btnPing.Location = new System.Drawing.Point(7, 26);
             this.btnPing.Margin = new System.Windows.Forms.Padding(4);
             this.btnPing.Name = "btnPing";
-            this.btnPing.Size = new System.Drawing.Size(72, 28);
+            this.btnPing.Size = new System.Drawing.Size(90, 28);
             this.btnPing.TabIndex = 10;
             this.btnPing.Text = "Ping";
             this.btnPing.UseVisualStyleBackColor = true;
@@ -140,10 +140,10 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(597, 294);
+            this.btnClear.Location = new System.Drawing.Point(579, 294);
             this.btnClear.Margin = new System.Windows.Forms.Padding(4);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(72, 28);
+            this.btnClear.Size = new System.Drawing.Size(90, 28);
             this.btnClear.TabIndex = 13;
             this.btnClear.Text = "Clr Log";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -152,10 +152,10 @@
             // btnReset
             // 
             this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReset.Location = new System.Drawing.Point(87, 26);
+            this.btnReset.Location = new System.Drawing.Point(105, 22);
             this.btnReset.Margin = new System.Windows.Forms.Padding(4);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(72, 28);
+            this.btnReset.Size = new System.Drawing.Size(90, 28);
             this.btnReset.TabIndex = 14;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -259,9 +259,9 @@
             this.btnTest.Location = new System.Drawing.Point(8, 0);
             this.btnTest.Margin = new System.Windows.Forms.Padding(4);
             this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(102, 28);
+            this.btnTest.Size = new System.Drawing.Size(90, 28);
             this.btnTest.TabIndex = 15;
-            this.btnTest.Text = "Test (Debug)";
+            this.btnTest.Text = "Test/Debug";
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
@@ -315,10 +315,10 @@
             // btnLaunch
             // 
             this.btnLaunch.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLaunch.Location = new System.Drawing.Point(146, 53);
+            this.btnLaunch.Location = new System.Drawing.Point(147, 54);
             this.btnLaunch.Margin = new System.Windows.Forms.Padding(4);
             this.btnLaunch.Name = "btnLaunch";
-            this.btnLaunch.Size = new System.Drawing.Size(72, 28);
+            this.btnLaunch.Size = new System.Drawing.Size(90, 28);
             this.btnLaunch.TabIndex = 15;
             this.btnLaunch.Text = "Launch";
             this.btnLaunch.UseVisualStyleBackColor = true;
@@ -455,12 +455,12 @@
             // btnRemoteDir
             // 
             this.btnRemoteDir.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemoteDir.Location = new System.Drawing.Point(250, 54);
+            this.btnRemoteDir.Location = new System.Drawing.Point(245, 54);
             this.btnRemoteDir.Margin = new System.Windows.Forms.Padding(4);
             this.btnRemoteDir.Name = "btnRemoteDir";
-            this.btnRemoteDir.Size = new System.Drawing.Size(72, 28);
+            this.btnRemoteDir.Size = new System.Drawing.Size(90, 28);
             this.btnRemoteDir.TabIndex = 24;
-            this.btnRemoteDir.Text = "Get Dir";
+            this.btnRemoteDir.Text = "Read Dir";
             this.btnRemoteDir.UseVisualStyleBackColor = true;
             this.btnRemoteDir.Click += new System.EventHandler(this.btnRemoteDir_Click);
             // 

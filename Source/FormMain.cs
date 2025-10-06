@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Newtonsoft.Json;
 
 namespace TRWinApp
 {
@@ -234,10 +235,10 @@ namespace TRWinApp
             {
                 WriteToOutput(errMsg, Color.Red);
             }
-
+            stFlushed = stFlushed.Substring(2, stFlushed.Length - 4); //cut off the 5a5a/a5a5, should check for them...
             WriteToOutput("Dir Path: " + strLaunchSource() + tbLaunchFilePath.Text, Color.Black);
-            //parse NDJSON data?
-            WriteToOutput(stFlushed, Color.Black);
+            //WriteToOutput(stFlushed, Color.Black);
+            DisplayDirNDJSON(stFlushed);
 
             if (!_streamIO.Close(out errMsg))
             {
@@ -318,7 +319,7 @@ namespace TRWinApp
         }
 
 
-        /********************************  Stand Alone Functions *****************************************/
+        /********************************  Stand Alone/Helper Functions *****************************************/
 
         private void WriteToOutput(string strMsg, Color color)
         {
@@ -330,9 +331,56 @@ namespace TRWinApp
             rtbOutput.Refresh();
         }
 
+        private void DisplayDirNDJSON(string ndjson)
+        {
+            WriteToOutput("Size".PadLeft(10) + " Name", Color.Black);
+
+            // Each line is a JSON object
+            var lines = ndjson.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                try
+                {
+                    // Parse JSON object (using Newtonsoft.Json for .NET Framework)
+                    var obj = Newtonsoft.Json.Linq.JObject.Parse(line);
+                    string strOut = "";
+                    if (obj.Property("type").Value.ToString() == "file")
+                    {
+                        strOut += obj.Property("size").Value.ToString().PadLeft(10);
+                    }
+                    else
+                    {
+                        strOut += "<Dir> ".PadLeft(10);
+                    }
+                    strOut += " " + obj.Property("name").Value.ToString();
+                    
+                    // Dir example:
+                    //    type: file
+                    //    name: sam ed.prg
+                    //    size: 4285
+
+                    // //generic:
+                    // foreach (var prop in obj.Properties())
+                    // {
+                    //     strOut += "\t" + prop.Value; //prop.Name
+                    //     //  WriteToOutput($"{prop.Name}: {prop.Value}", Color.Black);
+                    // }
+                    
+                    WriteToOutput(strOut, Color.DarkSlateBlue);
+                }
+                catch (Exception ex)
+                {
+                    WriteToOutput("Invalid NDJSON line: " + line, Color.Red);
+                    //WriteToOutput("Msg: " + ex.Message, Color.Red);
+                }
+            }
+        }
+
         private byte LaunchSource() { return (byte)(rbRL_SD.Checked ? 1 : (rbRL_TF.Checked ? 2 : 0)); }
 
         private string strLaunchSource() { return new[] { "USB:", "SD:", "TR:" }[LaunchSource()]; }
+
+
 
         private UInt16 to16(byte[] buf) { return (UInt16)(buf[1] * 256 + buf[0]); }
 

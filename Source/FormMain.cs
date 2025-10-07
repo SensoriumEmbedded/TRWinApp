@@ -199,7 +199,7 @@ namespace TRWinApp
 
             byte[] SIDSongToken = RespTokenToByte(SetSIDSongToken);
             byte[] SetSIDSong = new byte[2 + 1];
-            Array.Copy(SIDSongToken, SetSIDSong, 2);
+            Array.Copy(SIDSongToken, 0, SetSIDSong, 0, 2);
             SetSIDSong[2] = (byte)(nudSongNum.Value - 1);
 
             //for (int byteNum = 0; byteNum < SetSIDSong.Length; byteNum++)
@@ -252,29 +252,24 @@ namespace TRWinApp
             {
                 WriteToOutput(errMsg, Color.Red);
             }
-
         }
-
-
-
 
         private void btnSendFile_Click(object sender, EventArgs e)
         {
             if (!File.Exists(tbSource.Text))
             {
-                WriteToOutput("\nInvalid Source File/Path", Color.DarkRed);
+                WriteToOutput("\nInvalid Source File/Path", Color.Red);
                 return;
             }
 
             //Read/store file, get length, calc checksum
-            WriteToOutput("\nReading file: " + tbSource.Text, Color.Black);
+            WriteToOutput("\nReading file: " + tbSource.Text, Color.Blue);
             BinaryReader br = new BinaryReader(File.Open(tbSource.Text, FileMode.Open));
             UInt32 len = (UInt32)br.BaseStream.Length;
             byte[] fileBuf = br.ReadBytes((Int32)len);  //read full file to array
             br.Close();
             UInt16 CheckSum = 0;
             for (UInt32 num = 0; num < len; num++) CheckSum += fileBuf[num];
-
 
             //   App: SendFileToken 0x64AA
             //Teensy: AckToken 0x64CC
@@ -284,44 +279,64 @@ namespace TRWinApp
             //   App: Send file(length)
             //Teensy: AckToken 0x64CC on Pass,  0x9b7f on Fail
 
-            SendIntBytes(SendFileToken, 2);
-            if (!GetAck()) return;
+            if (!SendCommand(SendFileToken, "File Token", AckToken, false, false)) return;
 
-            UInt32 SD_nUSB = (rbSDCard.Checked ? 1U : 0U);
+            //SendIntBytes(SendFileToken, 2);
+            //if (!GetAck()) return;
+
+            byte SD_nUSB = (byte)(rbSDCard.Checked ? 1 : 0);
             if (!tbDestPath.Text.EndsWith("/")) tbDestPath.Text += "/";
             string DestPathFile = tbDestPath.Text;
             DestPathFile += Path.GetFileName(tbSource.Text);
 
-            WriteToOutput("Transferring " + len + " bytes, CS= 0x" + CheckSum.ToString("X4"), Color.Black);
-            WriteToOutput("  to TeensyROM " + (SD_nUSB == 1U ? "SD:" : "USB:") + DestPathFile, Color.Black);
+            WriteToOutput("Transferring " + len + " bytes, CS= 0x" + CheckSum.ToString("X4"), Color.DarkBlue);
+            WriteToOutput("  to TeensyROM " + (SD_nUSB == 1U ? "SD:" : "USB:") + DestPathFile, Color.DarkBlue);
 
-            SendIntBytes(len, 4);//Send Length
-            SendIntBytes(CheckSum, 2);//Send Checksum
-            SendIntBytes(SD_nUSB, 1);//Send SD or USB
+            byte[] DestPathFileBytes = Encoding.ASCII.GetBytes(DestPathFile);
+            byte[] pathInfo = new byte[4 + 2 + 1 + DestPathFileBytes.Length + 1];
 
-            serialPort1.Write(DestPathFile + "\0");                    //Send path/name, null terminate
-            if (!GetAck()) return;
+            pathInfo[0] = (byte)(len >> 24); // Length MSB
+            pathInfo[1] = (byte)(len >> 16);
+            pathInfo[2] = (byte)(len >> 8);
+            pathInfo[3] = (byte)(len);
+            pathInfo[4] = (byte)(CheckSum >> 8); // Checksum MSB
+            pathInfo[5] = (byte)(CheckSum);
+            pathInfo[6] = SD_nUSB;
+            Array.Copy(DestPathFileBytes, 0, pathInfo, 7, DestPathFileBytes.Length);
+            pathInfo[pathInfo.Length - 1] = 0;   // null terminator
 
-            WriteToOutput("Sending...", Color.Black);
-            Int32 BytesSent = 0;
-            while (len > BytesSent)
-            {
-                Int32 BytesToSend = 16 * 1024; //block size
-                if (len - BytesSent < BytesToSend) BytesToSend = (Int32)len - BytesSent;
-                //serialPort1.Write(fileBuf, 0, (Int32)len); //Send file
-                serialPort1.Write(fileBuf, BytesSent, BytesToSend); //Send file
-                //WriteToOutput("Sent " + BytesToSend, Color.Black);
-                rtbOutput.AppendText(".");
-                //rtbOutput.ScrollToCaret();
-                BytesSent += BytesToSend;
-            }
-            WriteToOutput("\n...Finished", Color.Black);
+            if (!SendCommand(pathInfo, "Path Info", AckToken, true, false)) return;
 
-            if (!GetAck())
-            {
-                WriteToOutput("Transfer Failed!", Color.DarkRed);
-                return;
-            }
+            //SendIntBytes(len, 4);//Send Length
+            //SendIntBytes(CheckSum, 2);//Send Checksum
+            //SendIntBytes(SD_nUSB, 1);//Send SD or USB
+            //
+            //serialPort1.Write(DestPathFile + "\0");                    //Send path/name, null terminate
+            //if (!GetAck()) return;
+
+            WriteToOutput("Sending...", Color.Blue);
+
+            if (!SendCommand(fileBuf, "File Data", AckToken, true, true)) return;
+
+            //Int32 BytesSent = 0;
+            //while (len > BytesSent)
+            //{
+            //    Int32 BytesToSend = 16 * 1024; //block size
+            //    if (len - BytesSent < BytesToSend) BytesToSend = (Int32)len - BytesSent;
+            //    //serialPort1.Write(fileBuf, 0, (Int32)len); //Send file
+            //    serialPort1.Write(fileBuf, BytesSent, BytesToSend); //Send file
+            //    //WriteToOutput("Sent " + BytesToSend, Color.Black);
+            //    rtbOutput.AppendText(".");
+            //    //rtbOutput.ScrollToCaret();
+            //    BytesSent += BytesToSend;
+            //}
+            //WriteToOutput("\n...Finished", Color.Black);
+            //
+            //if (!GetAck())
+            //{
+            //    WriteToOutput("Transfer Failed!", Color.DarkRed);
+            //    return;
+            //}
             WriteToOutput("Transfer Sucessful!", Color.Green);
             //btnConnected.PerformClick(); //auto disconnect
         }
@@ -390,46 +405,46 @@ namespace TRWinApp
 
 
 
-        private UInt16 to16(byte[] buf) { return (UInt16)(buf[1] * 256 + buf[0]); }
-
-        void SendIntBytes(UInt32 IntToSend, Int16 NumBytes)
-        {
-            byte[] BytesToSend = BitConverter.GetBytes(IntToSend);
-            for (Int16 ByteNum = (Int16)(NumBytes - 1); ByteNum >= 0; ByteNum--)
-                serialPort1.Write(BytesToSend, ByteNum, 1);
-        }
+        //private UInt16 to16(byte[] buf) { return (UInt16)(buf[1] * 256 + buf[0]); }
+        //
+        //void SendIntBytes(UInt32 IntToSend, Int16 NumBytes)
+        //{
+        //    byte[] BytesToSend = BitConverter.GetBytes(IntToSend);
+        //    for (Int16 ByteNum = (Int16)(NumBytes - 1); ByteNum >= 0; ByteNum--)
+        //        serialPort1.Write(BytesToSend, ByteNum, 1);
+        //}
 
         /******************************** Stream IO Control Functions *****************************************/
 
-        bool GetAck(int iTimeoutmSec = 500)
-        {
-            var recBuf = new byte[2];
-
-            if (!_streamIO.ReadStreamTO(recBuf, 2, out int bytesRead, iTimeoutmSec, out string errMsg))
-            {
-                WriteToOutput(errMsg, Color.Red);
-                return false;
-            }
-
-            UInt16 recU16 = to16(recBuf);
-            if (recU16 == AckToken)
-            {
-                WriteToOutput("Ack", Color.DarkGreen);
-                return true;
-            }
-            if (recU16 == FailToken)
-            {
-                WriteToOutput("Command Fail Indicated", Color.DarkRed);
-                return false;
-            }
-
-            WriteToOutput("Bad Ack: " + recBuf[0].ToString("X2") + ":" + recBuf[1].ToString("X2"), Color.DarkRed);
-            return false;
-        }
+        //bool GetAck(int iTimeoutmSec = 500)
+        //{
+        //    var recBuf = new byte[2];
+        //
+        //    if (!_streamIO.ReadStreamTO(recBuf, 2, out int bytesRead, iTimeoutmSec, out string errMsg))
+        //    {
+        //        WriteToOutput(errMsg, Color.Red);
+        //        return false;
+        //    }
+        //
+        //    UInt16 recU16 = to16(recBuf);
+        //    if (recU16 == AckToken)
+        //    {
+        //        WriteToOutput("Ack", Color.DarkGreen);
+        //        return true;
+        //    }
+        //    if (recU16 == FailToken)
+        //    {
+        //        WriteToOutput("Command Fail Indicated", Color.DarkRed);
+        //        return false;
+        //    }
+        //
+        //    WriteToOutput("Bad Ack: " + recBuf[0].ToString("X2") + ":" + recBuf[1].ToString("X2"), Color.DarkRed);
+        //    return false;
+        //}
 
         private byte[] RespTokenToByte(UInt16 Token)
         {
-            return new byte[] { (byte)(Token & 0x00FF), (byte)((Token >> 8) & 0x00FF) };
+            return new byte[] { (byte)(Token), (byte)(Token >> 8) };
         }
         private bool SendCommand(UInt16 cmdToken, string description, UInt16 RespToken, bool skipInit = false, bool closeOnSuccess = true)
         {
@@ -441,7 +456,7 @@ namespace TRWinApp
         }
         private bool SendCommand(UInt16 cmdToken, string description, byte[] expResponse, bool skipInit = false, bool closeOnSuccess = true)
         {
-            var command = new byte[] { (byte)((cmdToken >> 8) & 0x00FF), (byte)(cmdToken & 0x00FF) };
+            var command = new byte[] { (byte)(cmdToken >> 8), (byte)(cmdToken) };
             return SendCommand(command, description, expResponse, skipInit, closeOnSuccess);
         }
         private bool SendCommand(byte[] command, string description, byte[] expResponse, bool skipInit = false, bool closeOnSuccess = true)
@@ -496,6 +511,8 @@ namespace TRWinApp
                         WriteToOutput("Bad Response: ", Color.Red);
                         WriteToOutput(expResp, Color.Red);
                         WriteToOutput(actResp, Color.Red);
+                        _streamIO.FlushStreamRx(500, out stFlushed, out errMsg); //flush on bad response
+                        WriteToOutput(stFlushed, Color.DarkRed);
                         retVal = false;
                         goto Close;
                     }

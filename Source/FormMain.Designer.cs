@@ -107,7 +107,7 @@
             // btnPing
             // 
             this.btnPing.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPing.Location = new System.Drawing.Point(7, 26);
+            this.btnPing.Location = new System.Drawing.Point(9, 26);
             this.btnPing.Margin = new System.Windows.Forms.Padding(4);
             this.btnPing.Name = "btnPing";
             this.btnPing.Size = new System.Drawing.Size(90, 28);
@@ -152,7 +152,7 @@
             // btnReset
             // 
             this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReset.Location = new System.Drawing.Point(105, 22);
+            this.btnReset.Location = new System.Drawing.Point(9, 62);
             this.btnReset.Margin = new System.Windows.Forms.Padding(4);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(90, 28);
@@ -268,7 +268,7 @@
             // nudSongNum
             // 
             this.nudSongNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudSongNum.Location = new System.Drawing.Point(107, 100);
+            this.nudSongNum.Location = new System.Drawing.Point(180, 114);
             this.nudSongNum.Maximum = new decimal(new int[] {
             256,
             0,
@@ -291,7 +291,7 @@
             // btnSetSIDSong
             // 
             this.btnSetSIDSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetSIDSong.Location = new System.Drawing.Point(9, 96);
+            this.btnSetSIDSong.Location = new System.Drawing.Point(144, 80);
             this.btnSetSIDSong.Margin = new System.Windows.Forms.Padding(4);
             this.btnSetSIDSong.Name = "btnSetSIDSong";
             this.btnSetSIDSong.Size = new System.Drawing.Size(90, 28);
@@ -303,7 +303,7 @@
             // btnPauseSID
             // 
             this.btnPauseSID.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPauseSID.Location = new System.Drawing.Point(7, 60);
+            this.btnPauseSID.Location = new System.Drawing.Point(144, 26);
             this.btnPauseSID.Margin = new System.Windows.Forms.Padding(4);
             this.btnPauseSID.Name = "btnPauseSID";
             this.btnPauseSID.Size = new System.Drawing.Size(90, 28);
@@ -398,7 +398,7 @@
             // 
             this.pnlDebug.Controls.Add(this.btnTest);
             this.pnlDebug.Controls.Add(this.cbPostFlush);
-            this.pnlDebug.Location = new System.Drawing.Point(16, 270);
+            this.pnlDebug.Location = new System.Drawing.Point(303, 286);
             this.pnlDebug.Name = "pnlDebug";
             this.pnlDebug.Size = new System.Drawing.Size(258, 40);
             this.pnlDebug.TabIndex = 33;
@@ -522,7 +522,7 @@
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.Location = new System.Drawing.Point(15, 114);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(250, 150);
+            this.groupBox4.Size = new System.Drawing.Size(250, 166);
             this.groupBox4.TabIndex = 37;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Other Commands";

@@ -60,6 +60,7 @@
             this.cbPostFlush = new System.Windows.Forms.CheckBox();
             this.pnlDebug = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbAutoLaunch = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnRemoteDir = new System.Windows.Forms.Button();
@@ -68,6 +69,7 @@
             this.rbRL_USB = new System.Windows.Forms.RadioButton();
             this.tbLaunchFilePath = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.cbAutoSend = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
             this.pnlSerialSetup.SuspendLayout();
             this.pnlEthernetSetup.SuspendLayout();
@@ -81,7 +83,7 @@
             // btnSendFile
             // 
             this.btnSendFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSendFile.Location = new System.Drawing.Point(245, 74);
+            this.btnSendFile.Location = new System.Drawing.Point(97, 78);
             this.btnSendFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnSendFile.Name = "btnSendFile";
             this.btnSendFile.Size = new System.Drawing.Size(90, 28);
@@ -140,7 +142,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(579, 294);
+            this.btnClear.Location = new System.Drawing.Point(175, 299);
             this.btnClear.Margin = new System.Windows.Forms.Padding(4);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(90, 28);
@@ -164,17 +166,17 @@
             // lblDestPath
             // 
             this.lblDestPath.AutoSize = true;
-            this.lblDestPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDestPath.Location = new System.Drawing.Point(135, 95);
+            this.lblDestPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDestPath.Location = new System.Drawing.Point(132, 141);
             this.lblDestPath.Name = "lblDestPath";
-            this.lblDestPath.Size = new System.Drawing.Size(91, 16);
+            this.lblDestPath.Size = new System.Drawing.Size(104, 16);
             this.lblDestPath.TabIndex = 23;
             this.lblDestPath.Text = "SD Card Path:";
             // 
             // tbDestPath
             // 
             this.tbDestPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbDestPath.Location = new System.Drawing.Point(147, 115);
+            this.tbDestPath.Location = new System.Drawing.Point(144, 161);
             this.tbDestPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbDestPath.Name = "tbDestPath";
             this.tbDestPath.Size = new System.Drawing.Size(220, 22);
@@ -185,7 +187,7 @@
             // 
             this.rbUSBDrive.AutoSize = true;
             this.rbUSBDrive.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbUSBDrive.Location = new System.Drawing.Point(23, 125);
+            this.rbUSBDrive.Location = new System.Drawing.Point(23, 163);
             this.rbUSBDrive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rbUSBDrive.Name = "rbUSBDrive";
             this.rbUSBDrive.Size = new System.Drawing.Size(91, 20);
@@ -199,7 +201,7 @@
             this.rbSDCard.AutoSize = true;
             this.rbSDCard.Checked = true;
             this.rbSDCard.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbSDCard.Location = new System.Drawing.Point(23, 99);
+            this.rbSDCard.Location = new System.Drawing.Point(23, 137);
             this.rbSDCard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rbSDCard.Name = "rbSDCard";
             this.rbSDCard.Size = new System.Drawing.Size(79, 20);
@@ -212,7 +214,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(19, 80);
+            this.label2.Location = new System.Drawing.Point(19, 118);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(114, 16);
             this.label2.TabIndex = 19;
@@ -396,15 +398,20 @@
             // 
             // pnlDebug
             // 
+            this.pnlDebug.AutoSize = true;
+            this.pnlDebug.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlDebug.Controls.Add(this.btnTest);
             this.pnlDebug.Controls.Add(this.cbPostFlush);
-            this.pnlDebug.Location = new System.Drawing.Point(303, 286);
+            this.pnlDebug.Location = new System.Drawing.Point(376, 354);
             this.pnlDebug.Name = "pnlDebug";
-            this.pnlDebug.Size = new System.Drawing.Size(258, 40);
+            this.pnlDebug.Size = new System.Drawing.Size(262, 32);
             this.pnlDebug.TabIndex = 33;
+            this.pnlDebug.Visible = false;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbAutoSend);
+            this.groupBox1.Controls.Add(this.cbAutoLaunch);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.tbSource);
             this.groupBox1.Controls.Add(this.btnSelectSource);
@@ -417,10 +424,21 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(271, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(398, 156);
+            this.groupBox1.Size = new System.Drawing.Size(398, 199);
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "File Transfer";
+            // 
+            // cbAutoLaunch
+            // 
+            this.cbAutoLaunch.AutoSize = true;
+            this.cbAutoLaunch.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbAutoLaunch.Location = new System.Drawing.Point(205, 98);
+            this.cbAutoLaunch.Name = "cbAutoLaunch";
+            this.cbAutoLaunch.Size = new System.Drawing.Size(154, 20);
+            this.cbAutoLaunch.TabIndex = 38;
+            this.cbAutoLaunch.Text = "Auto-Launch on send";
+            this.cbAutoLaunch.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -445,7 +463,7 @@
             this.groupBox3.Controls.Add(this.btnLaunch);
             this.groupBox3.Controls.Add(this.tbLaunchFilePath);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(271, 173);
+            this.groupBox3.Location = new System.Drawing.Point(271, 217);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(398, 106);
             this.groupBox3.TabIndex = 36;
@@ -520,12 +538,23 @@
             this.groupBox4.Controls.Add(this.btnReset);
             this.groupBox4.Controls.Add(this.btnPauseSID);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(15, 114);
+            this.groupBox4.Location = new System.Drawing.Point(15, 96);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(250, 166);
+            this.groupBox4.Size = new System.Drawing.Size(250, 196);
             this.groupBox4.TabIndex = 37;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Other Commands";
+            // 
+            // cbAutoSend
+            // 
+            this.cbAutoSend.AutoSize = true;
+            this.cbAutoSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbAutoSend.Location = new System.Drawing.Point(205, 72);
+            this.cbAutoSend.Name = "cbAutoSend";
+            this.cbAutoSend.Size = new System.Drawing.Size(149, 20);
+            this.cbAutoSend.TabIndex = 39;
+            this.cbAutoSend.Text = "Auto-Send on select";
+            this.cbAutoSend.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
@@ -604,6 +633,8 @@
         private System.Windows.Forms.TextBox tbLaunchFilePath;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button btnRemoteDir;
+        private System.Windows.Forms.CheckBox cbAutoLaunch;
+        private System.Windows.Forms.CheckBox cbAutoSend;
     }
 }
 

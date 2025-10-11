@@ -111,6 +111,7 @@ namespace TRWinApp
             openFileDialog1.Filter = "C64 Files (*.prg;*.crt)|*.prg;*.crt|PRG files (*.prg)|*.prg|CRT files (*.crt)|*.crt|All files (*.*)|*.*";
             if (openFileDialog1.ShowDialog() == DialogResult.Cancel) return;
             tbSource.Text = openFileDialog1.FileName;
+            if (cbAutoSend.Checked) btnSendFile.PerformClick();
         }
 
         private void tbSource_DragDrop(object sender, DragEventArgs e)
@@ -122,6 +123,7 @@ namespace TRWinApp
                 tbSource.Text = files[0];
                 tbSource.SelectionStart = tbSource.Text.Length;
                 tbSource.SelectionLength = 0;
+                if (cbAutoSend.Checked) btnSendFile.PerformClick();
             }
         }
 
@@ -322,6 +324,14 @@ namespace TRWinApp
             WriteToOutput("  Took " + (Environment.TickCount - startTime).ToString() + "ms", Color.DarkBlue);
 
             WriteToOutput("Transfer Sucessful!", Color.Green);
+
+            //set up for launch
+            if (SD_nUSB == 1) rbRL_SD.Checked = true;
+            else rbRL_USB.Checked = true;
+            tbLaunchFilePath.Text = DestPathFile;
+
+            if (cbAutoLaunch.Checked) btnLaunch.PerformClick();
+ 
         }
 
 

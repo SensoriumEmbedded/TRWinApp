@@ -27,7 +27,7 @@ namespace TRWinApp
                         errMsg = "Select COM port";
                         return false; 
                     }
-                    _stream = new SerialDataStream(stCOMPort, 115200);
+                    _stream = new SerialDataStream(stCOMPort, 115200); //baud rate makes no diff, will transfer at USB speeds
                 }
 
                 _stream.Open();

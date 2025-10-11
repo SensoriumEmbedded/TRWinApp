@@ -75,6 +75,12 @@
             this.cbV2 = new System.Windows.Forms.CheckBox();
             this.cbV1 = new System.Windows.Forms.CheckBox();
             this.cbC64Freeze = new System.Windows.Forms.CheckBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.cmbColorTarget = new System.Windows.Forms.ComboBox();
+            this.cmbColor = new System.Windows.Forms.ComboBox();
+            this.btnSetColor = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
             this.pnlSerialSetup.SuspendLayout();
             this.pnlEthernetSetup.SuspendLayout();
@@ -83,6 +89,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSendFile
@@ -104,10 +111,10 @@
             // rtbOutput
             // 
             this.rtbOutput.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbOutput.Location = new System.Drawing.Point(16, 328);
+            this.rtbOutput.Location = new System.Drawing.Point(12, 450);
             this.rtbOutput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rtbOutput.Name = "rtbOutput";
-            this.rtbOutput.Size = new System.Drawing.Size(653, 169);
+            this.rtbOutput.Size = new System.Drawing.Size(656, 213);
             this.rtbOutput.TabIndex = 9;
             this.rtbOutput.Text = "";
             // 
@@ -147,7 +154,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(175, 299);
+            this.btnClear.Location = new System.Drawing.Point(175, 420);
             this.btnClear.Margin = new System.Windows.Forms.Padding(4);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(90, 28);
@@ -275,7 +282,7 @@
             // nudSongNum
             // 
             this.nudSongNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudSongNum.Location = new System.Drawing.Point(106, 163);
+            this.nudSongNum.Location = new System.Drawing.Point(104, 62);
             this.nudSongNum.Maximum = new decimal(new int[] {
             256,
             0,
@@ -298,7 +305,7 @@
             // btnSetSIDSong
             // 
             this.btnSetSIDSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetSIDSong.Location = new System.Drawing.Point(9, 159);
+            this.btnSetSIDSong.Location = new System.Drawing.Point(7, 58);
             this.btnSetSIDSong.Margin = new System.Windows.Forms.Padding(4);
             this.btnSetSIDSong.Name = "btnSetSIDSong";
             this.btnSetSIDSong.Size = new System.Drawing.Size(90, 28);
@@ -310,7 +317,7 @@
             // btnPauseSID
             // 
             this.btnPauseSID.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPauseSID.Location = new System.Drawing.Point(9, 123);
+            this.btnPauseSID.Location = new System.Drawing.Point(7, 22);
             this.btnPauseSID.Margin = new System.Windows.Forms.Padding(4);
             this.btnPauseSID.Name = "btnPauseSID";
             this.btnPauseSID.Size = new System.Drawing.Size(90, 28);
@@ -385,7 +392,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(12, 311);
+            this.label5.Location = new System.Drawing.Point(9, 432);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(146, 16);
             this.label5.TabIndex = 31;
@@ -394,7 +401,7 @@
             // cbPostFlush
             // 
             this.cbPostFlush.AutoSize = true;
-            this.cbPostFlush.Location = new System.Drawing.Point(117, 5);
+            this.cbPostFlush.Location = new System.Drawing.Point(112, 5);
             this.cbPostFlush.Name = "cbPostFlush";
             this.cbPostFlush.Size = new System.Drawing.Size(142, 20);
             this.cbPostFlush.TabIndex = 32;
@@ -407,9 +414,9 @@
             this.pnlDebug.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlDebug.Controls.Add(this.btnTest);
             this.pnlDebug.Controls.Add(this.cbPostFlush);
-            this.pnlDebug.Location = new System.Drawing.Point(376, 354);
+            this.pnlDebug.Location = new System.Drawing.Point(381, 455);
             this.pnlDebug.Name = "pnlDebug";
-            this.pnlDebug.Size = new System.Drawing.Size(262, 32);
+            this.pnlDebug.Size = new System.Drawing.Size(257, 32);
             this.pnlDebug.TabIndex = 33;
             this.pnlDebug.Visible = false;
             // 
@@ -548,29 +555,27 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.label6);
+            this.groupBox4.Controls.Add(this.label4);
+            this.groupBox4.Controls.Add(this.btnSetColor);
+            this.groupBox4.Controls.Add(this.cmbColor);
+            this.groupBox4.Controls.Add(this.cmbColorTarget);
             this.groupBox4.Controls.Add(this.cbC64Freeze);
-            this.groupBox4.Controls.Add(this.label3);
-            this.groupBox4.Controls.Add(this.nudSongNum);
             this.groupBox4.Controls.Add(this.btnPing);
-            this.groupBox4.Controls.Add(this.btnSetSIDSong);
             this.groupBox4.Controls.Add(this.btnReset);
-            this.groupBox4.Controls.Add(this.btnPauseSID);
-            this.groupBox4.Controls.Add(this.cbV3);
-            this.groupBox4.Controls.Add(this.cbV2);
-            this.groupBox4.Controls.Add(this.cbV1);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(15, 96);
+            this.groupBox4.Location = new System.Drawing.Point(12, 96);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(250, 196);
+            this.groupBox4.Size = new System.Drawing.Size(253, 196);
             this.groupBox4.TabIndex = 37;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Other Commands";
+            this.groupBox4.Text = "System Control";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(188, 95);
+            this.label3.Location = new System.Drawing.Point(171, 15);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(39, 16);
             this.label3.TabIndex = 42;
@@ -580,7 +585,7 @@
             // 
             this.cbV3.AutoSize = true;
             this.cbV3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbV3.Location = new System.Drawing.Point(191, 165);
+            this.cbV3.Location = new System.Drawing.Point(174, 85);
             this.cbV3.Name = "cbV3";
             this.cbV3.Size = new System.Drawing.Size(43, 20);
             this.cbV3.TabIndex = 41;
@@ -592,7 +597,7 @@
             // 
             this.cbV2.AutoSize = true;
             this.cbV2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbV2.Location = new System.Drawing.Point(191, 140);
+            this.cbV2.Location = new System.Drawing.Point(174, 60);
             this.cbV2.Name = "cbV2";
             this.cbV2.Size = new System.Drawing.Size(43, 20);
             this.cbV2.TabIndex = 40;
@@ -604,7 +609,7 @@
             // 
             this.cbV1.AutoSize = true;
             this.cbV1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbV1.Location = new System.Drawing.Point(191, 114);
+            this.cbV1.Location = new System.Drawing.Point(174, 34);
             this.cbV1.Name = "cbV1";
             this.cbV1.Size = new System.Drawing.Size(43, 20);
             this.cbV1.TabIndex = 39;
@@ -618,18 +623,113 @@
             this.cbC64Freeze.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbC64Freeze.Location = new System.Drawing.Point(9, 61);
             this.cbC64Freeze.Name = "cbC64Freeze";
-            this.cbC64Freeze.Size = new System.Drawing.Size(145, 20);
+            this.cbC64Freeze.Size = new System.Drawing.Size(97, 20);
             this.cbC64Freeze.TabIndex = 43;
-            this.cbC64Freeze.Text = "C64 System Freeze";
+            this.cbC64Freeze.Text = "C64 Freeze";
             this.cbC64Freeze.UseVisualStyleBackColor = true;
             this.cbC64Freeze.CheckedChanged += new System.EventHandler(this.cbC64Freeze_CheckedChanged);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.btnPauseSID);
+            this.groupBox5.Controls.Add(this.label3);
+            this.groupBox5.Controls.Add(this.cbV1);
+            this.groupBox5.Controls.Add(this.nudSongNum);
+            this.groupBox5.Controls.Add(this.cbV2);
+            this.groupBox5.Controls.Add(this.cbV3);
+            this.groupBox5.Controls.Add(this.btnSetSIDSong);
+            this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox5.Location = new System.Drawing.Point(12, 298);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(253, 116);
+            this.groupBox5.TabIndex = 38;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "SID Playback";
+            // 
+            // cmbColorTarget
+            // 
+            this.cmbColorTarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbColorTarget.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbColorTarget.FormattingEnabled = true;
+            this.cmbColorTarget.Items.AddRange(new object[] {
+            "Screen Background",
+            "Screen Border",
+            "Top of screen banner color",
+            "Time Display & Waiting msg",
+            "Input key option indication",
+            "General text/descriptions",
+            "FIle names & other text"});
+            this.cmbColorTarget.Location = new System.Drawing.Point(9, 109);
+            this.cmbColorTarget.Name = "cmbColorTarget";
+            this.cmbColorTarget.Size = new System.Drawing.Size(234, 24);
+            this.cmbColorTarget.TabIndex = 39;
+            // 
+            // cmbColor
+            // 
+            this.cmbColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbColor.FormattingEnabled = true;
+            this.cmbColor.Items.AddRange(new object[] {
+            "Black  ",
+            "White  ",
+            "Red   ",
+            "Cyan  ",
+            "Purple ",
+            "Green  ",
+            "Blue  ",
+            "Yellow ",
+            "Orange ",
+            "Brown  ",
+            "Light Red ",
+            "Dark Grey",
+            "Med Grey",
+            "Light Green",
+            "Light Blue ",
+            "Light Grey "});
+            this.cmbColor.Location = new System.Drawing.Point(9, 139);
+            this.cmbColor.Name = "cmbColor";
+            this.cmbColor.Size = new System.Drawing.Size(171, 24);
+            this.cmbColor.TabIndex = 44;
+            // 
+            // btnSetColor
+            // 
+            this.btnSetColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSetColor.Location = new System.Drawing.Point(187, 139);
+            this.btnSetColor.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSetColor.Name = "btnSetColor";
+            this.btnSetColor.Size = new System.Drawing.Size(56, 24);
+            this.btnSetColor.TabIndex = 45;
+            this.btnSetColor.Text = "Set";
+            this.btnSetColor.UseVisualStyleBackColor = true;
+            this.btnSetColor.Click += new System.EventHandler(this.btnSetColor_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(11, 90);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(60, 16);
+            this.label4.TabIndex = 46;
+            this.label4.Text = "Colors: ";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(65, 90);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(138, 16);
+            this.label6.TabIndex = 47;
+            this.label6.Text = "(Reset to upd display)";
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(685, 516);
+            this.ClientSize = new System.Drawing.Size(681, 674);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -657,6 +757,8 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -709,6 +811,12 @@
         private System.Windows.Forms.CheckBox cbV1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox cbC64Freeze;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.ComboBox cmbColorTarget;
+        private System.Windows.Forms.ComboBox cmbColor;
+        private System.Windows.Forms.Button btnSetColor;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
     }
 }
 

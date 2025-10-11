@@ -65,6 +65,8 @@ namespace TRWinApp
             InitialWinXSize = this.Size.Width;
             InitialWinYSize = this.Size.Height;
             FormMain_Resize(this, EventArgs.Empty); //initial resize
+            cmbColor.SelectedIndex = 0;
+            cmbColorTarget.SelectedIndex = 0;
         }
 
 
@@ -201,6 +203,29 @@ namespace TRWinApp
             Array.Copy(pathFileBytes, 0, launchPathFileName, 1, pathFileBytes.Length);
             launchPathFileName[launchPathFileName.Length - 1] = 0; // null terminator
             SendCommand(launchPathFileName, "Path/File Name", AckToken, true, true);
+        }
+
+        private void btnSetColor_Click(object sender, EventArgs e)
+        {
+            // Command: 
+            // Set one of the colors in the TR UI 
+            //    Color will be stored in EEPROM and IO space, TR menu will need to be reset to take visual effect
+            //
+            // Workflow:
+            // Receive <-- SetColorToken Token 0x6422
+            // Receive <-- Color reference to set (Range 0 to NumColorRefs-1) See enum ColorRefOffsets
+            // Receive <-- Color to set (Range 0 to 15)  See enum PokeColors
+            // Send --> AckToken 0x64CC or FailToken 0x9B7F
+
+            byte[] bytesSetColorToken = CommandTokenToByte(SetColorToken);
+            byte[] command = new byte[2 + 1 + 1];
+            Array.Copy(bytesSetColorToken, 0, command, 0, 2);
+            command[2] = (byte)cmbColorTarget.SelectedIndex;
+            command[3] = (byte)cmbColor.SelectedIndex;
+
+            SendCommand(command, "Color: " + cmbColorTarget.Text + " to " + cmbColor.Text, AckToken);
+
+
         }
 
         private void btnSetSIDSong_Click(object sender, EventArgs e)

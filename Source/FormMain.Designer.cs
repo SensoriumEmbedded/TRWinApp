@@ -120,7 +120,7 @@
             // 
             this.cmbCOMPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCOMPort.FormattingEnabled = true;
-            this.cmbCOMPort.Location = new System.Drawing.Point(51, 15);
+            this.cmbCOMPort.Location = new System.Drawing.Point(51, 2);
             this.cmbCOMPort.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbCOMPort.Name = "cmbCOMPort";
             this.cmbCOMPort.Size = new System.Drawing.Size(89, 24);
@@ -129,7 +129,7 @@
             // btnRefreshCOMList
             // 
             this.btnRefreshCOMList.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRefreshCOMList.Location = new System.Drawing.Point(16, 15);
+            this.btnRefreshCOMList.Location = new System.Drawing.Point(16, 2);
             this.btnRefreshCOMList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRefreshCOMList.Name = "btnRefreshCOMList";
             this.btnRefreshCOMList.Size = new System.Drawing.Size(29, 25);
@@ -145,7 +145,7 @@
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(90, 28);
             this.btnClear.TabIndex = 13;
-            this.btnClear.Text = "Clr Log";
+            this.btnClear.Text = "Clear Log";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
@@ -259,7 +259,7 @@
             this.btnTest.Location = new System.Drawing.Point(8, 0);
             this.btnTest.Margin = new System.Windows.Forms.Padding(4);
             this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(90, 28);
+            this.btnTest.Size = new System.Drawing.Size(102, 28);
             this.btnTest.TabIndex = 15;
             this.btnTest.Text = "Test/Debug";
             this.btnTest.UseVisualStyleBackColor = true;
@@ -351,17 +351,17 @@
             // 
             this.pnlSerialSetup.Controls.Add(this.btnRefreshCOMList);
             this.pnlSerialSetup.Controls.Add(this.cmbCOMPort);
-            this.pnlSerialSetup.Location = new System.Drawing.Point(97, 9);
+            this.pnlSerialSetup.Location = new System.Drawing.Point(77, 16);
             this.pnlSerialSetup.Name = "pnlSerialSetup";
-            this.pnlSerialSetup.Size = new System.Drawing.Size(150, 41);
+            this.pnlSerialSetup.Size = new System.Drawing.Size(150, 43);
             this.pnlSerialSetup.TabIndex = 19;
             // 
             // pnlEthernetSetup
             // 
             this.pnlEthernetSetup.Controls.Add(this.tbIPAddress);
-            this.pnlEthernetSetup.Location = new System.Drawing.Point(97, 53);
+            this.pnlEthernetSetup.Location = new System.Drawing.Point(77, 46);
             this.pnlEthernetSetup.Name = "pnlEthernetSetup";
-            this.pnlEthernetSetup.Size = new System.Drawing.Size(150, 37);
+            this.pnlEthernetSetup.Size = new System.Drawing.Size(150, 26);
             this.pnlEthernetSetup.TabIndex = 27;
             // 
             // tbIPAddress
@@ -415,9 +415,9 @@
             this.groupBox1.Controls.Add(this.btnSendFile);
             this.groupBox1.Controls.Add(this.lblDestPath);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(271, 18);
+            this.groupBox1.Location = new System.Drawing.Point(271, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(398, 150);
+            this.groupBox1.Size = new System.Drawing.Size(398, 156);
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "File Transfer";
@@ -426,12 +426,12 @@
             // 
             this.groupBox2.Controls.Add(this.rbComSerial);
             this.groupBox2.Controls.Add(this.rbComEthernet);
-            this.groupBox2.Controls.Add(this.pnlSerialSetup);
             this.groupBox2.Controls.Add(this.pnlEthernetSetup);
+            this.groupBox2.Controls.Add(this.pnlSerialSetup);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(12, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(253, 96);
+            this.groupBox2.Size = new System.Drawing.Size(253, 78);
             this.groupBox2.TabIndex = 35;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Interface";
@@ -445,7 +445,7 @@
             this.groupBox3.Controls.Add(this.btnLaunch);
             this.groupBox3.Controls.Add(this.tbLaunchFilePath);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(271, 174);
+            this.groupBox3.Location = new System.Drawing.Point(271, 173);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(398, 106);
             this.groupBox3.TabIndex = 36;
@@ -533,19 +533,19 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(685, 631);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pnlDebug);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.rtbOutput);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.Text = "TeensyROM Transfer/Control v0.5";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.FormMain_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).EndInit();
             this.pnlSerialSetup.ResumeLayout(false);
             this.pnlEthernetSetup.ResumeLayout(false);

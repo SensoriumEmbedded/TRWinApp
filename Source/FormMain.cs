@@ -1,6 +1,5 @@
 ﻿
 
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -23,6 +22,7 @@ namespace TRWinApp
     public partial class FormMain : Form
     {
         private StreamIO _streamIO;
+        private int InitialWinXSize, InitialWinYSize;
 
         //synch with TeensyROM code Common_Defs.h
         const UInt16 SetColorToken     = 0x6422;
@@ -61,10 +61,23 @@ namespace TRWinApp
             btnRefreshCOMList.PerformClick();
             rbComEthernet.PerformClick();
             serialPort1.ReadTimeout = 200;
+            InitialWinXSize = this.Size.Width;
+            InitialWinYSize = this.Size.Height;
+            FormMain_Resize(this, EventArgs.Empty); //initial resize
         }
 
 
         /********************************  Local Control Functions *****************************************/
+
+        private void FormMain_Resize(object sender, EventArgs e)
+        {
+            if (this.Width < InitialWinXSize) this.Width = InitialWinXSize;
+            if (this.Height < InitialWinYSize) this.Height = InitialWinYSize;
+            //rtbOutput.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+            rtbOutput.Width = this.ClientSize.Width - rtbOutput.Left - 15;
+            rtbOutput.Height = this.ClientSize.Height - rtbOutput.Top - 15;
+        }
+
         private void btnRefreshCOMList_Click(object sender, EventArgs e)
         {
             cmbCOMPort.Items.Clear();
@@ -304,7 +317,9 @@ namespace TRWinApp
 
             WriteToOutput("Sending...", Color.Blue);
 
+            var startTime = Environment.TickCount;
             if (!SendCommand(fileBuf, "File Data", AckToken, true, true)) return;
+            WriteToOutput("  Took " + (Environment.TickCount - startTime).ToString() + "ms", Color.DarkBlue);
 
             WriteToOutput("Transfer Sucessful!", Color.Green);
         }
@@ -347,7 +362,7 @@ namespace TRWinApp
                     
                     WriteToOutput(strOut, Color.DarkSlateBlue);
                 }
-                catch (Exception ex)
+                catch (Exception ) //ex
                 {
                     WriteToOutput("Invalid NDJSON line: " + line, Color.Red);
                     //WriteToOutput("Msg: " + ex.Message, Color.Red);
@@ -392,7 +407,7 @@ namespace TRWinApp
 
             //flush rx buffer, mostly for serial
             if (!_streamIO.FlushStreamRx(20, out stFlushed, out errMsg)) goto ErrorOut;
-            WriteToOutput(stFlushed, Color.Gray);
+            //WriteToOutput(stFlushed, Color.Gray);
 
             //write command
             if (!_streamIO.Write(command, out errMsg)) goto ErrorOut;
@@ -409,7 +424,7 @@ namespace TRWinApp
             else
             {
                 var recBuf = new byte[expResponse.Length];
-                if (!_streamIO.ReadStreamTO(recBuf, expResponse.Length, out int bytesRead, 500, out errMsg)) goto ErrorOut;
+                if (!_streamIO.ReadStreamTO(recBuf, expResponse.Length, out int bytesRead, 1500, out errMsg)) goto ErrorOut;
                 if (bytesRead != expResponse.Length)
                 {
                     WriteToOutput("Bad Response Length: " + bytesRead.ToString() + " != " + expResponse.Length.ToString(), Color.Red);

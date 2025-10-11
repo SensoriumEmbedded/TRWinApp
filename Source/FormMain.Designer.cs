@@ -60,6 +60,7 @@
             this.cbPostFlush = new System.Windows.Forms.CheckBox();
             this.pnlDebug = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbAutoSend = new System.Windows.Forms.CheckBox();
             this.cbAutoLaunch = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -69,7 +70,10 @@
             this.rbRL_USB = new System.Windows.Forms.RadioButton();
             this.tbLaunchFilePath = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.cbAutoSend = new System.Windows.Forms.CheckBox();
+            this.cbV3 = new System.Windows.Forms.CheckBox();
+            this.cbV2 = new System.Windows.Forms.CheckBox();
+            this.cbV1 = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
             this.pnlSerialSetup.SuspendLayout();
             this.pnlEthernetSetup.SuspendLayout();
@@ -102,7 +106,7 @@
             this.rtbOutput.Location = new System.Drawing.Point(16, 328);
             this.rtbOutput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rtbOutput.Name = "rtbOutput";
-            this.rtbOutput.Size = new System.Drawing.Size(653, 292);
+            this.rtbOutput.Size = new System.Drawing.Size(653, 169);
             this.rtbOutput.TabIndex = 9;
             this.rtbOutput.Text = "";
             // 
@@ -154,7 +158,7 @@
             // btnReset
             // 
             this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReset.Location = new System.Drawing.Point(9, 62);
+            this.btnReset.Location = new System.Drawing.Point(107, 26);
             this.btnReset.Margin = new System.Windows.Forms.Padding(4);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(90, 28);
@@ -270,7 +274,7 @@
             // nudSongNum
             // 
             this.nudSongNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudSongNum.Location = new System.Drawing.Point(180, 114);
+            this.nudSongNum.Location = new System.Drawing.Point(106, 163);
             this.nudSongNum.Maximum = new decimal(new int[] {
             256,
             0,
@@ -293,7 +297,7 @@
             // btnSetSIDSong
             // 
             this.btnSetSIDSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetSIDSong.Location = new System.Drawing.Point(144, 80);
+            this.btnSetSIDSong.Location = new System.Drawing.Point(9, 159);
             this.btnSetSIDSong.Margin = new System.Windows.Forms.Padding(4);
             this.btnSetSIDSong.Name = "btnSetSIDSong";
             this.btnSetSIDSong.Size = new System.Drawing.Size(90, 28);
@@ -305,7 +309,7 @@
             // btnPauseSID
             // 
             this.btnPauseSID.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPauseSID.Location = new System.Drawing.Point(144, 26);
+            this.btnPauseSID.Location = new System.Drawing.Point(9, 123);
             this.btnPauseSID.Margin = new System.Windows.Forms.Padding(4);
             this.btnPauseSID.Name = "btnPauseSID";
             this.btnPauseSID.Size = new System.Drawing.Size(90, 28);
@@ -429,6 +433,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "File Transfer";
             // 
+            // cbAutoSend
+            // 
+            this.cbAutoSend.AutoSize = true;
+            this.cbAutoSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbAutoSend.Location = new System.Drawing.Point(205, 72);
+            this.cbAutoSend.Name = "cbAutoSend";
+            this.cbAutoSend.Size = new System.Drawing.Size(149, 20);
+            this.cbAutoSend.TabIndex = 39;
+            this.cbAutoSend.Text = "Auto-Send on select";
+            this.cbAutoSend.UseVisualStyleBackColor = true;
+            // 
             // cbAutoLaunch
             // 
             this.cbAutoLaunch.AutoSize = true;
@@ -532,11 +547,15 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Controls.Add(this.nudSongNum);
             this.groupBox4.Controls.Add(this.btnPing);
             this.groupBox4.Controls.Add(this.btnSetSIDSong);
             this.groupBox4.Controls.Add(this.btnReset);
             this.groupBox4.Controls.Add(this.btnPauseSID);
+            this.groupBox4.Controls.Add(this.cbV3);
+            this.groupBox4.Controls.Add(this.cbV2);
+            this.groupBox4.Controls.Add(this.cbV1);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.Location = new System.Drawing.Point(15, 96);
             this.groupBox4.Name = "groupBox4";
@@ -545,23 +564,58 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Other Commands";
             // 
-            // cbAutoSend
+            // cbV3
             // 
-            this.cbAutoSend.AutoSize = true;
-            this.cbAutoSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbAutoSend.Location = new System.Drawing.Point(205, 72);
-            this.cbAutoSend.Name = "cbAutoSend";
-            this.cbAutoSend.Size = new System.Drawing.Size(149, 20);
-            this.cbAutoSend.TabIndex = 39;
-            this.cbAutoSend.Text = "Auto-Send on select";
-            this.cbAutoSend.UseVisualStyleBackColor = true;
+            this.cbV3.AutoSize = true;
+            this.cbV3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbV3.Location = new System.Drawing.Point(191, 165);
+            this.cbV3.Name = "cbV3";
+            this.cbV3.Size = new System.Drawing.Size(43, 20);
+            this.cbV3.TabIndex = 41;
+            this.cbV3.Text = "v3";
+            this.cbV3.UseVisualStyleBackColor = true;
+            this.cbV3.CheckedChanged += new System.EventHandler(this.cbVx_CheckedChanged);
+            // 
+            // cbV2
+            // 
+            this.cbV2.AutoSize = true;
+            this.cbV2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbV2.Location = new System.Drawing.Point(191, 140);
+            this.cbV2.Name = "cbV2";
+            this.cbV2.Size = new System.Drawing.Size(43, 20);
+            this.cbV2.TabIndex = 40;
+            this.cbV2.Text = "v2";
+            this.cbV2.UseVisualStyleBackColor = true;
+            this.cbV2.CheckedChanged += new System.EventHandler(this.cbVx_CheckedChanged);
+            // 
+            // cbV1
+            // 
+            this.cbV1.AutoSize = true;
+            this.cbV1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbV1.Location = new System.Drawing.Point(191, 114);
+            this.cbV1.Name = "cbV1";
+            this.cbV1.Size = new System.Drawing.Size(43, 20);
+            this.cbV1.TabIndex = 39;
+            this.cbV1.Text = "v1";
+            this.cbV1.UseVisualStyleBackColor = true;
+            this.cbV1.CheckedChanged += new System.EventHandler(this.cbVx_CheckedChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(188, 95);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(39, 16);
+            this.label3.TabIndex = 42;
+            this.label3.Text = "Mute:";
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(685, 631);
+            this.ClientSize = new System.Drawing.Size(685, 516);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -588,6 +642,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -635,6 +690,10 @@
         private System.Windows.Forms.Button btnRemoteDir;
         private System.Windows.Forms.CheckBox cbAutoLaunch;
         private System.Windows.Forms.CheckBox cbAutoSend;
+        private System.Windows.Forms.CheckBox cbV3;
+        private System.Windows.Forms.CheckBox cbV2;
+        private System.Windows.Forms.CheckBox cbV1;
+        private System.Windows.Forms.Label label3;
     }
 }
 

@@ -58,6 +58,7 @@ namespace TRWinApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            pnlDebug.Visible = true;
             btnRefreshCOMList.PerformClick();
             rbComEthernet.PerformClick();
             serialPort1.ReadTimeout = 200;
@@ -212,7 +213,7 @@ namespace TRWinApp
             // Receive <-- Song number to set (1 byte, zero based, song 1 is 0) 
             // Send --> AckToken 0x64CC or FailToken 0x9B7F
 
-            byte[] SIDSongToken = RespTokenToByte(SetSIDSongToken);
+            byte[] SIDSongToken = CommandTokenToByte(SetSIDSongToken);
             byte[] SetSIDSong = new byte[2 + 1];
             Array.Copy(SIDSongToken, 0, SetSIDSong, 0, 2);
             SetSIDSong[2] = (byte)(nudSongNum.Value - 1);
@@ -222,7 +223,30 @@ namespace TRWinApp
             //    WriteToOutput("Byte " + byteNum + " = " + SetSIDSong[byteNum].ToString("X2") + " '" + Encoding.UTF8.GetString(SetSIDSong, byteNum,1) + "'", Color.Purple);
             //}
 
-            SendCommand(SetSIDSongToken, "Set SID Song to #" + nudSongNum.Value, AckToken);
+            SendCommand(SetSIDSong, "Set SID Song to #" + nudSongNum.Value, AckToken);
+        }
+
+        private void cbVx_CheckedChanged(object sender, EventArgs e)
+        {
+            // Command: 
+            // Set individual SID voice muting
+            //
+            // Workflow:
+            // Receive <-- SIDVoiceMuteToken   0x6433
+            // Receive <-- voice mute info (1 byte)
+            //                bit 0=  Voice 1  on=0, mute=1
+            //                bit 1=  Voice 2  on=0, mute=1
+            //                bit 2=  Voice 3  on=0, mute=1 
+            //             bits 7:3= Zero
+            // Send --> AckToken 0x64CC or FailToken 0x9B7F
+
+            byte[] VoiceMuteToken = CommandTokenToByte(SIDVoiceMuteToken);
+            byte VoiceMuteBits = (byte)((cbV1.Checked ? 1 : 0) + (cbV2.Checked ? 2 : 0) + (cbV3.Checked ? 4 : 0));
+            byte[] SetSIDVoiceMute = new byte[2 + 1];
+            Array.Copy(VoiceMuteToken, 0, SetSIDVoiceMute, 0, 2);
+            SetSIDVoiceMute[2] = VoiceMuteBits;
+
+            SendCommand(SetSIDVoiceMute, "Voice Mute set: " + VoiceMuteBits, AckToken);
         }
 
         private void btnRemoteDir_Click(object sender, EventArgs e)
@@ -384,13 +408,18 @@ namespace TRWinApp
 
         private string strLaunchSource() { return new[] { "USB:", "SD:", "TR:" }[LaunchSource()]; }
 
+        private byte[] CommandTokenToByte(UInt16 Token)
+        {
+            return new byte[] { (byte)(Token >> 8), (byte)(Token) };
+        }
+
         private byte[] RespTokenToByte(UInt16 Token)
         {
             return new byte[] { (byte)(Token), (byte)(Token >> 8) };
         }
 
         /******************************** Main Stream IO Command Function *****************************************/
-        
+
         private bool SendCommand(UInt16 cmdToken, string description, UInt16 RespToken, bool skipInit = false, bool closeOnSuccess = true)
         {
             return SendCommand(cmdToken, description, RespTokenToByte(RespToken), skipInit, closeOnSuccess);
@@ -401,9 +430,10 @@ namespace TRWinApp
         }
         private bool SendCommand(UInt16 cmdToken, string description, byte[] expResponse, bool skipInit = false, bool closeOnSuccess = true)
         {
-            var command = new byte[] { (byte)(cmdToken >> 8), (byte)(cmdToken) };
+            var command = CommandTokenToByte(cmdToken);
             return SendCommand(command, description, expResponse, skipInit, closeOnSuccess);
         }
+
         private bool SendCommand(byte[] command, string description, byte[] expResponse, bool skipInit = false, bool closeOnSuccess = true)
         {
             string errMsg, stFlushed;

@@ -70,10 +70,11 @@
             this.rbRL_USB = new System.Windows.Forms.RadioButton();
             this.tbLaunchFilePath = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.cbV3 = new System.Windows.Forms.CheckBox();
             this.cbV2 = new System.Windows.Forms.CheckBox();
             this.cbV1 = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.cbC64Freeze = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
             this.pnlSerialSetup.SuspendLayout();
             this.pnlEthernetSetup.SuspendLayout();
@@ -547,6 +548,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.cbC64Freeze);
             this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Controls.Add(this.nudSongNum);
             this.groupBox4.Controls.Add(this.btnPing);
@@ -563,6 +565,16 @@
             this.groupBox4.TabIndex = 37;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Other Commands";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(188, 95);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(39, 16);
+            this.label3.TabIndex = 42;
+            this.label3.Text = "Mute:";
             // 
             // cbV3
             // 
@@ -600,15 +612,17 @@
             this.cbV1.UseVisualStyleBackColor = true;
             this.cbV1.CheckedChanged += new System.EventHandler(this.cbVx_CheckedChanged);
             // 
-            // label3
+            // cbC64Freeze
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(188, 95);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(39, 16);
-            this.label3.TabIndex = 42;
-            this.label3.Text = "Mute:";
+            this.cbC64Freeze.AutoSize = true;
+            this.cbC64Freeze.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbC64Freeze.Location = new System.Drawing.Point(9, 61);
+            this.cbC64Freeze.Name = "cbC64Freeze";
+            this.cbC64Freeze.Size = new System.Drawing.Size(145, 20);
+            this.cbC64Freeze.TabIndex = 43;
+            this.cbC64Freeze.Text = "C64 System Freeze";
+            this.cbC64Freeze.UseVisualStyleBackColor = true;
+            this.cbC64Freeze.CheckedChanged += new System.EventHandler(this.cbC64Freeze_CheckedChanged);
             // 
             // FormMain
             // 
@@ -694,6 +708,7 @@
         private System.Windows.Forms.CheckBox cbV2;
         private System.Windows.Forms.CheckBox cbV1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox cbC64Freeze;
     }
 }
 

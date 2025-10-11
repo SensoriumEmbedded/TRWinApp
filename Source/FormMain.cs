@@ -248,6 +248,15 @@ namespace TRWinApp
 
             SendCommand(SetSIDVoiceMute, "Voice Mute set: " + VoiceMuteBits, AckToken);
         }
+        private void cbC64Freeze_CheckedChanged(object sender, EventArgs e)
+        {
+            // C64PauseOnToken C64PauseOffToken
+
+            if (cbC64Freeze.Checked)
+                SendCommand(C64PauseOnToken, "C64 Pause", AckToken);
+            else
+                SendCommand(C64PauseOffToken, "C64 Unpause", AckToken);
+        }
 
         private void btnRemoteDir_Click(object sender, EventArgs e)
         {

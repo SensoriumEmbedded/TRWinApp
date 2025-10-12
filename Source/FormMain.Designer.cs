@@ -59,12 +59,16 @@
             this.cbAutoLaunch = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbTRFilename = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblPathSource = new System.Windows.Forms.Label();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnRemoteDir = new System.Windows.Forms.Button();
             this.rbRL_TF = new System.Windows.Forms.RadioButton();
             this.rbRL_SD = new System.Windows.Forms.RadioButton();
             this.rbRL_USB = new System.Windows.Forms.RadioButton();
-            this.tbLaunchFilePath = new System.Windows.Forms.TextBox();
+            this.tbTRPath = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -117,7 +121,7 @@
             // btnPing
             // 
             this.btnPing.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPing.Location = new System.Drawing.Point(9, 26);
+            this.btnPing.Location = new System.Drawing.Point(20, 22);
             this.btnPing.Margin = new System.Windows.Forms.Padding(4);
             this.btnPing.Name = "btnPing";
             this.btnPing.Size = new System.Drawing.Size(90, 28);
@@ -162,7 +166,7 @@
             // btnReset
             // 
             this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReset.Location = new System.Drawing.Point(107, 26);
+            this.btnReset.Location = new System.Drawing.Point(118, 22);
             this.btnReset.Margin = new System.Windows.Forms.Padding(4);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(90, 28);
@@ -221,7 +225,7 @@
             // nudSongNum
             // 
             this.nudSongNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudSongNum.Location = new System.Drawing.Point(104, 62);
+            this.nudSongNum.Location = new System.Drawing.Point(117, 62);
             this.nudSongNum.Maximum = new decimal(new int[] {
             256,
             0,
@@ -244,7 +248,7 @@
             // btnSetSIDSong
             // 
             this.btnSetSIDSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetSIDSong.Location = new System.Drawing.Point(7, 58);
+            this.btnSetSIDSong.Location = new System.Drawing.Point(20, 58);
             this.btnSetSIDSong.Margin = new System.Windows.Forms.Padding(4);
             this.btnSetSIDSong.Name = "btnSetSIDSong";
             this.btnSetSIDSong.Size = new System.Drawing.Size(90, 28);
@@ -256,7 +260,7 @@
             // btnPauseSID
             // 
             this.btnPauseSID.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPauseSID.Location = new System.Drawing.Point(7, 22);
+            this.btnPauseSID.Location = new System.Drawing.Point(20, 22);
             this.btnPauseSID.Margin = new System.Windows.Forms.Padding(4);
             this.btnPauseSID.Name = "btnPauseSID";
             this.btnPauseSID.Size = new System.Drawing.Size(90, 28);
@@ -268,7 +272,7 @@
             // btnLaunch
             // 
             this.btnLaunch.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLaunch.Location = new System.Drawing.Point(147, 54);
+            this.btnLaunch.Location = new System.Drawing.Point(108, 101);
             this.btnLaunch.Margin = new System.Windows.Forms.Padding(4);
             this.btnLaunch.Name = "btnLaunch";
             this.btnLaunch.Size = new System.Drawing.Size(90, 28);
@@ -281,7 +285,7 @@
             // 
             this.rbComSerial.AutoSize = true;
             this.rbComSerial.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbComSerial.Location = new System.Drawing.Point(6, 21);
+            this.rbComSerial.Location = new System.Drawing.Point(20, 21);
             this.rbComSerial.Name = "rbComSerial";
             this.rbComSerial.Size = new System.Drawing.Size(63, 20);
             this.rbComSerial.TabIndex = 25;
@@ -292,7 +296,7 @@
             // 
             this.rbComEthernet.AutoSize = true;
             this.rbComEthernet.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbComEthernet.Location = new System.Drawing.Point(6, 47);
+            this.rbComEthernet.Location = new System.Drawing.Point(20, 47);
             this.rbComEthernet.Name = "rbComEthernet";
             this.rbComEthernet.Size = new System.Drawing.Size(77, 20);
             this.rbComEthernet.TabIndex = 26;
@@ -304,7 +308,7 @@
             // 
             this.pnlSerialSetup.Controls.Add(this.btnRefreshCOMList);
             this.pnlSerialSetup.Controls.Add(this.cmbCOMPort);
-            this.pnlSerialSetup.Location = new System.Drawing.Point(77, 16);
+            this.pnlSerialSetup.Location = new System.Drawing.Point(91, 16);
             this.pnlSerialSetup.Name = "pnlSerialSetup";
             this.pnlSerialSetup.Size = new System.Drawing.Size(150, 43);
             this.pnlSerialSetup.TabIndex = 19;
@@ -312,7 +316,7 @@
             // pnlEthernetSetup
             // 
             this.pnlEthernetSetup.Controls.Add(this.tbIPAddress);
-            this.pnlEthernetSetup.Location = new System.Drawing.Point(77, 46);
+            this.pnlEthernetSetup.Location = new System.Drawing.Point(91, 46);
             this.pnlEthernetSetup.Name = "pnlEthernetSetup";
             this.pnlEthernetSetup.Size = new System.Drawing.Size(150, 26);
             this.pnlEthernetSetup.TabIndex = 27;
@@ -368,9 +372,9 @@
             this.groupBox1.Controls.Add(this.btnSelectSource);
             this.groupBox1.Controls.Add(this.btnSendFile);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(271, 12);
+            this.groupBox1.Location = new System.Drawing.Point(281, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(398, 128);
+            this.groupBox1.Size = new System.Drawing.Size(388, 128);
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Local File System";
@@ -413,25 +417,69 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.tbTRFilename);
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.lblPathSource);
             this.groupBox3.Controls.Add(this.btnDelete);
             this.groupBox3.Controls.Add(this.btnRemoteDir);
             this.groupBox3.Controls.Add(this.rbRL_TF);
             this.groupBox3.Controls.Add(this.rbRL_SD);
             this.groupBox3.Controls.Add(this.rbRL_USB);
             this.groupBox3.Controls.Add(this.btnLaunch);
-            this.groupBox3.Controls.Add(this.tbLaunchFilePath);
+            this.groupBox3.Controls.Add(this.tbTRPath);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(271, 146);
+            this.groupBox3.Location = new System.Drawing.Point(281, 146);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(398, 126);
+            this.groupBox3.Size = new System.Drawing.Size(388, 142);
             this.groupBox3.TabIndex = 36;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "TeensyROM File Systems";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(19, 76);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(75, 16);
+            this.label7.TabIndex = 51;
+            this.label7.Text = "Filename:";
+            // 
+            // tbTRFilename
+            // 
+            this.tbTRFilename.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbTRFilename.Location = new System.Drawing.Point(108, 73);
+            this.tbTRFilename.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbTRFilename.Name = "tbTRFilename";
+            this.tbTRFilename.Size = new System.Drawing.Size(188, 22);
+            this.tbTRFilename.TabIndex = 50;
+            this.tbTRFilename.Text = "Gorf!";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(19, 50);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(42, 16);
+            this.label2.TabIndex = 49;
+            this.label2.Text = "Path:";
+            // 
+            // lblPathSource
+            // 
+            this.lblPathSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPathSource.Location = new System.Drawing.Point(28, 50);
+            this.lblPathSource.Name = "lblPathSource";
+            this.lblPathSource.Size = new System.Drawing.Size(80, 19);
+            this.lblPathSource.TabIndex = 48;
+            this.lblPathSource.Text = "USB:";
+            this.lblPathSource.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // btnDelete
             // 
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(245, 54);
+            this.btnDelete.Location = new System.Drawing.Point(206, 101);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(90, 28);
@@ -443,12 +491,12 @@
             // btnRemoteDir
             // 
             this.btnRemoteDir.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemoteDir.Location = new System.Drawing.Point(147, 90);
+            this.btnRemoteDir.Location = new System.Drawing.Point(333, 70);
             this.btnRemoteDir.Margin = new System.Windows.Forms.Padding(4);
             this.btnRemoteDir.Name = "btnRemoteDir";
-            this.btnRemoteDir.Size = new System.Drawing.Size(90, 28);
+            this.btnRemoteDir.Size = new System.Drawing.Size(34, 28);
             this.btnRemoteDir.TabIndex = 24;
-            this.btnRemoteDir.Text = "Read Dir";
+            this.btnRemoteDir.Text = "Dir";
             this.btnRemoteDir.UseVisualStyleBackColor = true;
             this.btnRemoteDir.Click += new System.EventHandler(this.btnRemoteDir_Click);
             // 
@@ -457,7 +505,7 @@
             this.rbRL_TF.AutoSize = true;
             this.rbRL_TF.Checked = true;
             this.rbRL_TF.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbRL_TF.Location = new System.Drawing.Point(22, 70);
+            this.rbRL_TF.Location = new System.Drawing.Point(245, 20);
             this.rbRL_TF.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rbRL_TF.Name = "rbRL_TF";
             this.rbRL_TF.Size = new System.Drawing.Size(110, 20);
@@ -465,40 +513,44 @@
             this.rbRL_TF.TabStop = true;
             this.rbRL_TF.Text = "Teensy Flash";
             this.rbRL_TF.UseVisualStyleBackColor = true;
+            this.rbRL_TF.Click += new System.EventHandler(this.rbRL_X_Click);
             // 
             // rbRL_SD
             // 
             this.rbRL_SD.AutoSize = true;
             this.rbRL_SD.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbRL_SD.Location = new System.Drawing.Point(22, 23);
+            this.rbRL_SD.Location = new System.Drawing.Point(23, 23);
             this.rbRL_SD.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rbRL_SD.Name = "rbRL_SD";
             this.rbRL_SD.Size = new System.Drawing.Size(79, 20);
             this.rbRL_SD.TabIndex = 20;
             this.rbRL_SD.Text = "SD Card";
             this.rbRL_SD.UseVisualStyleBackColor = true;
+            this.rbRL_SD.Click += new System.EventHandler(this.rbRL_X_Click);
             // 
             // rbRL_USB
             // 
             this.rbRL_USB.AutoSize = true;
             this.rbRL_USB.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbRL_USB.Location = new System.Drawing.Point(22, 46);
+            this.rbRL_USB.Location = new System.Drawing.Point(135, 23);
             this.rbRL_USB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rbRL_USB.Name = "rbRL_USB";
             this.rbRL_USB.Size = new System.Drawing.Size(91, 20);
             this.rbRL_USB.TabIndex = 21;
             this.rbRL_USB.Text = "USB Drive";
             this.rbRL_USB.UseVisualStyleBackColor = true;
+            this.rbRL_USB.Click += new System.EventHandler(this.rbRL_X_Click);
             // 
-            // tbLaunchFilePath
+            // tbTRPath
             // 
-            this.tbLaunchFilePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbLaunchFilePath.Location = new System.Drawing.Point(147, 26);
-            this.tbLaunchFilePath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tbLaunchFilePath.Name = "tbLaunchFilePath";
-            this.tbLaunchFilePath.Size = new System.Drawing.Size(220, 22);
-            this.tbLaunchFilePath.TabIndex = 22;
-            this.tbLaunchFilePath.Text = "/Games/Gorf!";
+            this.tbTRPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbTRPath.Location = new System.Drawing.Point(108, 47);
+            this.tbTRPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbTRPath.Name = "tbTRPath";
+            this.tbTRPath.Size = new System.Drawing.Size(259, 22);
+            this.tbTRPath.TabIndex = 22;
+            this.tbTRPath.Text = "/Games/";
+            this.tbTRPath.LostFocus += new System.EventHandler(this.tbTRPath_LostFocus);
             // 
             // groupBox4
             // 
@@ -513,7 +565,7 @@
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.Location = new System.Drawing.Point(12, 96);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(253, 176);
+            this.groupBox4.Size = new System.Drawing.Size(253, 169);
             this.groupBox4.TabIndex = 37;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "System Control";
@@ -522,7 +574,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(65, 90);
+            this.label6.Location = new System.Drawing.Point(76, 86);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(138, 16);
             this.label6.TabIndex = 47;
@@ -532,7 +584,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(11, 90);
+            this.label4.Location = new System.Drawing.Point(22, 86);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(60, 16);
             this.label4.TabIndex = 46;
@@ -541,7 +593,7 @@
             // btnSetColor
             // 
             this.btnSetColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetColor.Location = new System.Drawing.Point(187, 139);
+            this.btnSetColor.Location = new System.Drawing.Point(186, 134);
             this.btnSetColor.Margin = new System.Windows.Forms.Padding(4);
             this.btnSetColor.Name = "btnSetColor";
             this.btnSetColor.Size = new System.Drawing.Size(56, 24);
@@ -572,9 +624,9 @@
             "Light Green",
             "Light Blue ",
             "Light Grey "});
-            this.cmbColor.Location = new System.Drawing.Point(9, 139);
+            this.cmbColor.Location = new System.Drawing.Point(20, 135);
             this.cmbColor.Name = "cmbColor";
-            this.cmbColor.Size = new System.Drawing.Size(171, 24);
+            this.cmbColor.Size = new System.Drawing.Size(159, 24);
             this.cmbColor.TabIndex = 44;
             // 
             // cmbColorTarget
@@ -590,16 +642,16 @@
             "Input key option indication",
             "General text/descriptions",
             "File names & other text"});
-            this.cmbColorTarget.Location = new System.Drawing.Point(9, 109);
+            this.cmbColorTarget.Location = new System.Drawing.Point(20, 105);
             this.cmbColorTarget.Name = "cmbColorTarget";
-            this.cmbColorTarget.Size = new System.Drawing.Size(234, 24);
+            this.cmbColorTarget.Size = new System.Drawing.Size(222, 24);
             this.cmbColorTarget.TabIndex = 39;
             // 
             // cbC64Freeze
             // 
             this.cbC64Freeze.AutoSize = true;
             this.cbC64Freeze.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbC64Freeze.Location = new System.Drawing.Point(9, 61);
+            this.cbC64Freeze.Location = new System.Drawing.Point(20, 57);
             this.cbC64Freeze.Name = "cbC64Freeze";
             this.cbC64Freeze.Size = new System.Drawing.Size(97, 20);
             this.cbC64Freeze.TabIndex = 43;
@@ -611,7 +663,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(184, 18);
+            this.label3.Location = new System.Drawing.Point(197, 18);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(39, 16);
             this.label3.TabIndex = 42;
@@ -621,7 +673,7 @@
             // 
             this.cbV3.AutoSize = true;
             this.cbV3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbV3.Location = new System.Drawing.Point(187, 89);
+            this.cbV3.Location = new System.Drawing.Point(200, 89);
             this.cbV3.Name = "cbV3";
             this.cbV3.Size = new System.Drawing.Size(43, 20);
             this.cbV3.TabIndex = 41;
@@ -633,7 +685,7 @@
             // 
             this.cbV2.AutoSize = true;
             this.cbV2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbV2.Location = new System.Drawing.Point(187, 63);
+            this.cbV2.Location = new System.Drawing.Point(200, 63);
             this.cbV2.Name = "cbV2";
             this.cbV2.Size = new System.Drawing.Size(43, 20);
             this.cbV2.TabIndex = 40;
@@ -645,7 +697,7 @@
             // 
             this.cbV1.AutoSize = true;
             this.cbV1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbV1.Location = new System.Drawing.Point(187, 37);
+            this.cbV1.Location = new System.Drawing.Point(200, 37);
             this.cbV1.Name = "cbV1";
             this.cbV1.Size = new System.Drawing.Size(43, 20);
             this.cbV1.TabIndex = 39;
@@ -663,7 +715,7 @@
             this.groupBox5.Controls.Add(this.cbV3);
             this.groupBox5.Controls.Add(this.btnSetSIDSong);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(12, 278);
+            this.groupBox5.Location = new System.Drawing.Point(12, 271);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(253, 120);
             this.groupBox5.TabIndex = 38;
@@ -743,7 +795,7 @@
         private System.Windows.Forms.RadioButton rbRL_TF;
         private System.Windows.Forms.RadioButton rbRL_SD;
         private System.Windows.Forms.RadioButton rbRL_USB;
-        private System.Windows.Forms.TextBox tbLaunchFilePath;
+        private System.Windows.Forms.TextBox tbTRPath;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button btnRemoteDir;
         private System.Windows.Forms.CheckBox cbAutoLaunch;
@@ -760,6 +812,10 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Label lblPathSource;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox tbTRFilename;
     }
 }
 

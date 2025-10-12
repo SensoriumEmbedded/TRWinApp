@@ -61,6 +61,7 @@ namespace TRWinApp
             //pnlDebug.Visible = true;
             btnRefreshCOMList.PerformClick();
             rbComEthernet.PerformClick();
+            rbRL_TF.PerformClick();
             serialPort1.ReadTimeout = 200;
             InitialWinXSize = this.Size.Width;
             InitialWinYSize = this.Size.Height;
@@ -144,6 +145,16 @@ namespace TRWinApp
             pnlSerialSetup.Enabled = rbComSerial.Checked;
         }
 
+        private void rbRL_X_Click(object sender, EventArgs e)
+        {
+            lblPathSource.Text = strLaunchSource();
+        }
+
+        private void tbTRPath_LostFocus(object sender, EventArgs e)
+        {
+            if (!tbTRPath.Text.EndsWith("/")) tbTRPath.Text += "/";
+        }
+
 
         /********************************  Command Button Functions *****************************************/
 
@@ -189,7 +200,7 @@ namespace TRWinApp
 
             if (!SendCommand(LaunchFileToken, "Launch File", AckToken, false, false)) return;
 
-            string LaunchFilePath = tbLaunchFilePath.Text;
+            string LaunchFilePath = tbTRPath.Text + tbTRFilename.Text;
             WriteToOutput("Launching " + strLaunchSource() + LaunchFilePath, Color.Blue);
 
             byte[] pathFileBytes = Encoding.ASCII.GetBytes(LaunchFilePath);
@@ -217,7 +228,7 @@ namespace TRWinApp
                 return;
             }
 
-            string LaunchFilePath = tbLaunchFilePath.Text;
+            string LaunchFilePath = tbTRPath.Text + tbTRFilename.Text;
             //verify delete
             if (MessageBox.Show("Are you sure you want to delete this file?\n" + strLaunchSource() + LaunchFilePath, "Confirm Delete", MessageBoxButtons.OKCancel) != DialogResult.OK)
             {
@@ -329,14 +340,14 @@ namespace TRWinApp
             // Send    --> Write content as json
             // Send    --> EndDirectoryListToken 0xA5A5,  0x9b7f on Fail
 
-            byte[] pathFileBytes = Encoding.ASCII.GetBytes(tbLaunchFilePath.Text);
-            byte[] pathInfo = new byte[1 + 2 + 2 + pathFileBytes.Length + 1];
+            byte[] pathBytes = Encoding.ASCII.GetBytes(tbTRPath.Text);
+            byte[] pathInfo = new byte[1 + 2 + 2 + pathBytes.Length + 1];
             pathInfo[0] = LaunchSource(); // Storage Type
             pathInfo[1] = 0;    // skip MSB
             pathInfo[2] = 0;    // skip LSB
             pathInfo[3] = 0x7F; // take MSB
             pathInfo[4] = 0xFF; // take LSB
-            Array.Copy(pathFileBytes, 0, pathInfo, 5, pathFileBytes.Length);
+            Array.Copy(pathBytes, 0, pathInfo, 5, pathBytes.Length);
             pathInfo[pathInfo.Length - 1] = 0;   // null terminator
   
             if (!SendCommand(GetDirNDJSONToken, "get NDJSON Dir", AckToken, false, false)) return;
@@ -348,7 +359,7 @@ namespace TRWinApp
                 WriteToOutput(errMsg, Color.Red);
             }
             stFlushed = stFlushed.Substring(2, stFlushed.Length - 4); //cut off the 5a5a/a5a5, should check for them...
-            WriteToOutput("Dir Path: " + strLaunchSource() + tbLaunchFilePath.Text, Color.Black);
+            WriteToOutput("Dir Path: " + strLaunchSource() + tbTRPath.Text, Color.Black);
             //WriteToOutput(stFlushed, Color.Black);
             DisplayDirNDJSON(stFlushed);
 
@@ -389,8 +400,8 @@ namespace TRWinApp
             //   App: Send file(length)
             //Teensy: AckToken 0x64CC on Pass,  0x9b7f on Fail
 
-            if (!tbLaunchFilePath.Text.EndsWith("/")) tbLaunchFilePath.Text += "/";
-            string DestPathFile = tbLaunchFilePath.Text + Path.GetFileName(tbSource.Text);
+            //if (!tbTRPath.Text.EndsWith("/")) tbTRPath.Text += "/";
+            string DestPathFile = tbTRPath.Text + Path.GetFileName(tbSource.Text);
             byte[] DestPathFileBytes = Encoding.ASCII.GetBytes(DestPathFile);
             byte[] pathInfo = new byte[4 + 2 + 1 + DestPathFileBytes.Length + 1];
 
@@ -420,7 +431,7 @@ namespace TRWinApp
             WriteToOutput("Transfer Sucessful!", Color.Green);
 
             //set up for launch
-            tbLaunchFilePath.Text = DestPathFile;
+            tbTRFilename.Text = Path.GetFileName(tbSource.Text);
 
             if (cbAutoLaunch.Checked) btnLaunch.PerformClick();
  
@@ -474,7 +485,7 @@ namespace TRWinApp
 
         private byte LaunchSource() { return (byte)(rbRL_SD.Checked ? 1 : (rbRL_TF.Checked ? 2 : 0)); }
 
-        private string strLaunchSource() { return new[] { "USB:", "SD:", "TR:" }[LaunchSource()]; }
+        private string strLaunchSource() { return new[] { "USB:", "SD:", "TF:" }[LaunchSource()]; }
 
         private byte[] CommandTokenToByte(UInt16 Token)
         {
@@ -501,7 +512,6 @@ namespace TRWinApp
             var command = CommandTokenToByte(cmdToken);
             return SendCommand(command, description, expResponse, skipInit, closeOnSuccess);
         }
-
         private bool SendCommand(byte[] command, string description, byte[] expResponse, bool skipInit = false, bool closeOnSuccess = true)
         {
             string errMsg, stFlushed;

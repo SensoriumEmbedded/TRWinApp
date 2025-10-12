@@ -38,11 +38,6 @@
             this.btnRefreshCOMList = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
-            this.lblDestPath = new System.Windows.Forms.Label();
-            this.tbDestPath = new System.Windows.Forms.TextBox();
-            this.rbUSBDrive = new System.Windows.Forms.RadioButton();
-            this.rbSDCard = new System.Windows.Forms.RadioButton();
-            this.label2 = new System.Windows.Forms.Label();
             this.btnSelectSource = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tbSource = new System.Windows.Forms.TextBox();
@@ -64,24 +59,24 @@
             this.cbAutoLaunch = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.btnRemoteDir = new System.Windows.Forms.Button();
             this.rbRL_TF = new System.Windows.Forms.RadioButton();
             this.rbRL_SD = new System.Windows.Forms.RadioButton();
             this.rbRL_USB = new System.Windows.Forms.RadioButton();
             this.tbLaunchFilePath = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnSetColor = new System.Windows.Forms.Button();
+            this.cmbColor = new System.Windows.Forms.ComboBox();
+            this.cmbColorTarget = new System.Windows.Forms.ComboBox();
+            this.cbC64Freeze = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbV3 = new System.Windows.Forms.CheckBox();
             this.cbV2 = new System.Windows.Forms.CheckBox();
             this.cbV1 = new System.Windows.Forms.CheckBox();
-            this.cbC64Freeze = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.cmbColorTarget = new System.Windows.Forms.ComboBox();
-            this.cmbColor = new System.Windows.Forms.ComboBox();
-            this.btnSetColor = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
             this.pnlSerialSetup.SuspendLayout();
             this.pnlEthernetSetup.SuspendLayout();
@@ -96,12 +91,12 @@
             // btnSendFile
             // 
             this.btnSendFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSendFile.Location = new System.Drawing.Point(97, 78);
+            this.btnSendFile.Location = new System.Drawing.Point(58, 67);
             this.btnSendFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnSendFile.Name = "btnSendFile";
-            this.btnSendFile.Size = new System.Drawing.Size(90, 28);
+            this.btnSendFile.Size = new System.Drawing.Size(117, 51);
             this.btnSendFile.TabIndex = 8;
-            this.btnSendFile.Text = "Send File";
+            this.btnSendFile.Text = "Send File\r\nto TeensyROM";
             this.btnSendFile.UseVisualStyleBackColor = true;
             this.btnSendFile.Click += new System.EventHandler(this.btnSendFile_Click);
             // 
@@ -172,66 +167,9 @@
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(90, 28);
             this.btnReset.TabIndex = 14;
-            this.btnReset.Text = "Reset";
+            this.btnReset.Text = "Reset/Menu";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-            // 
-            // lblDestPath
-            // 
-            this.lblDestPath.AutoSize = true;
-            this.lblDestPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDestPath.Location = new System.Drawing.Point(132, 141);
-            this.lblDestPath.Name = "lblDestPath";
-            this.lblDestPath.Size = new System.Drawing.Size(104, 16);
-            this.lblDestPath.TabIndex = 23;
-            this.lblDestPath.Text = "SD Card Path:";
-            // 
-            // tbDestPath
-            // 
-            this.tbDestPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbDestPath.Location = new System.Drawing.Point(144, 161);
-            this.tbDestPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tbDestPath.Name = "tbDestPath";
-            this.tbDestPath.Size = new System.Drawing.Size(220, 22);
-            this.tbDestPath.TabIndex = 22;
-            this.tbDestPath.Text = "/";
-            // 
-            // rbUSBDrive
-            // 
-            this.rbUSBDrive.AutoSize = true;
-            this.rbUSBDrive.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbUSBDrive.Location = new System.Drawing.Point(23, 163);
-            this.rbUSBDrive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rbUSBDrive.Name = "rbUSBDrive";
-            this.rbUSBDrive.Size = new System.Drawing.Size(91, 20);
-            this.rbUSBDrive.TabIndex = 21;
-            this.rbUSBDrive.Text = "USB Drive";
-            this.rbUSBDrive.UseVisualStyleBackColor = true;
-            this.rbUSBDrive.CheckedChanged += new System.EventHandler(this.rbUSBDRive_CheckedChanged);
-            // 
-            // rbSDCard
-            // 
-            this.rbSDCard.AutoSize = true;
-            this.rbSDCard.Checked = true;
-            this.rbSDCard.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbSDCard.Location = new System.Drawing.Point(23, 137);
-            this.rbSDCard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rbSDCard.Name = "rbSDCard";
-            this.rbSDCard.Size = new System.Drawing.Size(79, 20);
-            this.rbSDCard.TabIndex = 20;
-            this.rbSDCard.TabStop = true;
-            this.rbSDCard.Text = "SD Card";
-            this.rbSDCard.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(19, 118);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(114, 16);
-            this.label2.TabIndex = 19;
-            this.label2.Text = "TR Destination:";
             // 
             // btnSelectSource
             // 
@@ -251,9 +189,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(19, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(102, 16);
+            this.label1.Size = new System.Drawing.Size(164, 16);
             this.label1.TabIndex = 17;
-            this.label1.Text = "Local Source:";
+            this.label1.Text = "Source Path/Filename:";
             // 
             // tbSource
             // 
@@ -428,19 +366,14 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.tbSource);
             this.groupBox1.Controls.Add(this.btnSelectSource);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.rbSDCard);
-            this.groupBox1.Controls.Add(this.rbUSBDrive);
-            this.groupBox1.Controls.Add(this.tbDestPath);
             this.groupBox1.Controls.Add(this.btnSendFile);
-            this.groupBox1.Controls.Add(this.lblDestPath);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(271, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(398, 199);
+            this.groupBox1.Size = new System.Drawing.Size(398, 128);
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "File Transfer";
+            this.groupBox1.Text = "Local File System";
             // 
             // cbAutoSend
             // 
@@ -448,9 +381,9 @@
             this.cbAutoSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbAutoSend.Location = new System.Drawing.Point(205, 72);
             this.cbAutoSend.Name = "cbAutoSend";
-            this.cbAutoSend.Size = new System.Drawing.Size(149, 20);
+            this.cbAutoSend.Size = new System.Drawing.Size(150, 20);
             this.cbAutoSend.TabIndex = 39;
-            this.cbAutoSend.Text = "Auto-Send on select";
+            this.cbAutoSend.Text = "Auto Send on Select";
             this.cbAutoSend.UseVisualStyleBackColor = true;
             // 
             // cbAutoLaunch
@@ -459,9 +392,9 @@
             this.cbAutoLaunch.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbAutoLaunch.Location = new System.Drawing.Point(205, 98);
             this.cbAutoLaunch.Name = "cbAutoLaunch";
-            this.cbAutoLaunch.Size = new System.Drawing.Size(154, 20);
+            this.cbAutoLaunch.Size = new System.Drawing.Size(155, 20);
             this.cbAutoLaunch.TabIndex = 38;
-            this.cbAutoLaunch.Text = "Auto-Launch on send";
+            this.cbAutoLaunch.Text = "Auto Launch on Send";
             this.cbAutoLaunch.UseVisualStyleBackColor = true;
             // 
             // groupBox2
@@ -488,12 +421,24 @@
             this.groupBox3.Controls.Add(this.btnLaunch);
             this.groupBox3.Controls.Add(this.tbLaunchFilePath);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(271, 217);
+            this.groupBox3.Location = new System.Drawing.Point(271, 146);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(398, 129);
+            this.groupBox3.Size = new System.Drawing.Size(398, 126);
             this.groupBox3.TabIndex = 36;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Remote Launch";
+            this.groupBox3.Text = "TeensyROM File Systems";
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDelete.Location = new System.Drawing.Point(245, 54);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(90, 28);
+            this.btnDelete.TabIndex = 25;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnRemoteDir
             // 
@@ -573,6 +518,95 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "System Control";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(65, 90);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(138, 16);
+            this.label6.TabIndex = 47;
+            this.label6.Text = "(Reset to upd display)";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(11, 90);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(60, 16);
+            this.label4.TabIndex = 46;
+            this.label4.Text = "Colors: ";
+            // 
+            // btnSetColor
+            // 
+            this.btnSetColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSetColor.Location = new System.Drawing.Point(187, 139);
+            this.btnSetColor.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSetColor.Name = "btnSetColor";
+            this.btnSetColor.Size = new System.Drawing.Size(56, 24);
+            this.btnSetColor.TabIndex = 45;
+            this.btnSetColor.Text = "Set";
+            this.btnSetColor.UseVisualStyleBackColor = true;
+            this.btnSetColor.Click += new System.EventHandler(this.btnSetColor_Click);
+            // 
+            // cmbColor
+            // 
+            this.cmbColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbColor.FormattingEnabled = true;
+            this.cmbColor.Items.AddRange(new object[] {
+            "Black  ",
+            "White  ",
+            "Red   ",
+            "Cyan  ",
+            "Purple ",
+            "Green  ",
+            "Blue  ",
+            "Yellow ",
+            "Orange ",
+            "Brown  ",
+            "Light Red ",
+            "Dark Grey",
+            "Med Grey",
+            "Light Green",
+            "Light Blue ",
+            "Light Grey "});
+            this.cmbColor.Location = new System.Drawing.Point(9, 139);
+            this.cmbColor.Name = "cmbColor";
+            this.cmbColor.Size = new System.Drawing.Size(171, 24);
+            this.cmbColor.TabIndex = 44;
+            // 
+            // cmbColorTarget
+            // 
+            this.cmbColorTarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbColorTarget.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbColorTarget.FormattingEnabled = true;
+            this.cmbColorTarget.Items.AddRange(new object[] {
+            "Screen Background",
+            "Screen Border",
+            "Top of screen banner color",
+            "Time Display & Waiting msg",
+            "Input key option indication",
+            "General text/descriptions",
+            "File names & other text"});
+            this.cmbColorTarget.Location = new System.Drawing.Point(9, 109);
+            this.cmbColorTarget.Name = "cmbColorTarget";
+            this.cmbColorTarget.Size = new System.Drawing.Size(234, 24);
+            this.cmbColorTarget.TabIndex = 39;
+            // 
+            // cbC64Freeze
+            // 
+            this.cbC64Freeze.AutoSize = true;
+            this.cbC64Freeze.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbC64Freeze.Location = new System.Drawing.Point(9, 61);
+            this.cbC64Freeze.Name = "cbC64Freeze";
+            this.cbC64Freeze.Size = new System.Drawing.Size(97, 20);
+            this.cbC64Freeze.TabIndex = 43;
+            this.cbC64Freeze.Text = "C64 Freeze";
+            this.cbC64Freeze.UseVisualStyleBackColor = true;
+            this.cbC64Freeze.CheckedChanged += new System.EventHandler(this.cbC64Freeze_CheckedChanged);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -619,18 +653,6 @@
             this.cbV1.UseVisualStyleBackColor = true;
             this.cbV1.CheckedChanged += new System.EventHandler(this.cbVx_CheckedChanged);
             // 
-            // cbC64Freeze
-            // 
-            this.cbC64Freeze.AutoSize = true;
-            this.cbC64Freeze.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbC64Freeze.Location = new System.Drawing.Point(9, 61);
-            this.cbC64Freeze.Name = "cbC64Freeze";
-            this.cbC64Freeze.Size = new System.Drawing.Size(97, 20);
-            this.cbC64Freeze.TabIndex = 43;
-            this.cbC64Freeze.Text = "C64 Freeze";
-            this.cbC64Freeze.UseVisualStyleBackColor = true;
-            this.cbC64Freeze.CheckedChanged += new System.EventHandler(this.cbC64Freeze_CheckedChanged);
-            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.btnPauseSID);
@@ -647,95 +669,6 @@
             this.groupBox5.TabIndex = 38;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "SID Playback";
-            // 
-            // cmbColorTarget
-            // 
-            this.cmbColorTarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbColorTarget.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbColorTarget.FormattingEnabled = true;
-            this.cmbColorTarget.Items.AddRange(new object[] {
-            "Screen Background",
-            "Screen Border",
-            "Top of screen banner color",
-            "Time Display & Waiting msg",
-            "Input key option indication",
-            "General text/descriptions",
-            "FIle names & other text"});
-            this.cmbColorTarget.Location = new System.Drawing.Point(9, 109);
-            this.cmbColorTarget.Name = "cmbColorTarget";
-            this.cmbColorTarget.Size = new System.Drawing.Size(234, 24);
-            this.cmbColorTarget.TabIndex = 39;
-            // 
-            // cmbColor
-            // 
-            this.cmbColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbColor.FormattingEnabled = true;
-            this.cmbColor.Items.AddRange(new object[] {
-            "Black  ",
-            "White  ",
-            "Red   ",
-            "Cyan  ",
-            "Purple ",
-            "Green  ",
-            "Blue  ",
-            "Yellow ",
-            "Orange ",
-            "Brown  ",
-            "Light Red ",
-            "Dark Grey",
-            "Med Grey",
-            "Light Green",
-            "Light Blue ",
-            "Light Grey "});
-            this.cmbColor.Location = new System.Drawing.Point(9, 139);
-            this.cmbColor.Name = "cmbColor";
-            this.cmbColor.Size = new System.Drawing.Size(171, 24);
-            this.cmbColor.TabIndex = 44;
-            // 
-            // btnSetColor
-            // 
-            this.btnSetColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetColor.Location = new System.Drawing.Point(187, 139);
-            this.btnSetColor.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSetColor.Name = "btnSetColor";
-            this.btnSetColor.Size = new System.Drawing.Size(56, 24);
-            this.btnSetColor.TabIndex = 45;
-            this.btnSetColor.Text = "Set";
-            this.btnSetColor.UseVisualStyleBackColor = true;
-            this.btnSetColor.Click += new System.EventHandler(this.btnSetColor_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(11, 90);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 16);
-            this.label4.TabIndex = 46;
-            this.label4.Text = "Colors: ";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(65, 90);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(138, 16);
-            this.label6.TabIndex = 47;
-            this.label6.Text = "(Reset to upd display)";
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(245, 54);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(90, 28);
-            this.btnDelete.TabIndex = 25;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // FormMain
             // 
@@ -789,11 +722,6 @@
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button btnTest;
-        private System.Windows.Forms.Label lblDestPath;
-        private System.Windows.Forms.TextBox tbDestPath;
-        private System.Windows.Forms.RadioButton rbUSBDrive;
-        private System.Windows.Forms.RadioButton rbSDCard;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnSelectSource;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbSource;

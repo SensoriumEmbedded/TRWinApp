@@ -137,11 +137,6 @@ namespace TRWinApp
             else
                 e.Effect = DragDropEffects.None;
         }
-        private void rbUSBDRive_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbUSBDrive.Checked) lblDestPath.Text = "USB Drive Path:";
-            else lblDestPath.Text = "SD Card Path:";
-        }
 
         private void rbComEthernet_CheckedChanged(object sender, EventArgs e)
         {
@@ -215,6 +210,12 @@ namespace TRWinApp
             // Send --> AckToken 0x64CC
             // Receive <-- SD_nUSB(1), File Path(MaxNameLength, null terminator)
             // Send --> 0x64CC on Pass, 0x9b7f on Fail 
+
+            if (rbRL_TF.Checked)
+            {
+                WriteToOutput("\nCannot delete files from Teensy Flash", Color.Red);
+                return;
+            }
 
             string LaunchFilePath = tbLaunchFilePath.Text;
             //verify delete
@@ -359,6 +360,12 @@ namespace TRWinApp
 
         private void btnSendFile_Click(object sender, EventArgs e)
         {
+            if (rbRL_TF.Checked)
+            {
+                WriteToOutput("\nCannot write files to Teensy Flash", Color.Red);
+                return;
+            }
+
             if (!File.Exists(tbSource.Text))
             {
                 WriteToOutput("\nInvalid Source File/Path", Color.Red);
@@ -382,9 +389,8 @@ namespace TRWinApp
             //   App: Send file(length)
             //Teensy: AckToken 0x64CC on Pass,  0x9b7f on Fail
 
-            byte SD_nUSB = (byte)(rbSDCard.Checked ? 1 : 0);
-            if (!tbDestPath.Text.EndsWith("/")) tbDestPath.Text += "/";
-            string DestPathFile = tbDestPath.Text + Path.GetFileName(tbSource.Text);
+            if (!tbLaunchFilePath.Text.EndsWith("/")) tbLaunchFilePath.Text += "/";
+            string DestPathFile = tbLaunchFilePath.Text + Path.GetFileName(tbSource.Text);
             byte[] DestPathFileBytes = Encoding.ASCII.GetBytes(DestPathFile);
             byte[] pathInfo = new byte[4 + 2 + 1 + DestPathFileBytes.Length + 1];
 
@@ -394,14 +400,14 @@ namespace TRWinApp
             pathInfo[3] = (byte)(len);
             pathInfo[4] = (byte)(CheckSum >> 8); // Checksum MSB
             pathInfo[5] = (byte)(CheckSum);
-            pathInfo[6] = SD_nUSB;
+            pathInfo[6] = LaunchSource();
             Array.Copy(DestPathFileBytes, 0, pathInfo, 7, DestPathFileBytes.Length);
             pathInfo[pathInfo.Length - 1] = 0;   // null terminator
 
             if (!SendCommand(SendFileToken, "File Token", AckToken, false, false)) return;
 
             WriteToOutput("Transferring " + len + " bytes, CS= 0x" + CheckSum.ToString("X4"), Color.DarkBlue);
-            WriteToOutput("  to TeensyROM " + (SD_nUSB == 1U ? "SD:" : "USB:") + DestPathFile, Color.DarkBlue);
+            WriteToOutput("  to TeensyROM " + strLaunchSource() + DestPathFile, Color.DarkBlue);
 
             if (!SendCommand(pathInfo, "Path Info", AckToken, true, false)) return;
 
@@ -414,8 +420,6 @@ namespace TRWinApp
             WriteToOutput("Transfer Sucessful!", Color.Green);
 
             //set up for launch
-            if (SD_nUSB == 1) rbRL_SD.Checked = true;
-            else rbRL_USB.Checked = true;
             tbLaunchFilePath.Text = DestPathFile;
 
             if (cbAutoLaunch.Checked) btnLaunch.PerformClick();

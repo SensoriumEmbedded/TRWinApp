@@ -58,7 +58,7 @@ namespace TRWinApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            pnlDebug.Visible = true;
+            //pnlDebug.Visible = true;
             btnRefreshCOMList.PerformClick();
             rbComEthernet.PerformClick();
             serialPort1.ReadTimeout = 200;
@@ -205,6 +205,38 @@ namespace TRWinApp
             SendCommand(launchPathFileName, "Path/File Name", AckToken, true, true);
         }
 
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            // Command: 
+            // Delete a file from the specified storage device on TeensyROM.
+            //
+            // Workflow:
+            // Receive <-- DeleteFileToken (0x64CF) 
+            // Send --> AckToken 0x64CC
+            // Receive <-- SD_nUSB(1), File Path(MaxNameLength, null terminator)
+            // Send --> 0x64CC on Pass, 0x9b7f on Fail 
+
+            string LaunchFilePath = tbLaunchFilePath.Text;
+            //verify delete
+            if (MessageBox.Show("Are you sure you want to delete this file?\n" + strLaunchSource() + LaunchFilePath, "Confirm Delete", MessageBoxButtons.OKCancel) != DialogResult.OK)
+            {
+                WriteToOutput("Delete Canceled", Color.Blue);
+                return;
+            }
+
+            if (!SendCommand(DeleteFileToken, "Delete File", AckToken, false, false)) return;
+
+            WriteToOutput("Deleting " + strLaunchSource() + LaunchFilePath, Color.Blue);
+
+            //same as launch path/file
+            byte[] pathFileBytes = Encoding.ASCII.GetBytes(LaunchFilePath);
+            byte[] launchPathFileName = new byte[1 + pathFileBytes.Length + 1];
+            launchPathFileName[0] = LaunchSource();
+            Array.Copy(pathFileBytes, 0, launchPathFileName, 1, pathFileBytes.Length);
+            launchPathFileName[launchPathFileName.Length - 1] = 0; // null terminator
+            SendCommand(launchPathFileName, "Path/File Name", AckToken, true, true);
+        }
+
         private void btnSetColor_Click(object sender, EventArgs e)
         {
             // Command: 
@@ -224,8 +256,6 @@ namespace TRWinApp
             command[3] = (byte)cmbColor.SelectedIndex;
 
             SendCommand(command, "Color: " + cmbColorTarget.Text + " to " + cmbColor.Text, AckToken);
-
-
         }
 
         private void btnSetSIDSong_Click(object sender, EventArgs e)

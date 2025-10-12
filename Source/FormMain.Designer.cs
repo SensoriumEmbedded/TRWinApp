@@ -81,6 +81,7 @@
             this.btnSetColor = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
             this.pnlSerialSetup.SuspendLayout();
             this.pnlEthernetSetup.SuspendLayout();
@@ -111,10 +112,10 @@
             // rtbOutput
             // 
             this.rtbOutput.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbOutput.Location = new System.Drawing.Point(12, 450);
+            this.rtbOutput.Location = new System.Drawing.Point(12, 422);
             this.rtbOutput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rtbOutput.Name = "rtbOutput";
-            this.rtbOutput.Size = new System.Drawing.Size(656, 213);
+            this.rtbOutput.Size = new System.Drawing.Size(656, 241);
             this.rtbOutput.TabIndex = 9;
             this.rtbOutput.Text = "";
             // 
@@ -154,7 +155,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(175, 420);
+            this.btnClear.Location = new System.Drawing.Point(578, 388);
             this.btnClear.Margin = new System.Windows.Forms.Padding(4);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(90, 28);
@@ -264,7 +265,7 @@
             this.tbSource.ReadOnly = true;
             this.tbSource.Size = new System.Drawing.Size(309, 22);
             this.tbSource.TabIndex = 16;
-            this.tbSource.Text = "<-- Selection button      -or-      Drag/Drop File Here";
+            this.tbSource.Text = "<-- Selection button   -or-   Drag/Drop File Here";
             this.tbSource.DragDrop += new System.Windows.Forms.DragEventHandler(this.tbSource_DragDrop);
             this.tbSource.DragOver += new System.Windows.Forms.DragEventHandler(this.tbSource_DragOver);
             // 
@@ -392,7 +393,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(9, 432);
+            this.label5.Location = new System.Drawing.Point(12, 404);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(146, 16);
             this.label5.TabIndex = 31;
@@ -414,7 +415,7 @@
             this.pnlDebug.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlDebug.Controls.Add(this.btnTest);
             this.pnlDebug.Controls.Add(this.cbPostFlush);
-            this.pnlDebug.Location = new System.Drawing.Point(381, 455);
+            this.pnlDebug.Location = new System.Drawing.Point(294, 388);
             this.pnlDebug.Name = "pnlDebug";
             this.pnlDebug.Size = new System.Drawing.Size(257, 32);
             this.pnlDebug.TabIndex = 33;
@@ -479,6 +480,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnDelete);
             this.groupBox3.Controls.Add(this.btnRemoteDir);
             this.groupBox3.Controls.Add(this.rbRL_TF);
             this.groupBox3.Controls.Add(this.rbRL_SD);
@@ -488,7 +490,7 @@
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(271, 217);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(398, 106);
+            this.groupBox3.Size = new System.Drawing.Size(398, 129);
             this.groupBox3.TabIndex = 36;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Remote Launch";
@@ -496,7 +498,7 @@
             // btnRemoteDir
             // 
             this.btnRemoteDir.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemoteDir.Location = new System.Drawing.Point(245, 54);
+            this.btnRemoteDir.Location = new System.Drawing.Point(147, 90);
             this.btnRemoteDir.Margin = new System.Windows.Forms.Padding(4);
             this.btnRemoteDir.Name = "btnRemoteDir";
             this.btnRemoteDir.Size = new System.Drawing.Size(90, 28);
@@ -566,7 +568,7 @@
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.Location = new System.Drawing.Point(12, 96);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(253, 196);
+            this.groupBox4.Size = new System.Drawing.Size(253, 176);
             this.groupBox4.TabIndex = 37;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "System Control";
@@ -575,7 +577,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(171, 15);
+            this.label3.Location = new System.Drawing.Point(184, 18);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(39, 16);
             this.label3.TabIndex = 42;
@@ -585,7 +587,7 @@
             // 
             this.cbV3.AutoSize = true;
             this.cbV3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbV3.Location = new System.Drawing.Point(174, 85);
+            this.cbV3.Location = new System.Drawing.Point(187, 89);
             this.cbV3.Name = "cbV3";
             this.cbV3.Size = new System.Drawing.Size(43, 20);
             this.cbV3.TabIndex = 41;
@@ -597,7 +599,7 @@
             // 
             this.cbV2.AutoSize = true;
             this.cbV2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbV2.Location = new System.Drawing.Point(174, 60);
+            this.cbV2.Location = new System.Drawing.Point(187, 63);
             this.cbV2.Name = "cbV2";
             this.cbV2.Size = new System.Drawing.Size(43, 20);
             this.cbV2.TabIndex = 40;
@@ -609,7 +611,7 @@
             // 
             this.cbV1.AutoSize = true;
             this.cbV1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbV1.Location = new System.Drawing.Point(174, 34);
+            this.cbV1.Location = new System.Drawing.Point(187, 37);
             this.cbV1.Name = "cbV1";
             this.cbV1.Size = new System.Drawing.Size(43, 20);
             this.cbV1.TabIndex = 39;
@@ -639,9 +641,9 @@
             this.groupBox5.Controls.Add(this.cbV3);
             this.groupBox5.Controls.Add(this.btnSetSIDSong);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(12, 298);
+            this.groupBox5.Location = new System.Drawing.Point(12, 278);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(253, 116);
+            this.groupBox5.Size = new System.Drawing.Size(253, 120);
             this.groupBox5.TabIndex = 38;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "SID Playback";
@@ -722,6 +724,18 @@
             this.label6.Size = new System.Drawing.Size(138, 16);
             this.label6.TabIndex = 47;
             this.label6.Text = "(Reset to upd display)";
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDelete.Location = new System.Drawing.Point(245, 54);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(90, 28);
+            this.btnDelete.TabIndex = 25;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // FormMain
             // 
@@ -817,6 +831,7 @@
         private System.Windows.Forms.Button btnSetColor;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnDelete;
     }
 }
 

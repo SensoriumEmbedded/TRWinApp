@@ -81,6 +81,11 @@
             this.cbV2 = new System.Windows.Forms.CheckBox();
             this.cbV1 = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btnDefaultSpeed = new System.Windows.Forms.Button();
+            this.lblPlaybackSpeed = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.trackbarSIDSpeed = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
             this.pnlSerialSetup.SuspendLayout();
             this.pnlEthernetSetup.SuspendLayout();
@@ -90,17 +95,18 @@
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackbarSIDSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSendFile
             // 
             this.btnSendFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSendFile.Location = new System.Drawing.Point(58, 67);
+            this.btnSendFile.Location = new System.Drawing.Point(98, 81);
             this.btnSendFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnSendFile.Name = "btnSendFile";
-            this.btnSendFile.Size = new System.Drawing.Size(117, 51);
+            this.btnSendFile.Size = new System.Drawing.Size(100, 28);
             this.btnSendFile.TabIndex = 8;
-            this.btnSendFile.Text = "Send File\r\nto TeensyROM";
+            this.btnSendFile.Text = "Send to TR";
             this.btnSendFile.UseVisualStyleBackColor = true;
             this.btnSendFile.Click += new System.EventHandler(this.btnSendFile_Click);
             // 
@@ -114,7 +120,7 @@
             this.rtbOutput.Location = new System.Drawing.Point(12, 422);
             this.rtbOutput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rtbOutput.Name = "rtbOutput";
-            this.rtbOutput.Size = new System.Drawing.Size(656, 241);
+            this.rtbOutput.Size = new System.Drawing.Size(657, 241);
             this.rtbOutput.TabIndex = 9;
             this.rtbOutput.Text = "";
             // 
@@ -213,7 +219,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(8, 0);
+            this.btnTest.Location = new System.Drawing.Point(4, 3);
             this.btnTest.Margin = new System.Windows.Forms.Padding(4);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(102, 28);
@@ -285,7 +291,7 @@
             // 
             this.rbComSerial.AutoSize = true;
             this.rbComSerial.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbComSerial.Location = new System.Drawing.Point(20, 21);
+            this.rbComSerial.Location = new System.Drawing.Point(20, 27);
             this.rbComSerial.Name = "rbComSerial";
             this.rbComSerial.Size = new System.Drawing.Size(63, 20);
             this.rbComSerial.TabIndex = 25;
@@ -296,7 +302,7 @@
             // 
             this.rbComEthernet.AutoSize = true;
             this.rbComEthernet.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbComEthernet.Location = new System.Drawing.Point(20, 47);
+            this.rbComEthernet.Location = new System.Drawing.Point(20, 53);
             this.rbComEthernet.Name = "rbComEthernet";
             this.rbComEthernet.Size = new System.Drawing.Size(77, 20);
             this.rbComEthernet.TabIndex = 26;
@@ -308,7 +314,7 @@
             // 
             this.pnlSerialSetup.Controls.Add(this.btnRefreshCOMList);
             this.pnlSerialSetup.Controls.Add(this.cmbCOMPort);
-            this.pnlSerialSetup.Location = new System.Drawing.Point(91, 16);
+            this.pnlSerialSetup.Location = new System.Drawing.Point(91, 22);
             this.pnlSerialSetup.Name = "pnlSerialSetup";
             this.pnlSerialSetup.Size = new System.Drawing.Size(150, 43);
             this.pnlSerialSetup.TabIndex = 19;
@@ -316,7 +322,7 @@
             // pnlEthernetSetup
             // 
             this.pnlEthernetSetup.Controls.Add(this.tbIPAddress);
-            this.pnlEthernetSetup.Location = new System.Drawing.Point(91, 46);
+            this.pnlEthernetSetup.Location = new System.Drawing.Point(91, 52);
             this.pnlEthernetSetup.Name = "pnlEthernetSetup";
             this.pnlEthernetSetup.Size = new System.Drawing.Size(150, 26);
             this.pnlEthernetSetup.TabIndex = 27;
@@ -344,7 +350,7 @@
             // cbPostFlush
             // 
             this.cbPostFlush.AutoSize = true;
-            this.cbPostFlush.Location = new System.Drawing.Point(112, 5);
+            this.cbPostFlush.Location = new System.Drawing.Point(3, 38);
             this.cbPostFlush.Name = "cbPostFlush";
             this.cbPostFlush.Size = new System.Drawing.Size(142, 20);
             this.cbPostFlush.TabIndex = 32;
@@ -353,13 +359,12 @@
             // 
             // pnlDebug
             // 
-            this.pnlDebug.AutoSize = true;
             this.pnlDebug.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlDebug.Controls.Add(this.btnTest);
             this.pnlDebug.Controls.Add(this.cbPostFlush);
-            this.pnlDebug.Location = new System.Drawing.Point(294, 388);
+            this.pnlDebug.Location = new System.Drawing.Point(509, 312);
             this.pnlDebug.Name = "pnlDebug";
-            this.pnlDebug.Size = new System.Drawing.Size(257, 32);
+            this.pnlDebug.Size = new System.Drawing.Size(160, 64);
             this.pnlDebug.TabIndex = 33;
             this.pnlDebug.Visible = false;
             // 
@@ -410,7 +415,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(12, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(253, 78);
+            this.groupBox2.Size = new System.Drawing.Size(253, 92);
             this.groupBox2.TabIndex = 35;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Interface";
@@ -434,7 +439,7 @@
             this.groupBox3.Size = new System.Drawing.Size(388, 142);
             this.groupBox3.TabIndex = 36;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "TeensyROM File Systems";
+            this.groupBox3.Text = "TeensyROM File System";
             // 
             // label7
             // 
@@ -563,9 +568,9 @@
             this.groupBox4.Controls.Add(this.btnPing);
             this.groupBox4.Controls.Add(this.btnReset);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(12, 96);
+            this.groupBox4.Location = new System.Drawing.Point(12, 110);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(253, 169);
+            this.groupBox4.Size = new System.Drawing.Size(253, 178);
             this.groupBox4.TabIndex = 37;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "System Control";
@@ -663,7 +668,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(197, 18);
+            this.label3.Location = new System.Drawing.Point(161, 16);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(39, 16);
             this.label3.TabIndex = 42;
@@ -673,7 +678,7 @@
             // 
             this.cbV3.AutoSize = true;
             this.cbV3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbV3.Location = new System.Drawing.Point(200, 89);
+            this.cbV3.Location = new System.Drawing.Point(202, 68);
             this.cbV3.Name = "cbV3";
             this.cbV3.Size = new System.Drawing.Size(43, 20);
             this.cbV3.TabIndex = 41;
@@ -685,7 +690,7 @@
             // 
             this.cbV2.AutoSize = true;
             this.cbV2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbV2.Location = new System.Drawing.Point(200, 63);
+            this.cbV2.Location = new System.Drawing.Point(202, 42);
             this.cbV2.Name = "cbV2";
             this.cbV2.Size = new System.Drawing.Size(43, 20);
             this.cbV2.TabIndex = 40;
@@ -697,7 +702,7 @@
             // 
             this.cbV1.AutoSize = true;
             this.cbV1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbV1.Location = new System.Drawing.Point(200, 37);
+            this.cbV1.Location = new System.Drawing.Point(202, 16);
             this.cbV1.Name = "cbV1";
             this.cbV1.Size = new System.Drawing.Size(43, 20);
             this.cbV1.TabIndex = 39;
@@ -707,6 +712,10 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.btnDefaultSpeed);
+            this.groupBox5.Controls.Add(this.lblPlaybackSpeed);
+            this.groupBox5.Controls.Add(this.label8);
+            this.groupBox5.Controls.Add(this.label9);
             this.groupBox5.Controls.Add(this.btnPauseSID);
             this.groupBox5.Controls.Add(this.label3);
             this.groupBox5.Controls.Add(this.cbV1);
@@ -714,13 +723,67 @@
             this.groupBox5.Controls.Add(this.cbV2);
             this.groupBox5.Controls.Add(this.cbV3);
             this.groupBox5.Controls.Add(this.btnSetSIDSong);
+            this.groupBox5.Controls.Add(this.trackbarSIDSpeed);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(12, 271);
+            this.groupBox5.Location = new System.Drawing.Point(15, 293);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(253, 120);
+            this.groupBox5.Size = new System.Drawing.Size(474, 94);
             this.groupBox5.TabIndex = 38;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "SID Playback";
+            // 
+            // btnDefaultSpeed
+            // 
+            this.btnDefaultSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDefaultSpeed.Location = new System.Drawing.Point(374, 55);
+            this.btnDefaultSpeed.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDefaultSpeed.Name = "btnDefaultSpeed";
+            this.btnDefaultSpeed.Size = new System.Drawing.Size(90, 28);
+            this.btnDefaultSpeed.TabIndex = 47;
+            this.btnDefaultSpeed.Text = "Default";
+            this.btnDefaultSpeed.UseVisualStyleBackColor = true;
+            this.btnDefaultSpeed.Click += new System.EventHandler(this.btnDefaultSpeed_Click);
+            // 
+            // lblPlaybackSpeed
+            // 
+            this.lblPlaybackSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPlaybackSpeed.Location = new System.Drawing.Point(269, 58);
+            this.lblPlaybackSpeed.Name = "lblPlaybackSpeed";
+            this.lblPlaybackSpeed.Size = new System.Drawing.Size(80, 16);
+            this.lblPlaybackSpeed.TabIndex = 43;
+            this.lblPlaybackSpeed.Text = "100";
+            this.lblPlaybackSpeed.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(348, 58);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(19, 16);
+            this.label8.TabIndex = 46;
+            this.label8.Text = "%";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(257, 16);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(111, 16);
+            this.label9.TabIndex = 48;
+            this.label9.Text = "Playback Speed:";
+            // 
+            // trackbarSIDSpeed
+            // 
+            this.trackbarSIDSpeed.Location = new System.Drawing.Point(262, 29);
+            this.trackbarSIDSpeed.Maximum = 127;
+            this.trackbarSIDSpeed.Minimum = -68;
+            this.trackbarSIDSpeed.Name = "trackbarSIDSpeed";
+            this.trackbarSIDSpeed.Size = new System.Drawing.Size(199, 56);
+            this.trackbarSIDSpeed.TabIndex = 39;
+            this.trackbarSIDSpeed.TickFrequency = 10;
+            this.trackbarSIDSpeed.ValueChanged += new System.EventHandler(this.trackbarSIDSpeed_ValueChanged);
             // 
             // FormMain
             // 
@@ -758,6 +821,7 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackbarSIDSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -816,6 +880,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tbTRFilename;
+        private System.Windows.Forms.TrackBar trackbarSIDSpeed;
+        private System.Windows.Forms.Label lblPlaybackSpeed;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btnDefaultSpeed;
+        private System.Windows.Forms.Label label9;
     }
 }
 

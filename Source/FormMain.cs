@@ -71,15 +71,15 @@ namespace TRWinApp
         }
 
 
-        /********************************  Local Control Functions *****************************************/
+/********************************  Local Control Functions *****************************************/
 
         private void FormMain_Resize(object sender, EventArgs e)
         {
             if (this.Width < InitialWinXSize) this.Width = InitialWinXSize;
             if (this.Height < InitialWinYSize) this.Height = InitialWinYSize;
             //rtbOutput.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
-            rtbOutput.Width = this.ClientSize.Width - rtbOutput.Left - 15;
-            rtbOutput.Height = this.ClientSize.Height - rtbOutput.Top - 15;
+            rtbOutput.Width = this.ClientSize.Width - rtbOutput.Left - 10;
+            rtbOutput.Height = this.ClientSize.Height - rtbOutput.Top - 10;
         }
 
         private void btnRefreshCOMList_Click(object sender, EventArgs e)
@@ -154,9 +154,13 @@ namespace TRWinApp
         {
             if (!tbTRPath.Text.EndsWith("/")) tbTRPath.Text += "/";
         }
+        private void btnDefaultSpeed_Click(object sender, EventArgs e)
+        {
+            trackbarSIDSpeed.Value = 0;
+        }
 
 
-        /********************************  Command Button Functions *****************************************/
+/********************************  Command Button Functions *****************************************/
 
         private void btnTest_Click(object sender, EventArgs e)
         {
@@ -167,6 +171,32 @@ namespace TRWinApp
             byte[] command = { 0x64, 0x44, 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x2f, 0x47, 0x6f, 0x72, 0x66, 0x21, 0x00 };
             SendCommand(command, "Launch Gorf!", AckToken);
 
+        }
+
+        private void trackbarSIDSpeed_ValueChanged(object sender, EventArgs e)
+        {                
+            lblPlaybackSpeed.Text = (trackbarSIDSpeed.Value + 100).ToString();
+
+            // Command: 
+            // Set SID playback speed of currently loaded SID
+            //
+            // Workflow:
+            // Receive <-- SIDSpeedLinToken  0x6499 -or- SIDSpeedLogToken  0x649A
+            // Receive <-- playback rate (16 bit signed int as 2 bytes: hi, lo)
+            //                Linear Range is -68(*256) to <128(*256), argument represents speed change percent from nominal
+            //                Logrithmic Range is -127(*256) to 99(*256) argument to percentage shown in "SID playback speed-log.txt"
+            // Send --> AckToken 0x64CC or FailToken 0x9B7F
+            //
+            // Example 1: 0x64, 0x99, 0xf0, 0x40 = Set to -15.75 via linear equation
+            // Example 2: 0x64, 0x9a, 0x20, 0x40 = set to +32.25 via logarithmic equation
+
+            byte[] SIDSpeedLin = CommandTokenToByte(SIDSpeedLinToken);
+            byte[] command = new byte[2 + 2];
+            Array.Copy(SIDSpeedLin, 0, command, 0, 2);
+            command[2] = (byte)trackbarSIDSpeed.Value;
+            command[3] = 0;
+
+            SendCommand(command, "Set SID Speed: " + trackbarSIDSpeed.Value, AckToken);
         }
 
         private void btnPauseSID_Click(object sender, EventArgs e)
@@ -284,11 +314,6 @@ namespace TRWinApp
             byte[] SetSIDSong = new byte[2 + 1];
             Array.Copy(SIDSongToken, 0, SetSIDSong, 0, 2);
             SetSIDSong[2] = (byte)(nudSongNum.Value - 1);
-
-            //for (int byteNum = 0; byteNum < SetSIDSong.Length; byteNum++)
-            //{ 
-            //    WriteToOutput("Byte " + byteNum + " = " + SetSIDSong[byteNum].ToString("X2") + " '" + Encoding.UTF8.GetString(SetSIDSong, byteNum,1) + "'", Color.Purple);
-            //}
 
             SendCommand(SetSIDSong, "Set SID Song to #" + nudSongNum.Value, AckToken);
         }
@@ -438,7 +463,7 @@ namespace TRWinApp
         }
 
 
-        /********************************  Stand Alone/Helper Functions *****************************************/
+/********************************  Stand Alone/Helper Functions *****************************************/
 
         private void WriteToOutput(string strMsg, Color color)
         {
@@ -497,7 +522,7 @@ namespace TRWinApp
             return new byte[] { (byte)(Token), (byte)(Token >> 8) };
         }
 
-        /******************************** Main Stream IO Command Function *****************************************/
+/******************************** Main Stream IO Command Function *****************************************/
 
         private bool SendCommand(UInt16 cmdToken, string description, UInt16 RespToken, bool skipInit = false, bool closeOnSuccess = true)
         {
@@ -516,6 +541,10 @@ namespace TRWinApp
         {
             string errMsg, stFlushed;
             bool retVal = true;
+
+            //For Command Debug:
+            //for (int byteNum = 0; byteNum < command.Length; byteNum++)
+            //  WriteToOutput("Byte " + byteNum + " = " + command[byteNum].ToString("X2") + " '" + Encoding.UTF8.GetString(command, byteNum,1) + "'", Color.Purple);
 
             //initialize
             if (!skipInit)

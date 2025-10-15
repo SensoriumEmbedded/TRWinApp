@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.btnSendFile = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -175,7 +176,7 @@
             this.btnReset.Location = new System.Drawing.Point(118, 22);
             this.btnReset.Margin = new System.Windows.Forms.Padding(4);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(90, 28);
+            this.btnReset.Size = new System.Drawing.Size(113, 28);
             this.btnReset.TabIndex = 14;
             this.btnReset.Text = "Reset/Menu";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -496,10 +497,10 @@
             // btnRemoteDir
             // 
             this.btnRemoteDir.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemoteDir.Location = new System.Drawing.Point(333, 70);
+            this.btnRemoteDir.Location = new System.Drawing.Point(327, 70);
             this.btnRemoteDir.Margin = new System.Windows.Forms.Padding(4);
             this.btnRemoteDir.Name = "btnRemoteDir";
-            this.btnRemoteDir.Size = new System.Drawing.Size(34, 28);
+            this.btnRemoteDir.Size = new System.Drawing.Size(40, 28);
             this.btnRemoteDir.TabIndex = 24;
             this.btnRemoteDir.Text = "Dir";
             this.btnRemoteDir.UseVisualStyleBackColor = true;
@@ -668,7 +669,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(161, 16);
+            this.label3.Location = new System.Drawing.Point(158, 16);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(39, 16);
             this.label3.TabIndex = 42;
@@ -800,6 +801,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.rtbOutput);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.Text = "TeensyROM Transfer/Control v0.5";

@@ -36,6 +36,7 @@ namespace TRWinApp
         const UInt16 C64PauseOnToken   = 0x6431; // C64 Paused
         const UInt16 C64PauseOffToken  = 0x6430; // C64 Unpaused
         const UInt16 DebugToken        = 0x6467; //dg
+        const UInt16 VersionInfoToken  = 0x6476; //dv
         const UInt16 SendFileToken     = 0x64AA;
         const UInt16 PostFileToken     = 0x64BB;
         const UInt16 CopyFileToken     = 0x64FF;
@@ -211,6 +212,24 @@ namespace TRWinApp
             //look for "TeensyROM" instead of ack
             var expResponse = Encoding.ASCII.GetBytes("TeensyROM");
             SendCommand(PingToken, "Ping", expResponse);
+        }
+
+        private void btnFWVer_Click(object sender, EventArgs e)
+        {
+            SendCommand(VersionInfoToken, "Version Info", AckToken, false, false);
+
+            if (!_streamIO.FlushStreamRx(500, out string stFlushed, out string errMsg))
+            {
+                WriteToOutput(errMsg, Color.Red);
+                return;
+            }
+            WriteToOutput(stFlushed, Color.Black);
+
+            if (!_streamIO.Close(out errMsg))
+            {
+                WriteToOutput(errMsg, Color.Red);
+            }
+
         }
 
         private void btnReset_Click(object sender, EventArgs e)

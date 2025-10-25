@@ -87,6 +87,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.trackbarSIDSpeed = new System.Windows.Forms.TrackBar();
+            this.btnFWVer = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
             this.pnlSerialSetup.SuspendLayout();
             this.pnlEthernetSetup.SuspendLayout();
@@ -560,6 +561,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.btnFWVer);
             this.groupBox4.Controls.Add(this.label6);
             this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Controls.Add(this.btnSetColor);
@@ -786,6 +788,18 @@
             this.trackbarSIDSpeed.TickFrequency = 10;
             this.trackbarSIDSpeed.ValueChanged += new System.EventHandler(this.trackbarSIDSpeed_ValueChanged);
             // 
+            // btnFWVer
+            // 
+            this.btnFWVer.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFWVer.Location = new System.Drawing.Point(141, 58);
+            this.btnFWVer.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFWVer.Name = "btnFWVer";
+            this.btnFWVer.Size = new System.Drawing.Size(90, 28);
+            this.btnFWVer.TabIndex = 48;
+            this.btnFWVer.Text = "FW Ver";
+            this.btnFWVer.UseVisualStyleBackColor = true;
+            this.btnFWVer.Click += new System.EventHandler(this.btnFWVer_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -887,6 +901,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnDefaultSpeed;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button btnFWVer;
     }
 }
 

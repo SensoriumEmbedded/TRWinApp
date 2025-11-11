@@ -1,6 +1,7 @@
-# TRWinApp
-My inferior Form based Win App for TeensyROM
+# TR Transfer/Control Windops App
+Minimal Win App for to remotely control your C64/128 via TeensyROM and a USB or Ethernet connection.
 
-I use it for some testing and hacking around.
+![Window Capture](TR_Transfer-Control.png)
 
-For a real UI experiance, use [the TeensyROM-UI](https://github.com/MetalHexx/TeensyROM-UI) :)
+I use it mostly for testing and interface development. For a vastly improved UI experience, use [the TeensyROM-UI](https://github.com/MetalHexx/TeensyROM-UI) :)
+

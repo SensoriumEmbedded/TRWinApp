@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TR_Transfer_Control", "TR_Transfer_Control.csproj", "{26B38AD5-CCB5-4CC7-A05D-60117AF72AAD}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "..\Setup\Setup.vdproj", "{4D1AC582-8087-5490-FCC2-03CEC5D22547}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{26B38AD5-CCB5-4CC7-A05D-60117AF72AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26B38AD5-CCB5-4CC7-A05D-60117AF72AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26B38AD5-CCB5-4CC7-A05D-60117AF72AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D1AC582-8087-5490-FCC2-03CEC5D22547}.Debug|Any CPU.ActiveCfg = Debug
+		{4D1AC582-8087-5490-FCC2-03CEC5D22547}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

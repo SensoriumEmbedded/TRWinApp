@@ -1,4 +1,4 @@
-# TR Transfer/Control Windops App
+# TR Transfer/Control Application
 Minimal Win App for to remotely control your C64/128 via TeensyROM and a USB or Ethernet connection.
 
 * Windows:

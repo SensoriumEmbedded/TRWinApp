@@ -1,5 +1,5 @@
 # TR Transfer/Control Application
-Minimal Win App for to remotely control your C64/128 via TeensyROM and a USB or Ethernet connection.
+Minimal Win App for remote control of your C64/128 via [TeensyROM](https://github.com/SensoriumEmbedded/TeensyROM) using a USB or Ethernet connection.
 
 ![Window Capture](TR_Transfer-Control.png)
 

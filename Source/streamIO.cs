@@ -19,7 +19,20 @@ namespace TRWinApp
             try
             {
                 if (useEthernet)
-                    _stream = new TcpDataStream(stIPAddress, 80);
+                {
+                    int portNum = 2112; //default port, but allow override by parsing from end of IP address string if specified as "IP:Port"
+                    int lastColon = stIPAddress.LastIndexOf(':');
+                    if (lastColon > -1 && lastColon < stIPAddress.Length - 1)
+                    {
+                        string portPart = stIPAddress.Substring(lastColon + 1);
+                        if (int.TryParse(portPart, out int parsed))
+                        {
+                            portNum = parsed;
+                            stIPAddress = stIPAddress.Substring(0, lastColon); //remove port from IP address string
+                        }
+                    }
+                    _stream = new TcpDataStream(stIPAddress, portNum);
+                }
                 else
                 {
                     if (stCOMPort == "")

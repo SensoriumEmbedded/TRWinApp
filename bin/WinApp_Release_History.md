@@ -2,6 +2,10 @@
 # TeensyROM Transfer/Control Windows Utility
 ## Release Version history:
 
+### 0.5.1 2/6/26
+  * IP address now accepts <IPV4>:<Port#> format
+  * Defaults to port 2112 (used by TeensyROM) if omitted
+  
 ### 0.5 11/10/25
   * Ethernet based (TCP) control option
   * SID controls, color controls, directory read, separated transfer/launch

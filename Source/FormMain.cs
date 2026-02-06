@@ -590,7 +590,7 @@ namespace TRWinApp
             else
             {
                 var recBuf = new byte[expResponse.Length];
-                if (!_streamIO.ReadStreamTO(recBuf, expResponse.Length, out int bytesRead, 1500, out errMsg)) goto ErrorOut;
+                if (!_streamIO.ReadStreamTO(recBuf, expResponse.Length, out int bytesRead, 3000, out errMsg)) goto ErrorOut;
                 if (bytesRead != expResponse.Length)
                 {
                     WriteToOutput("Bad Response Length: " + bytesRead.ToString() + " != " + expResponse.Length.ToString(), Color.Red);

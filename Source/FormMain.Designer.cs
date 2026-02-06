@@ -71,6 +71,7 @@
             this.rbRL_USB = new System.Windows.Forms.RadioButton();
             this.tbTRPath = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnFWVer = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnSetColor = new System.Windows.Forms.Button();
@@ -87,7 +88,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.trackbarSIDSpeed = new System.Windows.Forms.TrackBar();
-            this.btnFWVer = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
             this.pnlSerialSetup.SuspendLayout();
             this.pnlEthernetSetup.SuspendLayout();
@@ -337,7 +337,7 @@
             this.tbIPAddress.Name = "tbIPAddress";
             this.tbIPAddress.Size = new System.Drawing.Size(124, 22);
             this.tbIPAddress.TabIndex = 23;
-            this.tbIPAddress.Text = "192.168.1.222";
+            this.tbIPAddress.Text = "192.168.1.20:2112";
             // 
             // label5
             // 
@@ -578,6 +578,18 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "System Control";
             // 
+            // btnFWVer
+            // 
+            this.btnFWVer.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFWVer.Location = new System.Drawing.Point(141, 58);
+            this.btnFWVer.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFWVer.Name = "btnFWVer";
+            this.btnFWVer.Size = new System.Drawing.Size(90, 28);
+            this.btnFWVer.TabIndex = 48;
+            this.btnFWVer.Text = "FW Ver";
+            this.btnFWVer.UseVisualStyleBackColor = true;
+            this.btnFWVer.Click += new System.EventHandler(this.btnFWVer_Click);
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -788,18 +800,6 @@
             this.trackbarSIDSpeed.TickFrequency = 10;
             this.trackbarSIDSpeed.ValueChanged += new System.EventHandler(this.trackbarSIDSpeed_ValueChanged);
             // 
-            // btnFWVer
-            // 
-            this.btnFWVer.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFWVer.Location = new System.Drawing.Point(141, 58);
-            this.btnFWVer.Margin = new System.Windows.Forms.Padding(4);
-            this.btnFWVer.Name = "btnFWVer";
-            this.btnFWVer.Size = new System.Drawing.Size(90, 28);
-            this.btnFWVer.TabIndex = 48;
-            this.btnFWVer.Text = "FW Ver";
-            this.btnFWVer.UseVisualStyleBackColor = true;
-            this.btnFWVer.Click += new System.EventHandler(this.btnFWVer_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -818,7 +818,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
-            this.Text = "TeensyROM Transfer/Control v0.5";
+            this.Text = "TeensyROM Transfer/Control v0.5.1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.FormMain_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).EndInit();

@@ -169,6 +169,10 @@ namespace TRWinApp
             //byte[] command = { 0x64, 0x9a, 0x20, 0x40 };// Example 2: 0x64, 0x9a, 0x20, 0x40 = set to +32.25 via logarithmic equation
             //byte[] command = { 0x64, 0x33, 0x05 };// Mute voice 1 & 3
             //byte[] command = { 0x64, 0x22, 0x02 , 0x0a};// Set banner to LtRed
+
+            //byte[] command = { 0x64, 0xfb,  0x04, 0x00,  0x00, 0x02,  0x08, 0x09};
+            //SendCommand(command, "Write 'hi' to screen", AckToken);
+
             byte[] command = { 0x64, 0x44, 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x2f, 0x47, 0x6f, 0x72, 0x66, 0x21, 0x00 };
             SendCommand(command, "Launch Gorf!", AckToken);
 
@@ -481,6 +485,20 @@ namespace TRWinApp
  
         }
 
+        private void btnScreenMem_Click(object sender, EventArgs e)
+        {
+            //byte[] PokeChars = { 0xf1, 0xeb, 0xf2, 0xf3 }; // -|  T  |-   
+            //byte[] PokeChars = { 0xcd, 0xc2, 0xce, 0xc3 }; // /|\-
+            byte[] PokeChars = { 0xd5, 0xc9, 0xcb, 0xca }; // quarter circles
+
+            for (int PassNum = 0; PassNum < 10; PassNum++)
+            {
+                for (int CharNum = 0; CharNum < PokeChars.Length; CharNum++)
+                {
+                    if(!FillScreenMem(PokeChars[CharNum])) return;
+                }
+            }
+        }
 
 /********************************  Stand Alone/Helper Functions *****************************************/
 
@@ -527,6 +545,22 @@ namespace TRWinApp
             }
         }
 
+        private bool FillScreenMem(byte PokeByte)
+        {
+            byte[] command = new byte[6 + 1000];
+            command[0] = 0x64; //WriteC64MemToken
+            command[1] = 0xfb;
+            command[2] = 0x04; //C64 mem location (screen)
+            command[3] = 0x00;
+            command[4] = 0x03; //Length (1000)
+            command[5] = 0xe8;
+
+            for (uint byteNum = 0; byteNum< 1000; byteNum++)
+                command[6 + byteNum] = PokeByte;
+
+            return SendCommand(command, "Fill screen: " + PokeByte, AckToken);
+        }
+
         private byte LaunchSource() { return (byte)(rbRL_SD.Checked ? 1 : (rbRL_TF.Checked ? 2 : 0)); }
 
         private string strLaunchSource() { return new[] { "USB:", "SD:", "TF:" }[LaunchSource()]; }
@@ -556,6 +590,7 @@ namespace TRWinApp
             var command = CommandTokenToByte(cmdToken);
             return SendCommand(command, description, expResponse, skipInit, closeOnSuccess);
         }
+
         private bool SendCommand(byte[] command, string description, byte[] expResponse, bool skipInit = false, bool closeOnSuccess = true)
         {
             string errMsg, stFlushed;

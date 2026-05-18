@@ -88,6 +88,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.trackbarSIDSpeed = new System.Windows.Forms.TrackBar();
+            this.btnScreenMem = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudSongNum)).BeginInit();
             this.pnlSerialSetup.SuspendLayout();
             this.pnlEthernetSetup.SuspendLayout();
@@ -221,7 +222,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(4, 3);
+            this.btnTest.Location = new System.Drawing.Point(0, 4);
             this.btnTest.Margin = new System.Windows.Forms.Padding(4);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(102, 28);
@@ -364,7 +365,7 @@
             this.pnlDebug.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlDebug.Controls.Add(this.btnTest);
             this.pnlDebug.Controls.Add(this.cbPostFlush);
-            this.pnlDebug.Location = new System.Drawing.Point(509, 312);
+            this.pnlDebug.Location = new System.Drawing.Point(498, 336);
             this.pnlDebug.Name = "pnlDebug";
             this.pnlDebug.Size = new System.Drawing.Size(160, 64);
             this.pnlDebug.TabIndex = 33;
@@ -800,12 +801,25 @@
             this.trackbarSIDSpeed.TickFrequency = 10;
             this.trackbarSIDSpeed.ValueChanged += new System.EventHandler(this.trackbarSIDSpeed_ValueChanged);
             // 
+            // btnScreenMem
+            // 
+            this.btnScreenMem.Location = new System.Drawing.Point(498, 301);
+            this.btnScreenMem.Margin = new System.Windows.Forms.Padding(4);
+            this.btnScreenMem.Name = "btnScreenMem";
+            this.btnScreenMem.Size = new System.Drawing.Size(150, 28);
+            this.btnScreenMem.TabIndex = 33;
+            this.btnScreenMem.Text = "TR+ Screen Mem";
+            this.btnScreenMem.UseVisualStyleBackColor = true;
+            this.btnScreenMem.Click += new System.EventHandler(this.btnScreenMem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(681, 674);
+            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.btnScreenMem);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox4);
@@ -813,7 +827,6 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pnlDebug);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.rtbOutput);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -902,6 +915,7 @@
         private System.Windows.Forms.Button btnDefaultSpeed;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnFWVer;
+        private System.Windows.Forms.Button btnScreenMem;
     }
 }
 

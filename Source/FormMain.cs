@@ -487,20 +487,52 @@ namespace TRWinApp
 
         private void btnScreenMem_Click(object sender, EventArgs e)
         {
+            //            byte[] PokeChars = { 0xd5, 0xc9, 0xca, 0xcb }; // quarter circles
+            //            uint DataLength = 1000;
+            //            byte[] command = new byte[6 + DataLength];
+            //            command[0] = 0x64; //WriteC64MemToken
+            //            command[1] = 0xfb;
+            //            command[2] = 0x04; //C64 mem location (screen)
+            //            command[3] = 0x00;
+            //            command[4] = (byte)(DataLength>>8); //Data Length
+            //            command[5] = (byte)DataLength;
+            //            for (int PassNum = 0; PassNum < 10; PassNum++)
+            //            {
+            //                //byte[] NextChars = (byte[])PokeChars.Clone();
+            //                //NextChars[PassNum % 4] = 0xa0; //blank one out
+            //                byte[] NextChars = { 0xa0, 0xa0, 0xa0, 0xa0 };
+            //                NextChars[PassNum % 4] = PokeChars[PassNum % 4]; 
+            //                for (uint byteNum = 0; byteNum < DataLength; byteNum++)
+            //                {
+            //                    if(byteNum%80 < 40)
+            //                        command[6+byteNum] = NextChars[byteNum%2];
+            //                    else
+            //                        command[6+byteNum] = NextChars[(byteNum%2)+2];
+            //                }
+            //                if (!SendCommand(command, "Fill screen", AckToken)) return;
+            //            }
+
             //byte[] PokeChars = { 0xf1, 0xeb, 0xf2, 0xf3 }; // -|  T  |-   
             //byte[] PokeChars = { 0xcd, 0xc2, 0xce, 0xc3 }; // /|\-
-            byte[] PokeChars = { 0xd5, 0xc9, 0xcb, 0xca }; // quarter circles
-
+            //byte[] PokeChars = { 0xd5, 0xc9, 0xcb, 0xca }; // quarter circles
+            byte[] PokeChars = { 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39 }; // '0'-'9'
+            byte[] command = new byte[6 + 1000];
+            command[0] = 0x64; //WriteC64MemToken
+            command[1] = 0xfb;
+            command[2] = 0x04; //C64 mem location (screen)
+            command[3] = 0x00;
+            command[4] = 0x03; //Length (1000)
+            command[5] = 0xe8;
             for (int PassNum = 0; PassNum < 10; PassNum++)
-            {
                 for (int CharNum = 0; CharNum < PokeChars.Length; CharNum++)
                 {
-                    if(!FillScreenMem(PokeChars[CharNum])) return;
+                    for (uint byteNum = 0; byteNum < 1000; byteNum++)
+                        command[6 + byteNum] = PokeChars[CharNum];
+                    if (!SendCommand(command, "Fill screen", AckToken)) return;
                 }
-            }
         }
 
-/********************************  Stand Alone/Helper Functions *****************************************/
+        /********************************  Stand Alone/Helper Functions *****************************************/
 
         private void WriteToOutput(string strMsg, Color color)
         {
@@ -543,22 +575,6 @@ namespace TRWinApp
                     //WriteToOutput("Msg: " + ex.Message, Color.Red);
                 }
             }
-        }
-
-        private bool FillScreenMem(byte PokeByte)
-        {
-            byte[] command = new byte[6 + 1000];
-            command[0] = 0x64; //WriteC64MemToken
-            command[1] = 0xfb;
-            command[2] = 0x04; //C64 mem location (screen)
-            command[3] = 0x00;
-            command[4] = 0x03; //Length (1000)
-            command[5] = 0xe8;
-
-            for (uint byteNum = 0; byteNum< 1000; byteNum++)
-                command[6 + byteNum] = PokeByte;
-
-            return SendCommand(command, "Fill screen: " + PokeByte, AckToken);
         }
 
         private byte LaunchSource() { return (byte)(rbRL_SD.Checked ? 1 : (rbRL_TF.Checked ? 2 : 0)); }

@@ -173,8 +173,27 @@ namespace TRWinApp
             //byte[] command = { 0x64, 0xfb,  0x04, 0x00,  0x00, 0x02,  0x08, 0x09};
             //SendCommand(command, "Write 'hi' to screen", AckToken);
 
-            byte[] command = { 0x64, 0x44, 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x2f, 0x47, 0x6f, 0x72, 0x66, 0x21, 0x00 };
-            SendCommand(command, "Launch Gorf!", AckToken);
+            byte[] command = { 0x64, 0xfd, 0x04, 0x00, 0x00, 0x0a }; //ReadC64MemToken, from screen, 10 chars
+            SendCommand(command, "Read screen", AckToken, false, false);
+
+            //SendCommand(VersionInfoToken, "Version Info", AckToken, false, false);
+
+            if (!_streamIO.FlushStreamRx(500, out string stFlushed, out string errMsg))
+            {
+                WriteToOutput(errMsg, Color.Red);
+                return;
+            }
+            for(int charnum =0; charnum < stFlushed.Length; charnum++)
+                WriteToOutput(" #" + charnum.ToString() + ": "+stFlushed[charnum].ToString(), Color.Black);
+
+            if (!_streamIO.Close(out errMsg))
+            {
+                WriteToOutput(errMsg, Color.Red);
+            }
+
+
+            //byte[] command = { 0x64, 0x44, 0x02, 0x2f, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x2f, 0x47, 0x6f, 0x72, 0x66, 0x21, 0x00 };
+            //SendCommand(command, "Launch Gorf!", AckToken);
 
         }
 
